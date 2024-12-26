@@ -51,6 +51,10 @@
     "swiper": "^11.1.15",
     "web-vitals": "^2.1.4"
   },
+  "build": {
+    "command": "npm run build",
+    "output": "build"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
