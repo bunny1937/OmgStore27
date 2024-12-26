@@ -1,0 +1,85 @@
+/* SimilarProducts.css */
+.similar-products {
+  margin-top: 20px;
+}
+
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.product-card {
+  width: 12rem;
+  height: 17rem;
+  margin: 10px;
+  padding: 2px;
+  background-color: #28361836;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+  width: 100%;
+  height: 12rem;
+  object-fit: contain;
+  border-radius: 10px;
+}
+.product-card h2 {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.product-card p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+}
+
+/* Media Queries */
+
+/* For screens between 1024px and 750px */
+@media (max-width: 1024px) and (min-width: 750px) {
+  .product-card {
+    width: 20%;
+    height: 100%; /* Adjust width to take up more space */
+  }
+}
+
+/* For screens between 750px and 550px */
+@media (max-width: 750px) and (min-width: 640px) {
+  .product-card {
+    width: 30%;
+    height: 100%; /* Adjust width to take up more space */
+  }
+}
+
+/* For screens between 550px and 350px */
+@media (max-width: 640px) and (min-width: 530px) {
+  .product-card {
+    width: 46%;
+    height: 100%;
+    border-radius: 10px; /* Full width for smaller screens */
+  }
+  .product-card img {
+    width: 100%;
+    height: 14rem;
+    object-fit: contain;
+    border-radius: 30px;
+  }
+}
+
+/* For screens below 350px */
+@media (max-width: 530px) {
+  .product-card {
+    width: 45%; /* Full width for the smallest screens */
+    height: auto; /* Allow height to adjust based on content */
+  }
+}
+@media (max-width: 431px) {
+  .product-card {
+    width: 42%; /* Full width for the smallest screens */
+    height: auto; /* Allow height to adjust based on content */
+  }
+}

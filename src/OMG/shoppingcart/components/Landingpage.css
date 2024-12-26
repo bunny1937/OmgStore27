@@ -1,0 +1,164 @@
+@font-face {
+  font-family: Astraal;
+  src: url(/public/Fonts/astraal.otf);
+}
+
+@font-face {
+  font-family: Demo4;
+  src: url(/public/Fonts/Montserrat-VariableFont_wght.ttf);
+}
+/*
+@font-face {
+  font-family: Demo1;
+  src: url(/public/Fonts/Amorous-Free-BF66b39862d4e9d.otf);
+}
+@font-face {
+  font-family: Demo2;
+  src: url(/public/Fonts/aotten.ttf);
+}
+@font-face {
+  font-family: Demo3;
+  src: url(/public/Fonts/astraal-italic.otf);
+}
+
+
+@font-face {
+  font-family: Demo5;
+  src: url(/public/Fonts/Grader-DEMO-BF66a9de68777b7.ttf);
+}
+ @font-face {
+  font-family: Demo6;
+  src: url(/public/Fonts/veldman.otf);
+} */
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap");
+
+.container {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.wavy-line {
+  width: 100%; /* Full viewport width */
+  height: 40px; /* Maintain the aspect ratio */
+  display: block;
+}
+.wavy-line-2 {
+  margin-top: -40px;
+  width: 100%; /* Full viewport width */
+  height: 40px; /* Maintain the aspect ratio */
+  display: block;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.circular-text {
+  width: 100px;
+  height: 100px;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.main-page {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.main-page h1 {
+  font-size: 8.5rem;
+  word-spacing: -20px;
+  font-weight: normal;
+  font-family: Astraal;
+}
+
+.main-page p {
+  color: #1f1f1f;
+  margin-top: -10px;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  line-height: 1.5;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: Demo4;
+}
+
+.explore-btn {
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.explore-btn:hover {
+  background: #333;
+}
+
+.landing-content {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 20px;
+}
+
+.left-sidebar {
+  text-align: left;
+}
+
+.left-sidebar p {
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.left-sidebar p::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: #000;
+  margin-right: auto;
+  margin-top: 10px;
+}
+.right-sidebar {
+  text-align: right;
+}
+
+.right-sidebar .right-sidebar-text {
+  font-size: 24px;
+  margin-top: 23rem;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.right-sidebar p::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: #000;
+  margin-left: auto;
+  margin-top: 10px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}

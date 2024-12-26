@@ -1,0 +1,189 @@
+/* General styles for the reviews section */
+.reviews-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 100%;
+  margin: 2rem auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Title styles */
+.reviews-section h3 {
+  font-size: 24px;
+  color: #333;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.no-reviews {
+  text-align: left;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+.no-reviews h2 {
+  background: #f8f9fa;
+  padding: 10px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Review list styles */
+.reviews-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  max-height: 400px;
+  padding-right: 10px;
+}
+
+.review-item {
+  background-color: #fff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.review-photo {
+  max-width: 100px;
+  max-height: 100px;
+  margin-top: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.review-photo img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.review-item p {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #111;
+}
+.review-rating {
+  display: flex;
+}
+
+.star {
+  width: 32px;
+  height: 32px;
+  margin-right: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.stars-input {
+  display: flex;
+  gap: 4px;
+}
+
+.review-item span {
+  font-size: 14px;
+  color: #888;
+  margin-top: 8px;
+  display: block;
+  text-align: right;
+}
+.review-info {
+  display: flex;
+  flex-direction: column;
+}
+/* Add review section styles */
+.add-review {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.add-review input {
+  font-size: 1.2rem;
+  border: none;
+}
+.add-review textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #111;
+  resize: none;
+  font-size: 1.2rem;
+  font-family: "Arial", sans-serif;
+}
+
+.add-review textarea:focus {
+  border-color: #333;
+  outline: none;
+}
+
+.add-review button {
+  align-self: flex-start;
+  padding: 15px 30px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.add-review button:hover {
+  background-color: #45a049;
+}
+
+/* Layout for large screens */
+@media (min-width: 920px) {
+  .reviews-section {
+    flex-direction: row;
+    gap: 30px;
+  }
+
+  .reviews-list {
+    flex: 2;
+    max-height: unset;
+  }
+
+  .add-review {
+    flex: 1;
+    max-width: 400px;
+    margin: 0;
+    padding: 0rem 1rem;
+    margin-left: 20px;
+    border-radius: 15px;
+    background-color: #ececec;
+  }
+
+  .reviews-section h3 {
+    font-size: 28px;
+    text-align: left;
+  }
+}
+@media (max-width: 767px) {
+  .reviews-section {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .reviews-list {
+    max-height: 300px;
+  }
+
+  .reviews-section h3 {
+    font-size: 20px;
+  }
+
+  .add-review button {
+    align-self: stretch;
+  }
+}

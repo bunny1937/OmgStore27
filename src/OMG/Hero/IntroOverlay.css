@@ -1,0 +1,58 @@
+@font-face {
+  font-family: veldman;
+  src: url(/public/Fonts/veldman.otf);
+}
+.intro-overlay {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 99;
+  background-color: #223030; /* Darkest green base */
+  background-image: radial-gradient(
+    circle at 15% 30%,
+    #efefe9 0%,
+    /* Off-white */ #e8d9cd 20%,
+    /* Light beige */ #bba58f 40%,
+    /* Warm beige */ #959d90 60%,
+    /* Sage green */ #523d35 80%,
+    /* Dark brown */ #223030 100% /* Darkest green */
+  );
+  background-size: 150% 150%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
+}
+
+.intro-overlay svg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: calc(100% + 300px);
+}
+
+.intro-overlay path {
+  fill: #141516;
+}
+
+.word-display {
+  font-family: veldman;
+  color: black;
+  font-size: 10rem;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+}
+@media (max-width: 900px) {
+  .word-display {
+    font-size: 8rem;
+  }
+}
+@media (max-width: 500px) {
+  .word-display {
+    font-size: 6rem;
+  }
+}

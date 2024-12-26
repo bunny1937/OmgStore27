@@ -1,0 +1,13 @@
+.checkout-component {
+  position: fixed;
+  top: 6rem;
+  height: 100%;
+  width: 600px;
+  background-color: #a98f8f;
+  padding: 1em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.checkout-component {
+  bottom: 0;
+  right: 0;
+}

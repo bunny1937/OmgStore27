@@ -1,0 +1,216 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400&display=swap");
+@font-face {
+  font-family: Astraal;
+  src: url(/public/Fonts/astraal.otf);
+}
+.landing-container {
+  display: flex;
+  position: relative;
+  background-color: #1d2621;
+  min-height: fit-content;
+  overflow: hidden;
+  flex-direction: row;
+  padding-bottom: 5px;
+}
+
+.landing-partition {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  position: relative;
+}
+
+.aesthetic {
+  background-color: #e6e6fa;
+  justify-content: flex-end;
+  clip-path: polygon(0 0, 100% 0, 60% 380%, 0 100%);
+}
+
+.spiritual {
+  background-color: #f8f4f1;
+  justify-content: flex-start;
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+  align-items: flex-end;
+}
+
+.landing-title {
+  font-family: Astraal;
+  font-size: 6rem;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+  transition: transform 0.3s ease;
+}
+
+.landing-title:hover {
+  transform: scale(1.05);
+}
+
+.aesthetic-title {
+  align-self: flex-start;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.spiritual-title {
+  align-self: flex-end;
+  color: #34495e;
+}
+
+.landing-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 600px;
+}
+.landing-content2 {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0rem;
+  max-width: 700px;
+}
+.landing-image-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.landing-image {
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  object-fit: cover;
+}
+
+.landing-image-container img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+.landing-image-container:nth-child(2) {
+  margin-left: 2rem;
+}
+
+.landing-image:hover {
+  transform: translateY(-10px);
+}
+
+.landing-description {
+  font-size: 1.4rem;
+  text-align: left;
+  line-height: 1.6;
+  color: #555;
+}
+.landing-description2 {
+  font-size: 1.4rem;
+  text-align: right;
+  line-height: 1.6;
+  color: #555;
+}
+
+@media (max-width: 1240px) {
+  .landing-title {
+    font-size: 5rem;
+  }
+
+  .landing-description {
+    font-size: 1.3rem;
+  }
+  .landing-image-container:nth-child(2) {
+    margin-left: 8rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .landing-container {
+    flex-direction: column;
+    min-height: fit-content;
+  }
+
+  .aesthetic,
+  .spiritual {
+    clip-path: none;
+  }
+
+  .landing-title {
+    font-size: 4rem;
+    text-align: center;
+  }
+
+  .landing-content,
+  .landing-content2 {
+    align-items: center;
+    text-align: center;
+    padding: 0;
+  }
+
+  .landing-description {
+    font-size: 1.2rem;
+  }
+  .landing-partition:nth-child(2) {
+    align-items: flex-end;
+    padding: 1rem;
+  }
+  .landing-description2 {
+    margin-left: 2rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .landing-title {
+    font-size: 3.5rem;
+  }
+
+  .landing-description {
+    font-size: 1.1rem;
+  }
+
+  .landing-image-container {
+    gap: 1rem;
+  }
+
+  .landing-image-container img {
+    width: 100%;
+    min-width: 230px;
+    height: auto;
+  }
+  .aesthetic {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .landing-title {
+    font-size: 3rem;
+  }
+
+  .landing-description {
+    font-size: 1rem;
+  }
+
+  .landing-image-container {
+    gap: 0.5rem;
+  }
+  .landing-image-container img {
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 399px) {
+  .landing-title {
+    font-size: 2.5rem;
+  }
+
+  .landing-description {
+    font-size: 0.9rem;
+  }
+
+  .landing-image-container {
+    gap: 0.25rem;
+  }
+}

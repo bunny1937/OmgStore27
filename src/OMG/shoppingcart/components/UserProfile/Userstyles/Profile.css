@@ -1,0 +1,82 @@
+.profile-card {
+  margin: auto;
+  padding: 0.5rem;
+  background-color: #ebeae4;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}
+
+.input-grid,
+.shipping-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.input,
+input[type="email"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: var(--text-color);
+  font-family: "Montserrat", sans-serif;
+  transition: all 0.3s ease;
+}
+
+.input:focus,
+input[type="email"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.input:disabled {
+  background-color: #f8fafc;
+  cursor: not-allowed;
+}
+
+.edit-button {
+  background-color: #29342a;
+  color: wheat;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.edit-button:hover {
+  transform: scale(1.1);
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.button-group .cancel-button {
+  background-color: red;
+  color: white;
+  padding: 0.5rem;
+}
+
+.button-group .cancel-button:hover {
+  background-color: white;
+  color: red;
+}
+.button-group .save-button {
+  background-color: green;
+  color: white;
+  padding: 0.5rem;
+}
+
+.button-group .save-button:hover {
+  background-color: white;
+  color: green;
+}

@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: visible;
+  /* color: #1b216b; Grounding color for text */
+}
+#root,
+html {
+  height: 100%;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+/* General Background */
+
+/* Primary Headings */
+/* h1,
+h2 {
+  color: #e88134 !important; /* Primary brand accent for bold focus *
+}
+
+/* Secondary Headings *
+h3,
+h4 {
+  color: #3765f8 !important; /* Secondary color for sub-focus *
+} */
+
+/* Links */
+
+/* Buttons */
+/* button {
+  background-color: #e88134 !important;
+  color: #ffffff !important;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;/
+}
+button:hover {
+  background-color: #1b216b !important; 
+
+/* Accordion Background */

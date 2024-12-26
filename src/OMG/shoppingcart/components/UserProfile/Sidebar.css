@@ -1,0 +1,29 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  height: 100vh;
+}
+
+.menu-item {
+  padding: 10px 20px;
+  border: none;
+  background-color: #fff;
+  color: #333;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.menu-item:hover {
+  background-color: #363636;
+  color: #fff;
+}
+
+.menu-item.active {
+  background-color: #000000;
+  color: #fff;
+}

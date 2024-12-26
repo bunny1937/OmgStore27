@@ -1,0 +1,127 @@
+.signup-container {
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Signup form styles */
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Header styles */
+.logo {
+  background-image: url(../shoppingcart/components/pages/photos/OMGstore.svg);
+}
+.header {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Input field styles */
+
+.input-field {
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.input:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Button field styles */
+.signup-method-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.signup-method-toggle button {
+  background-color: transparent;
+  border: 2px solid #ccc;
+  color: #333;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.signup-method-toggle button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.signup-method-toggle button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.signup-method-toggle button:focus {
+  outline: none;
+}
+
+.button-field {
+  margin: 5px !important;
+}
+
+.btn {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #3e8e41;
+}
+
+/* Login link styles */
+
+.login-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.text {
+  font-size: 16px;
+  color: #666;
+}
+
+.link {
+  text-decoration: none;
+  color: #337ab7;
+}
+
+.link:hover {
+  color: #23527c;
+}

@@ -1,0 +1,12 @@
+.component1 {
+  position: fixed;
+  top: 8rem;
+  height: 100%;
+  width: 600px;
+  background-color: #eba2a2;
+  padding: 1em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.component1 {
+  right: 0;
+}
