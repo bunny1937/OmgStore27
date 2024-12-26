@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6a50b11c.css",
+    "main.js": "/static/js/main.72bef596.js",
+    "static/js/511.ed0c4c1c.chunk.js": "/static/js/511.ed0c4c1c.chunk.js",
+    "static/media/man-poses-in-light-colored-overcoat.jpg": "/static/media/man-poses-in-light-colored-overcoat.cc04180b7a52941ee55b.jpg",
+    "static/media/Montserrat-VariableFont_wght.ttf": "/static/media/Montserrat-VariableFont_wght.4df14eb5e72bf55c4497.ttf",
+    "static/media/model.jpg": "/static/media/model.adbfd6e6717327218463.jpg",
+    "static/media/OMGstore.svg": "/static/media/OMGstore.e84a09f102d61f0d55351e6579889163.svg",
+    "static/media/man-wearing-white-shirt-with-tattoo-his-arm-words-hes-man-left_1045176-14545-transformed.jpeg": "/static/media/man-wearing-white-shirt-with-tattoo-his-arm-words-hes-man-left_1045176-14545-transformed.fb330f992a138364d723.jpeg",
+    "static/media/logo-black.svg": "/static/media/logo-black.4e04b901cbcf27dcd324.svg",
+    "static/media/woman-4266713_640.jpg": "/static/media/woman-4266713_640.1a390f676c9b5d8eb169.jpg",
+    "static/media/astraal.otf": "/static/media/astraal.0cd4e54f99043363ccaf.otf",
+    "static/media/premium_photo-1690341214258-18cb88438805-transformed.jpeg": "/static/media/premium_photo-1690341214258-18cb88438805-transformed.37d32e3652990ef9af15.jpeg",
+    "static/media/veldman.otf": "/static/media/veldman.2285c8e48ee557834b7f.otf",
+    "static/media/BrightGestureDEMO.otf": "/static/media/BrightGestureDEMO.0dabd06f4d380086abfa.otf",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/index.html",
+    "static/media/shopping-cart-white.svg": "/static/media/shopping-cart-white.046fa365456afad6d845.svg",
+    "static/media/heart.svg": "/static/media/heart.c9cb3f58dd65032f4435.svg",
+    "static/media/user.svg": "/static/media/user.0ec5e11fdf0a402814c1.svg",
+    "main.6a50b11c.css.map": "/static/css/main.6a50b11c.css.map",
+    "main.72bef596.js.map": "/static/js/main.72bef596.js.map",
+    "511.ed0c4c1c.chunk.js.map": "/static/js/511.ed0c4c1c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6a50b11c.css",
+    "static/js/main.72bef596.js"
+  ]
+}
