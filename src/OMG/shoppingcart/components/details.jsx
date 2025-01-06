@@ -9,7 +9,7 @@ import SimilarProducts from "./SimilarProducts";
 import ReviewSection from "./ReviewSection";
 import { getFirestore, collection, doc, getDoc } from "firebase/firestore";
 import { firebaseApp } from "../../db/Firebase";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaRegHeart } from "react-icons/fa";
@@ -17,6 +17,8 @@ import SignIn from "../../Auth/SignIn";
 import SignInSignUpPopup from "../../Auth/Popupsignin";
 import UserContext from "../../Auth/UserContext";
 import toast, { Toaster } from "react-hot-toast";
+import { auth } from "../../db/Firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
 
@@ -36,7 +38,9 @@ const Details = () => {
   const [selectedImage, setSelectedImage] = useState(null); // For main image
   const [popupOpen, setPopupOpen] = useState(false); // Popup state
   const { user } = useContext(UserContext); // User context
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const { cartItems } = useContext(cartContext);
   // Fetch product based on id
   useEffect(() => {
     if (id) {
@@ -58,11 +62,21 @@ const Details = () => {
         });
     }
   }, [id]);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   if (!product) {
-    return <div>Product not found!</div>;
+    return (
+      <div className="loading-state">
+        <div className="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    );
   }
-
   const { ImgUrls = [], Name, Description, price, Gender, Category } = product;
 
   const handleAddToCart = () => {
@@ -104,6 +118,21 @@ const Details = () => {
     }, 3000);
   };
 
+  const handleCheckout = () => {
+    if (!user) {
+      toast.error("Please sign in to proceed to checkout.");
+      return;
+    }
+
+    if (cartItems.length === 0) {
+      toast.error("Your cart is empty. Add items to proceed.");
+      return;
+    }
+
+    // Proceed to checkout
+    navigate("/Checkoutold");
+  };
+
   const handleAddToFavourites = () => {
     console.log("Selected size is:", selectedSize); // Debugging the size value
 
@@ -114,7 +143,6 @@ const Details = () => {
     }
 
     if (!selectedSize) {
-      console.log("No size selected");
       toast.dismiss(); // Dismiss any existing toasts
       toast.error("Please select a size before adding to favourites.");
       return;
@@ -226,7 +254,7 @@ const Details = () => {
                   <img src="icon1.svg" alt="240 GSM Icon" />
                 </div>
                 <div className="feature-item ">
-                  <span>OVERSIZED FIT</span>
+                  <span> FIT</span>
                   <img src="icon2.svg" alt="Oversized Fit Icon" />
                 </div>
                 <div className="feature-item">
@@ -284,8 +312,8 @@ const Details = () => {
                   <FaRegHeart />
                 </button>
               </div>
-              <button type="button" className="details-checkout">
-                <Link to={"/Checkoutold"}>Checkout</Link>
+              <button onClick={handleCheckout} className="details-checkout">
+                Checkout
               </button>
             </div>
             <div className="description-box">

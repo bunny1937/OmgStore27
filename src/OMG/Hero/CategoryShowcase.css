@@ -1,0 +1,337 @@
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.category-showcase {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.category-showcase.loaded {
+  opacity: 1;
+}
+
+.category-half {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-half::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.5s ease;
+}
+
+.minimalist::before {
+  background-color: #f0f0f0;
+  opacity: 0.7;
+}
+
+.spiritual1::before {
+  background-color: #e0e0e0;
+  opacity: 0.7;
+}
+
+.category-half:hover::before {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.category-content {
+  position: relative;
+  text-align: center;
+  color: #333;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.category-half:hover .category-content {
+  transform: translateY(-10px);
+}
+
+.category-half h2 {
+  font-size: 3.5rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.category-half p {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+
+.category-button {
+  background-color: transparent;
+  border: 2px solid #000000;
+  color: #000000;
+  padding: 0.75rem 1.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.category-button:hover {
+  color: #000000;
+}
+
+.category-button:hover::before {
+  left: 0;
+}
+
+.category-question {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-question h3,
+.category-question p {
+  position: relative;
+  display: inline;
+  font-weight: bold;
+  color: #686868;
+  background-image: linear-gradient(to right, #000, #000);
+  background-repeat: no-repeat;
+  background-size: var(--fill-percentage, 00%) 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-size 0.3s ease;
+}
+
+.category-question h3 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.category-question p {
+  font-size: 1.2rem;
+}
+
+.category-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+  background-color: rgba(51, 51, 51, 0.1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.category-icon svg {
+  width: 60px;
+  height: 60px;
+  transition: all 0.3s ease;
+}
+
+.category-half:hover .category-icon {
+  transform: scale(1.1);
+  background-color: rgba(51, 51, 51, 0.2);
+}
+
+.category-half:hover .category-icon svg {
+  transform: rotate(360deg);
+}
+
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  pointer-events: none;
+}
+
+.float-item {
+  position: absolute;
+  opacity: 0.2;
+  animation: float 6s ease-in-out infinite, fadeIn 2s ease-in-out;
+}
+
+.minimalist .float-item {
+  background-color: #333;
+}
+
+.spiritual1 .float-item {
+  background-color: #333;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  top: 20%;
+  left: 10%;
+}
+
+.square {
+  width: 40px;
+  height: 40px;
+  top: 60%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 52px solid #333;
+  top: 40%;
+  left: 60%;
+  animation-delay: 2s;
+}
+
+.om {
+  font-size: 60px;
+  top: 20%;
+  left: 10%;
+}
+
+.lotus {
+  font-size: 50px;
+  top: 60%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+.mandala {
+  font-size: 70px;
+  top: 40%;
+  left: 60%;
+  animation-delay: 2s;
+  animation: float 6s ease-in-out infinite, rotate 20s linear infinite,
+    fadeIn 2s ease-in-out;
+}
+
+.minimalist::before {
+  background-image: url(../shoppingcart/components/pages/photos/parallax/pexels-olly-837140.jpg);
+  opacity: 0.7;
+}
+
+.spiritual1::before {
+  background-image: url(../shoppingcart/components/pages/photos/parallax/woman-1721065_640.jpg);
+  opacity: 0.7;
+}
+
+@media (max-width: 1200px) and (min-width: 768px) {
+  .category-content h2 {
+    font-size: 2.2rem;
+  }
+  .category-content p {
+    font-size: 1.4rem;
+  }
+  .category-button {
+    font-size: 1.4rem;
+  }
+  .category-question {
+    padding: 1rem;
+  }
+  .category-question h3 {
+    font-size: 2.5rem;
+  }
+  .category-icon {
+    width: 70px;
+    height: 70px;
+  }
+  .category-icon svg {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .category-showcase {
+    flex-direction: column;
+  }
+
+  .category-half {
+    height: 100vh;
+  }
+  .category-content h2 {
+    font-size: 2rem;
+  }
+  .category-content p {
+    font-size: 1.3rem;
+  }
+  .category-button {
+    font-size: 1.2rem;
+  }
+  .category-question {
+    padding: 0.8rem;
+  }
+  .category-question h3 {
+    font-size: 1.5rem;
+  }
+  .category-icon {
+    width: 60px;
+    height: 60px;
+  }
+  .category-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+}

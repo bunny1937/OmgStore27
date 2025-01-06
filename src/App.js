@@ -28,6 +28,7 @@ import Support from "./OMG/shoppingcart/components/UserProfile/Support/Support";
 import Profile from "./OMG/shoppingcart/components/UserProfile/Profile";
 import Profile1 from "./OMG/shoppingcart/components/UserProfile/Basic/Basic";
 import Checkoutold from "./OMG/shoppingcart/components/Checkoutold";
+import Cursor from "./OMG/Cursor";
 
 function App() {
   const containerRef = useRef(null);
@@ -39,6 +40,7 @@ function App() {
           <ParallaxProvider>
             <FavouritesProvider>
               <CartProvider>
+                <Cursor />
                 <Header />
                 <Routes>
                   <Route path="/" element={<Heroui />} />

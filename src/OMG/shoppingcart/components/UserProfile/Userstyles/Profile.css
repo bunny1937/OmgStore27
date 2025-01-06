@@ -23,9 +23,7 @@
 input[type="email"] {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--border-color);
   border-radius: 6px;
-  background-color: #ffffff;
   color: var(--text-color);
   font-family: "Montserrat", sans-serif;
   transition: all 0.3s ease;

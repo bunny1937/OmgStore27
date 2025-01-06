@@ -72,6 +72,10 @@
 
 /* For screens below 350px */
 @media (max-width: 530px) {
+  .product-card img {
+    height: auto;
+    border-radius: 4px;
+  }
   .product-card {
     width: 45%; /* Full width for the smallest screens */
     height: auto; /* Allow height to adjust based on content */
@@ -81,5 +85,18 @@
   .product-card {
     width: 42%; /* Full width for the smallest screens */
     height: auto; /* Allow height to adjust based on content */
+  }
+}
+@media (max-width: 164px) {
+  .similar-products h2 {
+    font-size: 0.6rem;
+  }
+  .product-card {
+    margin: 5px;
+    width: 43%; /* Full width for the smallest screens */
+    height: auto; /* Allow height to adjust based on content */
+  }
+  .product-card p {
+    font-size: 8px;
   }
 }

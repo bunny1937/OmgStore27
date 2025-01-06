@@ -64,7 +64,9 @@ const SimilarProducts = ({ category, id }) => {
 
     fetchProducts();
   }, [category, id]);
-
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the screen on id change
+  }, [id]);
   return (
     <div className="similar-products">
       <h2>Similar Products</h2>

@@ -1,0 +1,131 @@
+.skeleton-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  width: 300px;
+  height: 345px;
+  border-radius: 8px;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #ececec 25%, #f3f3f3 50%, #e9e9e9 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-image {
+  width: 280px;
+  height: 270px;
+}
+.skeleton-title-price {
+  display: flex;
+  justify-content: space-between;
+}
+.skeleton-title {
+  width: 70%;
+  height: 20px;
+}
+.skeleton-price {
+  width: 20%;
+  height: 20px;
+}
+
+.skeleton-category {
+  width: 50%;
+  height: 20px;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Till 960px */
+@media (max-width: 1000px) {
+  .skeleton-card {
+    width: auto;
+    height: auto;
+  }
+  .skeleton-image {
+    width: auto;
+    height: 300px;
+  }
+}
+
+/* From 960px and Above */
+@media (min-width: 1000px) {
+  .skeleton-card {
+    width: auto;
+    height: 400px;
+  }
+  .skeleton-image {
+    width: auto;
+    height: 300px;
+  }
+}
+
+/* Till 670px */
+@media (max-width: 670px) {
+  .skeleton-card {
+    width: auto;
+    height: 360px;
+  }
+  .skeleton-image {
+    width: auto;
+    height: 350px;
+  }
+  .skeleton-title,
+  .skeleton-category,
+  .skeleton-price {
+    height: 15px;
+  }
+}
+
+/* From 615px to 200px */
+@media (max-width: 500px) {
+  .skeleton-card {
+    width: auto;
+    height: 280px;
+  }
+  .skeleton-image {
+    width: auto;
+    height: 260px;
+  }
+}
+@media (max-width: 380px) {
+  .skeleton-card {
+    width: auto;
+    height: 240px;
+  }
+  .skeleton-image {
+    width: auto;
+    height: 220px;
+  }
+  .skeleton-title,
+  .skeleton-category,
+  .skeleton-price {
+    height: 12px;
+  }
+}
+@media (max-width: 380px) and (min-width: 220px) {
+  .skeleton-card {
+    width: auto;
+    height: 170px;
+  }
+  .skeleton-image {
+    width: auto;
+    height: 160px;
+  }
+  .skeleton-title,
+  .skeleton-category,
+  .skeleton-price {
+    height: 10px;
+  }
+}

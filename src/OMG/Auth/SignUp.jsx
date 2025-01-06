@@ -1,5 +1,6 @@
-import { useNavigate, Link } from "react-router-dom";
 import { useState, useContext, useEffect, useRef } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -18,6 +19,7 @@ import "./SignUp.css";
 import toast, { Toaster } from "react-hot-toast";
 
 const auth = getAuth(firebaseApp);
+
 const db = getFirestore(firebaseApp);
 
 function SignUp({ onClose, open, onSignUpSuccess }) {
@@ -38,8 +40,10 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
   const { setUser } = useContext(UserContext);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // Ref for recaptcha container
   const recaptchaContainerRef = useRef(null);
@@ -210,7 +214,8 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
         phoneNumber
       );
       const user = userCredential.user;
-
+      const redirectTo = location.state?.redirectTo || "/home";
+      navigate(redirectTo, { replace: true });
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         email: user.email,
@@ -303,12 +308,17 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
     setPhoneNumber("");
   };
 
+  // const handleClose = () => {
+  //   setEmail("");
+  //   setPassword("");
+  //   setError(null);
+  //   onClose(); // Trigger parent close action
+  // };
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <div className={`modal ${open ? "open" : ""}`}>
         <div className="signup-container">
-          <div className="logo"></div>
           <div className="signup-form">
             <div className="header">
               <h1 className="title">Signup</h1>

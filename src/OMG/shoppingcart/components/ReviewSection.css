@@ -75,7 +75,15 @@
 .review-rating {
   display: flex;
 }
-
+.stars-input {
+  display: flex;
+  justify-content: space-between;
+}
+.reset-button {
+  width: 1.6rem;
+  color: black;
+  font-size: 1.2rem;
+}
 .star {
   width: 32px;
   height: 32px;
@@ -127,21 +135,42 @@
   outline: none;
 }
 
-.add-review button {
-  align-self: flex-start;
-  padding: 15px 30px;
-  background-color: #4caf50;
-  color: #fff;
+.photo-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+.photo-box input[type="file"] {
+  padding: 0;
+  margin: 0;
   border: none;
-  border-radius: 5px;
+  height: auto;
+}
+.photo-preview img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.photo-box button {
+  align-self: flex-start;
+  padding: 0 10px;
+  color: #000000;
+
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 1.2rem;
 }
-
-.add-review button:hover {
-  background-color: #45a049;
+.review-submit {
+  margin: 1rem 0;
+  padding: 0.6rem;
+  font-size: 1.2rem;
+  width: 6rem;
+  background-color: #4caf50;
+  color: #fff;
 }
-
 /* Layout for large screens */
 @media (min-width: 920px) {
   .reviews-section {
@@ -185,5 +214,78 @@
 
   .add-review button {
     align-self: stretch;
+  }
+}
+@media screen and (max-width: 164px) {
+  .reviews-section {
+    margin: 0.5rem 0;
+    padding: 5px;
+  }
+
+  .reviews-section h3 {
+    font-size: 12px;
+    text-align: left;
+    margin-bottom: 0;
+    padding-bottom: 2px;
+  }
+  .reviews-list {
+    gap: 5px;
+  }
+  .review-item {
+    padding: 0 5px;
+    border-radius: 4px;
+  }
+  .review-item p,
+  .review-item span {
+    margin-top: 0;
+    font-size: 0.6rem;
+  }
+  .star {
+    width: 8px;
+    height: 8px;
+  }
+
+  .review-photo {
+    max-width: 50px;
+    max-height: 50px;
+  }
+  .add-review {
+    gap: 5px;
+  }
+  .add-review textarea {
+    height: 50px;
+  }
+  .add-review textarea::placeholder {
+    font-size: 0.6rem;
+  }
+  .add-review input {
+    font-size: 0.6rem;
+  }
+  .photo-box button {
+    padding: 0 2px;
+    width: 0.8rem;
+    height: 15px;
+    font-size: 0.8rem;
+  }
+  .reset-button {
+    padding: 0 2px;
+    width: 0.8rem;
+    height: 15px;
+    margin-top: 6px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+  }
+  .rating-input label {
+    font-size: 0.8rem;
+    margin-bottom: -8px;
+  }
+  .add-review button {
+    align-self: stretch;
+  }
+  .review-submit {
+    margin: 0;
+    padding: 0.3rem;
+    font-size: 0.6rem;
+    width: 3rem;
   }
 }

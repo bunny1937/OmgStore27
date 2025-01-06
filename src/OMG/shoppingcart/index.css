@@ -40,10 +40,6 @@ svg {
   font-family: BrightDemo;
   src: url(/public/BrightGestureDEMO.otf);
 }
-/* @font-face {
-  font-family: Magnificient;
-  src: url(/public/Magnificent.ttf);
-} */
 
 @font-face {
   font-family: Montserrat;
@@ -55,7 +51,6 @@ svg {
 }
 
 /*--====== Home / Products Section ======--*/
-/* Main container and grid setup */
 #home {
   padding: 2rem;
 }
@@ -68,8 +63,6 @@ svg {
   width: 100%;
 }
 
-/* Responsive breakpoints */
-
 /* Product Card Styles */
 .product_card {
   background-color: transparent;
@@ -80,8 +73,6 @@ svg {
   padding: 0.1rem;
   border-radius: 5px;
   width: auto;
-
-  /* box-shadow: 6px 7px 30px 0px #5c5c5c; */
 }
 
 .product_card_img {
@@ -114,17 +105,11 @@ svg {
   color: #283618;
   font-weight: bold;
 }
-/* .parallax-effect {
-  transform-style: preserve-3d;
-} */
 
 .details-btn {
   display: flex;
   justify-content: space-between;
   padding: 0 0.2rem;
-  /* font-size: 35px;
-  font-style: italic;
-  transform: translateZ(60px); */
 }
 /* Filter Section */
 .filter-section button {
@@ -139,18 +124,17 @@ svg {
 .filter-container {
   position: fixed;
   top: 5rem;
-  left: -300px; /* Start off-screen */
+  left: -300px;
   width: 300px;
   height: 100%;
   background-color: #efebeb;
   transition: transform 0.3s ease-in-out;
   padding: 20px;
-  /* box-shadow: 0 0 0 90em rgba(84, 84, 84, 0.458); */
   z-index: 1;
 }
 
 .filter-container.open {
-  transform: translateX(300px); /* Slide in */
+  transform: translateX(300px);
 }
 
 .filter-container h2 {
@@ -382,64 +366,3 @@ svg {
     height: 2rem;
   }
 }
-/* Hover Effects */
-/* .card-actions {
-  position: absolute;
-  top: 10%;
-  right: 10%;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.product_card:hover .card-actions {
-  opacity: 1;
-  visibility: visible;
-}
-
-.hehe {
-  background-color: #b71d1d;
-  width: 30rem;
-  height: 30rem;
-  color: wheat;
-}
-
-
-.product_card .btn1,
-.btn2 {
-  background-color: #ffffff;
-  width: 3rem;
-  border-radius: 50%;
-  padding: 0.6rem;
-  font-size: 1rem;
-  height: 3rem;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.product_card .btn1:hover,
-.btn2:hover {
-  color: #b71d1d; /* Change color on hover *
-  transform: scale(1.1); 
-}
-
-.product_card .btn.added {
-  color: green;
-}
-.fav-icon1 {
-  background-image: url(../shoppingcart/components/pages/photos/icon-heart.svg);
-
-  background-repeat: no-repeat;
-  height: 2.5rem;
-}
-.bag-icon1 {
-  background-image: url(../shoppingcart/components/pages/photos/icon-cart.svg);
-
-  background-repeat: no-repeat;
-  height: 2.5rem;
-} */
-
-/******** -Filter- **********/
-
-/* Add this to your CSS file */

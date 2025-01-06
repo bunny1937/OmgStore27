@@ -30,6 +30,20 @@
   color: #333;
 }
 
+.signup-close-btn {
+  position: relative;
+  bottom: 0.5rem;
+  left: 5.7rem;
+  font-size: 1.5rem;
+  background-color: transparent;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signup-close-btn:hover {
+  color: red;
+}
 /* Input field styles */
 
 .input-field {

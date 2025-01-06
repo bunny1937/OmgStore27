@@ -5,6 +5,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
+import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { firebaseApp } from "../db/Firebase";
 import UserContext from "./UserContext";
@@ -21,11 +23,18 @@ function Popupsignin({ onClose }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false); // State to toggle between SignIn and SignUp screens
-
-  const toggleSignUp = () => {
-    setShowSignUp(!showSignUp); // Toggle between SignIn and SignUp screens
+  const navigate = useNavigate();
+  const location = useLocation();
+  // const toggleSignUp = () => {
+  //   setShowSignUp(!showSignUp); // Toggle between SignIn and SignUp screens
+  // };
+  const handleClose = () => {
+    setEmail("");
+    setPassword("");
+    setError(null);
+    // setShowSignUp(false); // Reset to SignIn view
+    onClose(); // Trigger parent close action
   };
-
   const signin = async () => {
     if (email === "" || password === "") {
       return toast.error("Please fill all fields");
@@ -119,10 +128,14 @@ function Popupsignin({ onClose }) {
           }}
         />
       ) : (
-        <div className="signin-form">
+        <div className="popup-signin-form">
           <div className="header">
             <h1 className="title">Sign In</h1>
+            <button className="popup-close-btn" onClick={handleClose}>
+              ✖
+            </button>
           </div>
+
           <div className="input-field">
             <input
               type="email"
@@ -158,10 +171,18 @@ function Popupsignin({ onClose }) {
           </div>
           <div className="login-link">
             <h2 className="text">
-              Don't have an account?{" "}
-              <button className="link" onClick={toggleSignUp}>
-                Sign Up
-              </button>
+              Don't have an account?
+              <Link to="/SignUp">
+                <button
+                  onClick={() =>
+                    navigate("/signup", {
+                      state: { redirectTo: "/popupsignin" },
+                    })
+                  }
+                >
+                  Sign up
+                </button>
+              </Link>
             </h2>
           </div>
           {error && <div className="error-message">{error}</div>}

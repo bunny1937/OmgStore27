@@ -496,3 +496,135 @@ button:focus {
     background-color: #0056b3;
   }
 }
+
+@media (max-width: 164px) {
+  /* Checkout Container */
+  .checkout-container {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  /* Cart View */
+  .cart-view {
+    width: 100%;
+    padding: 0.2rem;
+  }
+
+  /* Cart Item */
+  .cart-item {
+    padding: 0.2rem;
+    margin-bottom: 0.5rem;
+    gap: 20px;
+  }
+
+  .cart-item-img {
+    width: 40px;
+    height: auto;
+    margin-right: 0;
+  }
+  .cart-item-img img {
+    width: 50px;
+    height: auto;
+    margin-right: 0;
+  }
+  .cart-item-info {
+    margin-top: 0.5rem;
+  }
+
+  .cart-item-info h2 {
+    font-size: 0.6rem;
+    margin: 0;
+  }
+
+  .cart-item-info h3 {
+    font-size: 0.5rem;
+  }
+
+  .cart-item-info h4 {
+    font-size: 0.6rem;
+  }
+
+  /* Cart Item Pricing */
+  .cart-item-pricing {
+    justify-content: center;
+    margin-top: 0;
+    flex-direction: column;
+    align-items: normal;
+    gap: 2px;
+  }
+
+  .cart-item-pricing h3 {
+    font-size: 0.7rem;
+  }
+
+  /* Quantity Controls */
+  .quantity-controls {
+    margin-right: 0;
+  }
+
+  .quantity-controls button {
+    width: 10px;
+    height: 10px;
+    border-radius: 0;
+  }
+
+  .quantity-controls span {
+    margin: 0 5px;
+    font-size: 0.6rem;
+  }
+
+  /* Address Overview */
+  .address-overview {
+    margin: 0;
+    padding: 0.2rem;
+  }
+  .add-address-button {
+    margin: 0;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+  }
+  form input {
+    font-size: 0.6rem;
+    padding: 3px;
+  }
+  .address-selection label {
+    margin-bottom: 7px;
+    font-size: 0.6rem;
+  }
+  .address-overview h3 {
+    font-size: 1rem;
+  }
+  .pay-overview {
+    padding: 6px;
+  }
+  .summary-row span {
+    font-size: 0.7rem;
+  }
+  .coupon-section button {
+    padding: 4px;
+    font-size: 0.8rem;
+  }
+  /* Summary Actions */
+  .summary-actions {
+    padding: 0.1rem;
+  }
+  .summary-row {
+    padding: 0;
+  }
+  .summary-actions .total span {
+    font-weight: bold;
+    font-size: 0.6rem;
+    color: #f2e4d7 !important;
+    border-bottom: none;
+  }
+
+  .pay-button {
+    margin-bottom: 0.5rem;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .pay-button:hover {
+    background-color: #0056b3;
+  }
+}

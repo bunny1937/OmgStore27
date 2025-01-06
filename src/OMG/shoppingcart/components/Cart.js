@@ -84,26 +84,6 @@ const Cart = () => {
     return () => unsubscribe();
   }, [dispatch, cartItems.length]);
 
-  // Handle disabling body scroll when cart is open
-  // useEffect(() => {
-  //   document.body.classList.toggle("overflow_hide", isCartOpen);
-  // }, [isCartOpen]);
-
-  // // Handle clicking outside to close cart
-  // useEffect(() => {
-  //   const outsideClose = (e) => {
-  //     if (e.target.id === "cart") {
-  //       toggleCart(false);
-  //     }
-  //   };
-
-  //   window.addEventListener("click", outsideClose);
-
-  //   return () => {
-  //     window.removeEventListener("click", outsideClose);
-  //   };
-  // }, [toggleCart]);
-
   const cartQuantity = cartItems ? cartItems.length : 0;
   const cartTotal = cartItems
     ? cartItems
@@ -156,24 +136,25 @@ const Cart = () => {
                       </figure>
                       <div className="cart_items_info">
                         <h4>{Name}</h4>
-                        <h5> {Category}</h5>
+                        <h4>{Category}</h4>
                         <h3 className="size">Size:{size || "N/A"}</h3>
                         <h3 className="price">
                           ₹ {itemTotal.toLocaleString()} ||
                           <span> ₹ {price}</span>
                         </h3>
+                        <div className="cart_items_quantity">
+                          <span onClick={() => decrementItem(id, size)}>
+                            &#8722;
+                          </span>
+                          <b>{quantity}</b>
+                          <span onClick={() => incrementItem(id, size)}>
+                            &#43;
+                          </span>
+                        </div>
                       </div>
-                      <div className="cart_items_quantity">
-                        <span onClick={() => decrementItem(id, size)}>
-                          &#8722;
-                        </span>
-                        <b>{quantity}</b>
-                        <span onClick={() => incrementItem(id, size)}>
-                          &#43;
-                        </span>
-                      </div>
+
                       <button onClick={() => removeItem(id, size || "N/A")}>
-                        <span style={{ color: "#000", fontSize: "21pt" }}>
+                        <span style={{ color: "#000", fontSize: "10pt" }}>
                           &times;
                         </span>
                       </button>
@@ -195,7 +176,7 @@ const Cart = () => {
                 onClick={clearCart} // Trigger clearCart function here
                 disabled={cartQuantity === 0}
               >
-                Clear Cart
+                Clear All
               </button>
               <Link to={"/Checkoutold"}>
                 <button

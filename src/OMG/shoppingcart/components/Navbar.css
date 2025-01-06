@@ -535,10 +535,6 @@ input.nosubmit {
     font-size: 2rem;
   }
 }
-@media screen and (max-width: 960px) and (min-width: 700px) {
-}
-@media screen and (max-width: 700px) and (min-width: 500px) {
-}
 @media screen and (max-width: 550px) {
   .navbar {
     height: 7rem;
@@ -560,7 +556,9 @@ input.nosubmit {
     font-size: 1.8rem;
     z-index: 10;
   }
-
+  .nav-menu.active a {
+    font-size: 0.7rem !important;
+  }
   .navbar-logo {
     margin: 0;
     position: absolute;
@@ -650,5 +648,81 @@ input.nosubmit {
   }
   .nav-menu .favourites-text {
     display: block;
+  }
+}
+@media screen and (max-width: 200px) {
+  .navbar {
+    height: 3rem;
+  }
+  .navbar-logo {
+    margin: 0;
+    position: absolute;
+    top: -0.6rem;
+    margin-left: -1.3rem;
+  }
+  .navbar-logo img {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+  .nav-menu.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 3rem;
+    width: 100%;
+    padding: 1rem;
+  }
+  .menu-icon {
+    font-size: 1rem;
+    top: 40%;
+    left: 0.6rem;
+  }
+  .fa-times {
+    font-size: 1rem;
+    position: absolute;
+    top: -0.7rem;
+  }
+  .bag-icon,
+  .user-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    right: 0.3rem;
+    top: 0.9rem;
+  }
+  .search-container {
+    margin-top: 2.3rem;
+  }
+  .search-icon {
+    left: 0.8rem;
+    top: -0.8rem;
+    z-index: 1;
+    font-size: 0.8rem;
+  }
+  .header-links > .nav-links {
+    padding: 0 1.5rem;
+  }
+  .header-links > input {
+    border-radius: 25px;
+    border: none;
+    height: 1.1rem;
+    position: absolute;
+    width: 90%;
+    top: -1rem;
+    background-color: #dbdbde;
+  }
+  .header-links > input::placeholder {
+    font-size: 0.8rem;
+  }
+  .user-icon {
+    right: 1.6rem;
+  }
+  .cart_icon .badge {
+    right: 3px;
+    top: 6px;
+    line-height: 1;
+    font-size: 0.4rem;
+    margin: 10px 0 0 0;
+    padding: 0.2rem 0.3rem;
+    border-radius: 50%;
   }
 }

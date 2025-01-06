@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "../../Auth/UserContext";
 import { getAuth } from "firebase/auth";
@@ -20,8 +20,7 @@ const db = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 const ReviewComponent = () => {
-  const { id } = useParams(); // Get the id from the URL parameters
-
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState(product?.Review || []);
   const [newReview, setNewReview] = useState("");
@@ -82,12 +81,12 @@ const ReviewComponent = () => {
 
   const handleAddReview = async () => {
     if (!user) {
-      toast.warning("You need to sign in to add a review.");
+      toast.error("You need to sign in to add a review.");
       return;
     }
 
     if (newReview.trim() === "") {
-      toast.warning("Review cannot be empty!");
+      toast.error("Review cannot be empty!");
       return;
     }
 
@@ -123,6 +122,15 @@ const ReviewComponent = () => {
       toast.error("Failed to add review. Please try again.");
     }
   };
+
+  const handleRemovePhoto = () => {
+    setPhoto(null);
+  };
+
+  const handleResetRating = () => {
+    setRating(0);
+  };
+
   const renderStars = (rating) => {
     const stars = [];
 
@@ -199,28 +207,37 @@ const ReviewComponent = () => {
           value={newReview}
           onChange={(e) => setNewReview(e.target.value)}
         ></textarea>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setPhoto(e.target.files[0])}
-        />
+        <div className="photo-box">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setPhoto(e.target.files[0])}
+          />
+          <button onClick={handleRemovePhoto}>x</button>
+        </div>
+        {photo && <img src={URL.createObjectURL(photo)} alt="Preview" />}
         <div className="rating-input">
           <label>Rating: </label>
           <div className="stars-input">
-            {renderStars(rating).map((star, index) => (
-              <span
-                key={index}
-                onClick={() => setRating(index + 1)}
-                onMouseEnter={() => setRating(index + 1)}
-                onMouseLeave={() => setRating(rating)}
-                style={{ cursor: "pointer" }}
-              >
-                {star}
-              </span>
-            ))}
+            <div className="stars">
+              {renderStars(rating).map((star, index) => (
+                <span
+                  key={index}
+                  onClick={() => setRating(index + 1)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {star}
+                </span>
+              ))}
+            </div>
+            <button className="reset-button" onClick={handleResetRating}>
+              x
+            </button>
           </div>
         </div>
-        <button onClick={handleAddReview}>Submit</button>
+        <button className="review-submit" onClick={handleAddReview}>
+          Submit
+        </button>
       </div>
     </div>
   );

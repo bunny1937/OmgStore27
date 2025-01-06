@@ -39,8 +39,6 @@ const db = getFirestore(firebaseApp); // Corrected import
 setPersistence(auth, browserLocalPersistence).catch((error) => {
   console.error("Failed to set persistence:", error.message);
 });
-console.log(firebaseConfig);
-console.log(storage);
 
 // Export Firebase services and Firestore utilities
 export {

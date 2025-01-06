@@ -4,11 +4,13 @@ import ProductsCard from "../components/ProductsCard";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firebaseApp } from "../../db/Firebase";
 import Cart from "../components/Cart";
+import SkeletonCard from "./Skeleton";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const firestore = getFirestore(firebaseApp);
 
+  const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState("none");
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -16,8 +18,8 @@ const Home = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedGenders, setSelectedGenders] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState([]);
-  const availableSizes = ["XS", "S", "M", "L", "XL", "XXL"]; // No state needed
-  const availableGenders = ["Male", "Female", "Unisex"]; // No state needed
+  const availableSizes = ["XS", "S", "M", "L", "XL", "XXL"];
+  const availableGenders = ["Male", "Female", "Unisex"];
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,6 +34,8 @@ const Home = () => {
         setFilteredProducts(productsData);
       } catch (error) {
         console.error("Error fetching products:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -126,14 +130,13 @@ const Home = () => {
                 min={0}
                 max={2000}
                 value={priceRange}
-                onChange={(values) => setPriceRange(values)} // Update price range dynamically
-                step={10} // Step size for slider movement
+                onChange={(values) => setPriceRange(values)}
+                step={10}
               />
               <div className="price-range-values">
                 <span>₹{priceRange[0]}</span> - <span>₹{priceRange[1]}</span>
               </div>
             </div>
-            {/* Category Filter */}
             {/* Category Filter */}
             <label>
               Categories:
@@ -203,20 +206,10 @@ const Home = () => {
               Apply
             </button>
           </div>
-          {/* <div className="sort-box">
-            <label>
-              Sort by:
-              <select value={sortBy} onChange={handleSortChange}>
-                <option value="none">None</option>
-                <option value="priceLowToHigh">Price: Low to High</option>
-                <option value="priceHighToLow">Price: High to Low</option>
-                <option value="avgCustomerReview">Avg. Customer Review</option>
-                <option value="newestArrivals">Newest Arrivals</option>
-              </select>
-            </label>
-          </div> */}
           <div className="home_content">
-            {filteredProducts.length > 0 ? (
+            {isLoading ? (
+              [...Array(24)].map((_, index) => <SkeletonCard key={index} />)
+            ) : filteredProducts.length > 0 ? (
               filteredProducts.map((product, index) => (
                 <ProductsCard
                   key={`${product.id}_${index}`}
