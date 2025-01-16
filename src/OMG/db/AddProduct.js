@@ -21,6 +21,7 @@ export const AddProducts = () => {
   const [Gender, setProductGender] = useState("");
   const [progress, setProgress] = useState(0);
   const [size, setProductSize] = useState([]);
+  const [Type, setProductType] = useState("");
 
   const types = ["image/png", "image/jpg", "image/jpeg"]; // image types
 
@@ -42,7 +43,6 @@ export const AddProducts = () => {
       const updatedSizes = prevSizes.includes(size)
         ? prevSizes.filter((s) => s !== size) // Remove if already selected
         : [...prevSizes, size]; // Add if not selected
-      console.log("Updated Sizes:", updatedSizes); // Debugging
       return updatedSizes;
     });
   };
@@ -121,6 +121,7 @@ export const AddProducts = () => {
       await setDoc(newDocRef, {
         id: newId,
         Name,
+        Type,
         Description,
         price: Number(price),
         Category,
@@ -131,6 +132,7 @@ export const AddProducts = () => {
       });
 
       // Reset the form
+      setProductType("");
       setProductName("");
       setProductDescription("");
       setProductGender();
@@ -154,6 +156,18 @@ export const AddProducts = () => {
         <h2>ADD PRODUCTS</h2>
         <hr />
         <form autoComplete="off" className="form-group" onSubmit={addProduct}>
+          <label htmlFor="product-type">Product Type</label>
+          <select
+            className="text-input"
+            required
+            onChange={(e) => setProductType(e.target.value)}
+            value={Type}
+          >
+            <option value="">Select Category</option>
+            <option value="Jeans">Minimalist</option>
+            <option value="Oversize">Spiritual</option>
+          </select>
+          <br />
           <label htmlFor="product-category">Product Category</label>
           <select
             className="text-input"
@@ -185,7 +199,7 @@ export const AddProducts = () => {
           <label htmlFor="product-size">Product Size</label>
           <h2>Select Product Sizes</h2>
           <div className="size-selector">
-            {["S", "M", "L", "XL", "XXL"].map((size) => (
+            {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
               <button
                 key={size}
                 onClick={() => toggleSize(size)}

@@ -2,11 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
-import { motion } from "framer-motion";
 import { firebaseApp } from "../../../db/Firebase"; // Adjust this path to your Firebase initialization
 import "./Userstyles/Order.css";
-import { FiArrowRight, FiArrowLeft } from "react-icons/fi"; // Adjust this import as needed
-import Breadcrumb from "./Breadcrumb";
+import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);

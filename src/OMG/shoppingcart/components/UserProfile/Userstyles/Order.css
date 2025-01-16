@@ -6,6 +6,18 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.loading-spinner {
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  font-size: 18px;
+}
+
 /* Container for order sections */
 .orders-section {
   background-color: #fff;
@@ -70,9 +82,9 @@
 }
 .order-cart-list {
   display: flex;
-  flex-direction: column; /* Ensures items are stacked vertically */
-  gap: 10px; /* Adds space between the boxes */
-  width: 40%; /* Takes up the available space on the left */
+  flex-direction: column;
+  gap: 10px;
+  width: 40%;
 }
 .order-cart-box {
   border: 1px solid rgb(131, 131, 131);
@@ -80,6 +92,7 @@
   padding: 0.5rem;
   background-color: rgb(222, 227, 223);
   display: flex;
+  transition: transform 0.3s ease;
 }
 
 .order-header {
@@ -98,11 +111,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
   padding: 5px;
   font-size: 2rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
   border-radius: 50%;
   background-color: rgb(222, 227, 223);
+}
+
+.order-toggle:hover {
+  transform: rotate(180deg);
 }
 .order-info {
   background-color: rgb(169, 169, 169);

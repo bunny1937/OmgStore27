@@ -1,0 +1,252 @@
+/* General Layout */
+.order-confirmation-container {
+  font-family: "Arial", sans-serif;
+  background-color: #fafafa;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.thank-you-header {
+  font-size: 36px;
+  font-weight: bold;
+  color: #1d2621;
+}
+
+.order-status-message {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Order Summary Section */
+.order-summary {
+  width: 100%;
+}
+
+.orders-heading {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.orders-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Loading & Error States */
+.loading-indicator,
+.error-notification {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.loading-indicator {
+  color: #888;
+}
+
+.error-notification {
+  color: red;
+}
+
+/* Recent Order Details */
+.recent-order-details {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.order-detail-card {
+  display: flex;
+  gap: 20px;
+}
+
+.order-overview {
+  color: #333;
+  text-align: left;
+}
+
+.order-overview p {
+  margin-bottom: 8px;
+}
+
+.order-overview strong {
+  color: #1d2621;
+}
+
+.order-info-header,
+.shipping-info-header {
+  text-align: left;
+  font-size: 20px;
+  color: #1d2621;
+  margin-bottom: 10px;
+}
+
+.shipping-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.shipping-primary-info,
+.shipping-secondary-info {
+  flex: 1 1 45%;
+}
+
+.shipping-primary-info p,
+.shipping-secondary-info p {
+  text-align: left;
+}
+
+/* Items Ordered Section */
+.order-items-list {
+  width: 100%;
+}
+
+.ordered-items-header {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.order-item-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.order-item-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.order-item-details {
+  display: flex;
+  width: 300px;
+  flex-direction: row;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.order-item-details p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.order-item-details strong {
+  color: #1d2621;
+}
+
+/* Buttons */
+.order-confirmation-container button {
+  padding: 12px 25px;
+  background-color: #1d2621;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+.order-confirmation-container button:hover {
+  color: #1d2621;
+  background-color: #f2e4d7;
+  border: 2px solid #1d2621;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .order-confirmation-container {
+    padding: 20px;
+  }
+
+  .thank-you-header {
+    font-size: 28px;
+  }
+
+  .order-status-message {
+    font-size: 16px;
+  }
+  .order-item-card {
+    padding: 5px;
+  }
+  .orders-heading {
+    font-size: 24px;
+  }
+
+  .recent-order-details {
+    padding: 15px;
+  }
+
+  .shipping-details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .order-detail-card {
+    flex-direction: column;
+  }
+  .order-item-details p {
+    font-size: 16px;
+  }
+
+  .order-confirmation-container button {
+    width: 100%;
+  }
+}
+@media (max-width: 360px) {
+  .order-confirmation-container,
+  .recent-order-details {
+    padding: 5px;
+  }
+  .order-item-card img {
+    margin-right: 10px;
+  }
+  .order-item-card img {
+    width: 80px;
+    height: 80px;
+  }
+  .order-item-details {
+    font-size: 1rem;
+    gap: 0.1rem;
+  }
+  .order-item-details p {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 290px) {
+  .order-overview,
+  .shipping-details {
+    font-size: 14px;
+  }
+  .order-item-card img {
+    margin-right: 4px;
+  }
+  .order-item-card img {
+    width: 60px;
+    height: 60px;
+  }
+  .order-item-details {
+    font-size: 0.8rem;
+    gap: 0.1rem;
+  }
+  .order-item-details p {
+    font-size: 0.8rem;
+  }
+}

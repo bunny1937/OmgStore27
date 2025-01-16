@@ -226,37 +226,33 @@
     height: 80vh;
   }
   .carousel-item {
-    --width: clamp(280px, 30vw, 350px);
-    --height: clamp(280px, 40vw, 450px);
+    --width: clamp(250px, 26vw, 320px);
+    --height: clamp(250px, 34vw, 400px);
   }
 }
 
 /* 960px to 760px */
-@media (max-width: 960px) and (min-width: 760px) {
-  .carousel {
-    height: 70vh;
-  }
+/* @media (max-width: 960px) and (min-width: 760px) {
   .carousel-item {
     --width: clamp(270px, 28vw, 320px);
     --height: clamp(270px, 38vw, 420px);
   }
-}
+} */
 
 /* 760px to 540px */
 @media (max-width: 760px) and (min-width: 540px) {
   .carousel {
-    height: 60vh;
+    height: 70vh;
   }
   .carousel-item {
-    --width: clamp(240px, 25vw, 300px);
-    --height: clamp(240px, 35vw, 400px);
+    --height: clamp(240px, 34vw, 400px);
   }
 }
 
 /* 540px to 399px */
 @media (max-width: 540px) and (min-width: 399px) {
   .carousel {
-    height: 50vh;
+    height: 60vh;
   }
   .carousel-item {
     --width: clamp(200px, 20vw, 250px);
@@ -267,7 +263,7 @@
 /* Below 399px */
 @media (max-width: 399px) {
   .carousel {
-    height: 40vh;
+    height: 50vh;
   }
   .carousel-item {
     --width: clamp(180px, 15vw, 200px);

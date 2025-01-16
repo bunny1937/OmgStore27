@@ -25,7 +25,7 @@ import UserProfile1 from "./OMG/shoppingcart/components/UserProfile/UserProfile"
 import Sidebar from "./OMG/shoppingcart/components/UserProfile/Sidebar";
 import { BackButtonProvider } from "./OMG/BackHandle/BackContext";
 import Support from "./OMG/shoppingcart/components/UserProfile/Support/Support";
-import Profile from "./OMG/shoppingcart/components/UserProfile/Profile";
+import Order from "./OMG/shoppingcart/components/UserProfile/Order";
 import Profile1 from "./OMG/shoppingcart/components/UserProfile/Basic/Basic";
 import Checkoutold from "./OMG/shoppingcart/components/Checkoutold";
 import Cursor from "./OMG/Cursor";
@@ -49,7 +49,7 @@ function App() {
                   <Route path="/UserProfile1/*" element={<UserProfile1 />} />
                   <Route path="/Profile1" element={<Profile1 />} />
                   <Route path="/Support" element={<Support />} />
-
+                  <Route path="/Order" element={<Order />} />
                   <Route path="/Sidebar" element={<Sidebar />} />
                   <Route path="/SignIn" element={<SignIn />} />
                   <Route path="/Home" element={<Home />} />

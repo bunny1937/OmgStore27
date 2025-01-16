@@ -12,7 +12,7 @@ import "./Checkout.css";
 
 const Checkoutold = () => {
   const navigate = useNavigate();
-  const { cartItems, updateCartItem } = useContext(cartContext);
+  const { cartItems, updateCartItem, removeItem } = useContext(cartContext);
   const [userId, setUserId] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [showAddressDetails, setShowAddressDetails] = useState(false);
@@ -22,7 +22,6 @@ const Checkoutold = () => {
   const [showCouponInput, setShowCouponInput] = useState(false);
   const { incrementItem, decrementItem } = useContext(cartContext);
   const [userInfo, setUserInfo] = useState(null);
-  const [sanitizedId, setSanitizedId] = useState(null);
 
   const [shippingInfo, setShippingInfo] = useState({
     city: "",
@@ -37,10 +36,18 @@ const Checkoutold = () => {
 
   useEffect(() => {
     const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setUserId(user.uid);
+        // Fetch user data from Firestore
+        const userDocRef = doc(firestore, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setUserInfo(userDoc.data());
+        } else {
+          console.error("User document does not exist");
+        }
       } else {
+        setUserInfo(null);
       }
     });
 
@@ -65,7 +72,7 @@ const Checkoutold = () => {
           if (userDoc) {
             const userData = userDoc.data();
             // Store the document ID for future use
-            setSanitizedId(userDoc.id);
+            setUserId(userDoc.id);
             setUserInfo(userData);
 
             // Pre-fill shipping info with user data
@@ -92,7 +99,7 @@ const Checkoutold = () => {
       } else {
         setUserId(null);
         setUserInfo(null);
-        setSanitizedId(null);
+        setUserId(null);
       }
     });
 
@@ -101,15 +108,10 @@ const Checkoutold = () => {
 
   // Update the address fetching logic to use sanitizedId
   useEffect(() => {
-    if (sanitizedId) {
+    if (userId) {
       const fetchAddresses = async () => {
         try {
-          const addressesRef = collection(
-            db,
-            "users",
-            sanitizedId,
-            "ShippingInfo"
-          );
+          const addressesRef = collection(db, "users", userId, "ShippingInfo");
           const snapshot = await getDocs(addressesRef);
           const addresses = snapshot.docs.map((doc) => ({
             id: doc.id,
@@ -123,7 +125,7 @@ const Checkoutold = () => {
       };
       fetchAddresses();
     }
-  }, [sanitizedId]);
+  }, [userId]);
 
   const handleInputChange = (e) => {
     setShippingInfo((prev) => {
@@ -222,9 +224,9 @@ const Checkoutold = () => {
           },
         };
 
-        console.log("Saving order to Firestore:", newOrder); // Debugging log
-        await addDoc(orderRef, newOrder); // Save order to Firestore
-        navigate("/Payment"); // Navigate to payment page
+        console.log("Saving order to Firestore:", newOrder);
+        await addDoc(orderRef, newOrder);
+        // navigate("/Payment");
       } catch (error) {
         console.error("Error saving order:", error);
       }
@@ -242,7 +244,7 @@ const Checkoutold = () => {
             {cartItems.map((item, index) => (
               <motion.div
                 className="cart-item"
-                key={item.id}
+                key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -252,8 +254,13 @@ const Checkoutold = () => {
                 </figure>
                 <div className="cart-item-info">
                   <h2>{item.Name}</h2>
-                  <h4>₹ {item.price.toLocaleString()}</h4>
-                  <h3>Size : {item.size}</h3>
+                  <h4>
+                    <span style={{ color: "#4e4e4e" }}>
+                      ₹ {item.price.toLocaleString()} {""}
+                    </span>
+                    || ₹{(item.price * item.quantity).toLocaleString()}
+                  </h4>
+                  <h4>Size : {item.size}</h4>
                   <div className="cart-item-pricing">
                     <div className="quantity-controls">
                       <button
@@ -267,7 +274,12 @@ const Checkoutold = () => {
                         <FaPlus />
                       </button>
                     </div>
-                    <h3>₹ {(item.price * item.quantity).toLocaleString()}</h3>
+                    <button
+                      className="remove-item-button"
+                      onClick={() => removeItem(item.id, item.size || "N/A")}
+                    >
+                      <p>Remove</p>
+                    </button>
                   </div>
                 </div>
               </motion.div>

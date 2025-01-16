@@ -60,7 +60,6 @@ function UserProfile1() {
       >
         <Routes>
           <Route path="profile" element={<Profile />} />
-          <Route path="order" element={<Order />} />
           <Route path="Favourite" element={<Favourites />} />
           <Route path="address" element={<Address />} />
           <Route path="return-refund" element={<ReturnRefund />} />
