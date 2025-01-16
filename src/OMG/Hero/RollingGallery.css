@@ -9,15 +9,22 @@
   z-index: 1;
   height: 100vh;
   overflow: hidden;
-  background-image: url(../shoppingcart/components/pages/photos/my-durves-vector-new1.svg);
+  background: linear-gradient(
+    135deg,
+    #1a1a2e,
+    /* Midnight Blue */ #16213e,
+    /* Dark Navy */ #0f3460,
+    /* Deep Ocean */ #53354a,
+    /* Dark Burgundy */ #2c2c54 /* Twilight Purple */
+  );
   object-fit: cover;
   pointer-events: none;
 }
 
 .carousel-item {
   --items: 10;
-  --width: clamp(200px, 30vw, 350px);
-  --height: clamp(200px, 40vw, 450px);
+  --width: clamp(200px, 30vw, 320px);
+  --height: clamp(200px, 40vw, 420px);
   --x: calc(var(--active) * 800%);
   --y: calc(var(--active) * 200%);
   --rot: calc(var(--active) * 120deg);

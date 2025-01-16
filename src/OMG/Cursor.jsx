@@ -65,7 +65,7 @@ const Cursor = () => {
         className={`cursor ${isHovering ? "hovering" : ""}`}
         style={{
           position: "fixed",
-          zIndex: 10,
+          zIndex: 100,
           top: 0,
           left: 0,
           width: isHovering ? "60px" : "40px", // Increase size on hover
@@ -86,7 +86,7 @@ const Cursor = () => {
         className={`cursor cursor2 ${isHovering ? "hovering" : ""}`}
         style={{
           position: "fixed",
-          zIndex: 10,
+          zIndex: 100,
           top: 0,
           left: 0,
           width: "7px",

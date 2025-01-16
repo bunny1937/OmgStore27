@@ -33,7 +33,7 @@ export default function Heroui() {
           <MainPage />
 
           <Carouselwheeel />
-          <CategoryShowcase />
+          {/* <CategoryShowcase /> */}
           <Category />
           <SuggestionComponent />
           <Footer />
