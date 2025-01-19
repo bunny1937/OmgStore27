@@ -1,252 +1,611 @@
-/* General Layout */
-.order-confirmation-container {
-  font-family: "Arial", sans-serif;
-  background-color: #fafafa;
-  padding: 10px;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+:root {
+  --color-dark: #1d2621;
+  --color-dark-mid: #3a4a41;
+  --color-mid: #576e61;
+  --color-light-mid: #a9bdb3;
+  --color-light: #f5f0ec;
+  --font-primary: "Playfair Display", serif;
+  --font-secondary: "Lato", sans-serif;
+}
+
+body {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  font-family: var(--font-secondary);
+  line-height: 1.6;
+}
+
+.payment-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem;
 }
 
-.thank-you-header {
-  font-size: 36px;
-  font-weight: bold;
-  color: #1d2621;
-}
-
-.order-status-message {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 30px;
-}
-
-/* Order Summary Section */
-.order-summary {
-  width: 100%;
-}
-
-.orders-heading {
-  font-size: 28px;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.orders-content {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-/* Loading & Error States */
-.loading-indicator,
-.error-notification {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.loading-indicator {
-  color: #888;
-}
-
-.error-notification {
-  color: red;
-}
-
-/* Recent Order Details */
-.recent-order-details {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.order-detail-card {
-  display: flex;
-  gap: 20px;
-}
-
-.order-overview {
-  color: #333;
-  text-align: left;
-}
-
-.order-overview p {
-  margin-bottom: 8px;
-}
-
-.order-overview strong {
-  color: #1d2621;
-}
-
-.order-info-header,
-.shipping-info-header {
-  text-align: left;
-  font-size: 20px;
-  color: #1d2621;
-  margin-bottom: 10px;
-}
-
-.shipping-details {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.shipping-primary-info,
-.shipping-secondary-info {
-  flex: 1 1 45%;
-}
-
-.shipping-primary-info p,
-.shipping-secondary-info p {
-  text-align: left;
-}
-
-/* Items Ordered Section */
-.order-items-list {
-  width: 100%;
-}
-
-.ordered-items-header {
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-
-.order-item-card {
+.payment-header {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  text-align: left;
+  margin-bottom: 3rem;
 }
 
-.order-item-card img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-right: 20px;
+.payment-header h1 {
+  font-family: var(--font-primary);
+  font-size: 2.5rem;
+  color: var(--color-dark);
+  margin-bottom: 1rem;
 }
 
-.order-item-details {
+.payment-header span {
+  margin-left: 0.3rem;
+  font-size: 1.5rem;
+  color: var(--color-mid);
+}
+
+.payment-status-tracker {
+  background-color: var(--color-light);
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.payment-status-line {
+  height: 4px;
+  background-color: var(--color-light-mid);
+  position: absolute;
+  top: 50px;
+  left: 10%;
+  right: 10%;
+  z-index: 1;
+}
+
+.payment-status-points {
   display: flex;
-  width: 300px;
-  flex-direction: row;
-  gap: 8px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
 }
 
-.order-item-details p {
-  font-size: 1rem;
-  color: #555;
+.payment-status-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 20%;
 }
 
-.order-item-details strong {
-  color: #1d2621;
+.payment-status-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--color-light-mid);
+  position: absolute;
+  top: 42px;
+  z-index: 1;
 }
 
-/* Buttons */
-.order-confirmation-container button {
-  padding: 12px 25px;
-  background-color: #1d2621;
-  color: white;
+.payment-status-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-light);
+  border: 2px solid var(--color-light-mid);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.payment-status-point.active .payment-status-icon,
+.payment-status-point.active .payment-status-dot {
+  background-color: var(--color-dark);
+  border-color: var(--color-dark);
+  color: var(--color-light);
+}
+
+.payment-status-point.past .payment-status-icon,
+.payment-status-point.past .payment-status-dot {
+  background-color: var(--color-mid);
+  border-color: var(--color-mid);
+  color: var(--color-light);
+}
+
+.payment-status-label {
+  font-weight: bold;
+  color: var(--color-dark-mid);
+  transition: all 0.3s ease;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.payment-status-point.active .payment-status-label {
+  color: var(--color-dark);
+}
+
+.payment-status-date {
+  font-size: 0.8rem;
+  color: var(--color-mid);
+  text-align: center;
+}
+
+.payment-status-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.payment-status-point:hover .payment-status-tooltip {
+  opacity: 1;
+}
+
+.payment-status-connector {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--color-light-mid);
+  z-index: 1;
+}
+
+.payment-status-point.past .payment-status-connector,
+.payment-status-point.active .payment-status-connector {
+  background-color: var(--color-mid);
+}
+
+.payment-button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.payment-order-summary {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.payment-order-summary h2 {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  color: var(--color-dark);
+  margin-bottom: 1.5rem;
+}
+
+.payment-order-detail-card {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.payment-order-overview,
+.payment-shipping-info-section {
+  flex: 1;
+  padding: 1rem;
+}
+
+.payment-order-overview h3,
+.payment-shipping-info-section h3 {
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  color: var(--color-dark-mid);
+  margin-bottom: 1rem;
+}
+
+.payment-order-items-list {
+  margin-top: 2rem;
+}
+
+.payment-order-item-card {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-light);
+  border-radius: 5px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.payment-order-item-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 1rem;
+  border-radius: 5px;
+}
+
+.payment-order-item-details {
+  flex: 1;
+}
+
+.payment-btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 5px;
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 20px;
-  width: 200px;
-  margin-bottom: 10px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.order-confirmation-container button:hover {
-  color: #1d2621;
-  background-color: #f2e4d7;
-  border: 2px solid #1d2621;
+.payment-btn-primary {
+  background-color: var(--color-dark);
+  color: var(--color-light);
 }
 
-/* Responsive Styles */
+.payment-btn-primary:hover {
+  background-color: var(--color-dark-mid);
+}
+
+.payment-btn-secondary {
+  background-color: var(--color-light-mid);
+  color: var(--color-dark);
+}
+
+.payment-btn-secondary:hover {
+  background-color: var(--color-mid);
+  color: var(--color-light);
+}
+@media (min-width: 768px) and (max-width: 970px) {
+  .payment-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.2rem;
+  }
+  .payment-header span {
+    font-size: 1.2rem;
+  }
+  .payment-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
 @media (max-width: 768px) {
-  .order-confirmation-container {
-    padding: 20px;
+  .payment-container {
+    padding: 1rem;
+  }
+  .payment-header h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0.2rem;
+  }
+  .payment-header span {
+    font-size: 0.8rem;
+  }
+  .payment-btn {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
   }
 
-  .thank-you-header {
-    font-size: 28px;
+  .payment-order-summary {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
-  .order-status-message {
-    font-size: 16px;
-  }
-  .order-item-card {
-    padding: 5px;
-  }
-  .orders-heading {
-    font-size: 24px;
+  .payment-order-summary h2 {
+    font-family: var(--font-primary);
+    font-size: 2rem;
+    color: var(--color-dark);
+    margin-bottom: 1.5rem;
   }
 
-  .recent-order-details {
-    padding: 15px;
+  .payment-order-detail-card {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
   }
 
-  .shipping-details {
+  .payment-order-overview,
+  .payment-shipping-info-section {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  .payment-order-overview h3,
+  .payment-shipping-info-section h3 {
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    color: var(--color-dark-mid);
+    margin-bottom: 1rem;
+  }
+
+  .payment-order-items-list {
+    margin-top: 2rem;
+  }
+
+  .payment-order-item-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-light);
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .payment-order-item-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 1rem;
+    border-radius: 5px;
+  }
+
+  .payment-order-item-details {
+    flex: 1;
+  }
+
+  .payment-btn {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-family: var(--font-secondary);
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .payment-btn-primary {
+    background-color: var(--color-dark);
+    color: var(--color-light);
+  }
+
+  .payment-btn-primary:hover {
+    background-color: var(--color-dark-mid);
+  }
+
+  .payment-btn-secondary {
+    background-color: var(--color-light-mid);
+    color: var(--color-dark);
+  }
+
+  .payment-btn-secondary:hover {
+    background-color: var(--color-mid);
+    color: var(--color-light);
+  }
+}
+@media (max-width: 670px) {
+  .payment-status-tracker {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+  }
+  .payment-header {
+    margin-bottom: 1rem;
+  }
+  .payment-status-line {
+    top: 35px;
+  }
+  .payment-status-label {
+    font-size: 0.9rem;
+    margin-right: 0.4rem;
+  }
+  .payment-status-date {
+    font-size: 0.7rem;
+  }
+  .payment-order-summary h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.4rem;
+  }
+  .payment-order-overview,
+  .payment-shipping-info-section {
+    padding: 0;
+    font-size: 1rem;
+  }
+  .payment-order-overview h3,
+  .payment-shipping-info-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+  }
+  .payment-button-group {
+    flex-direction: column;
+  }
+  .payment-btn {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+  }
+  .payment-order-summary {
+    padding: 0.8rem;
+  }
+}
+@media (max-width: 540px) {
+  .payment-status-tracker {
+    padding: 1rem;
+    margin-bottom: 0;
+  }
+  .payment-status-point {
+    margin-bottom: 0.6rem;
+  }
+  .payment-status-point:last-child {
+    margin-bottom: 0;
+  }
+  .payment-status-dot {
+    width: 14px;
+    height: 14px;
+  }
+
+  .payment-status-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .payment-status-points {
     flex-direction: column;
     align-items: flex-start;
   }
-  .order-detail-card {
-    flex-direction: column;
-  }
-  .order-item-details p {
-    font-size: 16px;
+
+  .payment-status-point {
+    width: 100%;
+    margin-bottom: 1rem;
+    flex-direction: row;
+    align-items: center;
   }
 
-  .order-confirmation-container button {
-    width: 100%;
+  .payment-status-icon {
+    margin-right: 0.6rem;
+    margin-bottom: 0;
+  }
+
+  .payment-status-dot {
+    top: 12px;
+    left: -8px;
+  }
+
+  .payment-status-label {
+    font-size: 1.1rem;
+    text-align: left;
+    margin-top: 0;
+  }
+  .payment-status-date {
+    font-size: 0.9rem;
+  }
+  .payment-status-line,
+  .payment-status-connector {
+    display: none;
+  }
+  .payment-container {
+    padding: 0.6rem;
+  }
+  .payment-order-overview,
+  .payment-shipping-info-section {
+    padding: 0;
+    font-size: 0.9rem;
+  }
+  .payment-order-summary {
+    padding: 0.4rem;
+  }
+  .payment-header h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0.2rem;
+  }
+  .payment-header span {
+    font-size: 0.1rem;
   }
 }
-@media (max-width: 360px) {
-  .order-confirmation-container,
-  .recent-order-details {
-    padding: 5px;
+@media (max-width: 440px) {
+  .payment-container {
+    padding: 0.2rem;
   }
-  .order-item-card img {
-    margin-right: 10px;
+  .payment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 0.4rem;
+    margin-bottom: 1rem;
   }
-  .order-item-card img {
-    width: 80px;
-    height: 80px;
+  .payment-order-detail-card {
+    flex-direction: column;
+    gap: 0.6rem;
   }
-  .order-item-details {
+  .payment-header h1 {
+    font-size: 1.4rem;
+  }
+  .payment-header span {
     font-size: 1rem;
-    gap: 0.1rem;
   }
-  .order-item-details p {
+  .payment-button-group {
+    flex-direction: row;
+    gap: 0.2rem;
+  }
+  .payment-btn {
+    font-size: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+  }
+  .payment-order-summary h2 {
+    margin-bottom: 0;
+  }
+  .payment-order-overview,
+  .payment-shipping-info-section {
+    font-size: 0.8rem;
+  }
+  .payment-status-icon {
+    margin-right: 0.4rem;
+  }
+
+  .payment-status-label {
     font-size: 1rem;
+  }
+  .payment-status-date {
+    font-size: 0.7rem;
   }
 }
-@media (max-width: 290px) {
-  .order-overview,
-  .shipping-details {
-    font-size: 14px;
+@media (max-width: 340px) {
+  .payment-status-tracker {
+    padding: 1rem;
+    margin-bottom: 1rem;
   }
-  .order-item-card img {
-    margin-right: 4px;
+  .payment-status-point {
+    margin-bottom: 0.6rem;
   }
-  .order-item-card img {
-    width: 60px;
-    height: 60px;
+  .payment-status-dot {
+    width: 12px;
+    height: 12px;
   }
-  .order-item-details {
+
+  .payment-status-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+@media (min-width: 180px) and (max-width: 340px) {
+  .payment-status-tracker {
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .payment-status-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .payment-container {
+    padding: 0.2rem;
+  }
+  .payment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .payment-order-detail-card {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .payment-header h1 {
+    font-size: 1.4rem;
+  }
+  .payment-header span {
+    font-size: 1rem;
+  }
+  .payment-order-overview,
+  .payment-shipping-info-section {
     font-size: 0.8rem;
-    gap: 0.1rem;
   }
-  .order-item-details p {
+  .payment-status-label {
     font-size: 0.8rem;
+  }
+  .payment-status-date {
+    font-size: 0.6rem;
   }
 }

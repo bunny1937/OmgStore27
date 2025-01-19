@@ -193,8 +193,8 @@ const ReviewComponent = () => {
         ) : (
           <div className="no-reviews">
             <h2>
-              ⭐ Be the first to review this product! Share your experience and
-              help others. ⭐
+              ⭐ Be the first to review! Share your experience and help others.
+              ⭐
             </h2>
           </div>
         )}

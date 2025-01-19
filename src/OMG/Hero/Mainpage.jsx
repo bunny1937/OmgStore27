@@ -5,6 +5,7 @@ import Asthetics2 from "../shoppingcart/components/pages/photos/parallax/man-wea
 import Spiritual1 from "../shoppingcart/components/pages/photos/parallax/premium_photo-1690341214258-18cb88438805-transformed.jpeg";
 import Spiritual2 from "../shoppingcart/components/pages/photos/parallax/woman-4266713_640.jpg";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const fadeInBottom = {
   initial: { opacity: 0, y: 50 },
@@ -17,12 +18,16 @@ const fadeInTop = {
 };
 
 const Mainpage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="landing-container">
       <motion.div
         className="landing-partition aesthetic"
         initial="initial"
         animate="animate"
+        onClick={() => navigate("/products/Minimalist")}
+        style={{ cursor: "pointer" }}
       >
         <div className="landing-content">
           <motion.div
@@ -51,11 +56,13 @@ const Mainpage = () => {
         className="landing-partition spiritual"
         initial="initial"
         animate="animate"
+        onClick={() => navigate("/products/Spiritual")}
+        style={{ cursor: "pointer" }}
       >
         <h1 className="landing-title spiritual-title">Divine</h1>
         <motion.div className="landing-content2" variants={fadeInTop}>
           <p className="landing-description2">
-            Discover tranquility and inner peace through our spiritual
+            Discover tranquility, faith and inner peace through our spiritual
             treasures.
           </p>
           <div className="landing-image-container">

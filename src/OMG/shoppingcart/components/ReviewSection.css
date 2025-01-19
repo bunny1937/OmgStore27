@@ -192,7 +192,9 @@
     border-radius: 15px;
     background-color: #ececec;
   }
-
+  .no-reviews h2 {
+    font-size: 1.6rem;
+  }
   .reviews-section h3 {
     font-size: 28px;
     text-align: left;
@@ -203,7 +205,9 @@
     flex-direction: column;
     padding: 15px;
   }
-
+  .no-reviews h2 {
+    font-size: 1rem;
+  }
   .reviews-list {
     max-height: 300px;
   }

@@ -401,7 +401,6 @@
   }
   .thumbnails {
     flex-direction: row;
-    width: 50%;
     order: 2;
   }
   .main-image {
@@ -409,14 +408,14 @@
     order: 1;
   }
   .details-actions > h2 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 600;
   }
   .details-actions > h3 {
     font-size: 1.8rem;
   }
   .details-actions > p {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 
   .btn1 {

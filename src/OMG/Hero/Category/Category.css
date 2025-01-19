@@ -117,7 +117,7 @@
   color: #f2e4d7;
   border: 1px solid #e5e7eb;
   cursor: pointer;
-  z-index: 10;
+  z-index: 1;
   transition: all 0.2s;
 }
 

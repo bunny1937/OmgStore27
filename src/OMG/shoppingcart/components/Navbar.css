@@ -1,7 +1,7 @@
 .navbar {
   background: #1d2621;
   color: #f2e4d7;
-  height: 80px;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -409,7 +409,7 @@ input.nosubmit {
     align-items: center;
     justify-content: flex-start; /* Align items to the left */
     padding: 0 1rem; /* Add padding to the left and right */
-    height: 80px;
+    height: 50px;
     width: 100%; /* Ensure full width */
   }
   .nav-menu {
@@ -474,7 +474,7 @@ input.nosubmit {
   .navbar-logo {
     margin: 0 2.5rem;
     background-image: url(./pages/photos/logo-black.svg);
-
+    margin-top: -0.4rem;
     width: 5rem;
     object-fit: contain; /* Make sure the color is visible */
   }
@@ -505,7 +505,7 @@ input.nosubmit {
     order: 0;
     display: block;
     position: absolute;
-    top: 1.6rem;
+    top: 0.8rem;
     font-size: 1.8rem;
     cursor: pointer;
   }
@@ -537,22 +537,21 @@ input.nosubmit {
 }
 @media screen and (max-width: 550px) {
   .navbar {
-    height: 7rem;
+    height: 5.5rem;
   }
   .navbar-container {
     flex-direction: column; /* Stack items vertically */
     align-items: center;
     justify-content: center;
     height: auto; /* Allow height to adjust */
-    padding: 2rem 0;
+    padding: 0.2rem 0;
   }
 
   .menu-icon {
     position: absolute;
     left: 1rem; /* Move menu icon to the left */
-    top: 30%; /* Center vertically */
+    top: 34%; /* Center vertically */
     transform: translateY(-50%);
-
     font-size: 1.8rem;
     z-index: 10;
   }
@@ -562,9 +561,13 @@ input.nosubmit {
   .navbar-logo {
     margin: 0;
     position: absolute;
-    top: -1.3rem;
+    top: -1.1rem;
     margin-left: -3rem;
-    width: 4.5rem;
+    width: 4rem;
+  }
+  .navbar-logo img {
+    width: 5rem;
+    height: 5rem;
   }
   .search-join {
     width: 100%;
@@ -572,7 +575,7 @@ input.nosubmit {
   .user-icon,
   .bag-icon {
     position: absolute;
-    top: 1.7rem;
+    top: 1.5rem;
   }
 
   .user-icon {
@@ -582,11 +585,15 @@ input.nosubmit {
   .bag-icon {
     right: 1.5rem; /* Adjust spacing for cart icon */
   }
-
+  .cart_icon .badge {
+    right: 14px;
+    top: 12px;
+    padding: 0.25rem 0.45rem;
+  }
   .search-container {
     display: flex;
     width: 100%;
-    margin-top: 2.8rem;
+    margin-top: 2.6rem;
     padding: 0 1rem;
     flex-direction: column;
   }
@@ -598,10 +605,6 @@ input.nosubmit {
     border-radius: 25px;
     border: 1px solid #555;
     padding: 9px 12px; /* Adjust padding for better UX */
-  }
-
-  .nav-menu {
-    display: none; /* Hide menu by default */
   }
 
   .nav-menu.active {
@@ -621,14 +624,24 @@ input.nosubmit {
 }
 
 @media screen and (max-width: 398px) and (min-width: 200px) {
+  .navbar {
+    height: 5rem;
+  }
   .navbar-logo {
-    width: 4rem;
-    margin-left: -3rem;
-    position: absolute;
     top: -1.3rem;
   }
   .nav-menu.active {
     width: 100%;
+  }
+  .user-icon,
+  .bag-icon {
+    top: 1.3rem;
+  }
+  .header-links > input {
+    height: 2.4rem;
+  }
+  .search-container {
+    margin-top: 2.2rem;
   }
   .search-icon {
     left: 1.4rem;

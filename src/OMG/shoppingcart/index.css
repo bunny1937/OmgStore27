@@ -99,22 +99,23 @@ svg {
 .product_card h4 {
   color: #283618;
   padding: 0 0.2rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 .product_card .price {
   color: #283618;
   font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .details-btn {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 0 0.2rem;
 }
 /* Filter Section */
 .filter-section button {
-  height: 3rem;
-  width: 6%;
+  padding: 12px;
   background-color: #1d2621;
   color: #f2e4d7;
   border: none;
@@ -333,7 +334,10 @@ svg {
     font-size: 0.9rem;
   }
   .product_card .price {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+  }
+  .product_card h4 {
+    font-size: 1rem;
   }
 }
 @media screen and (max-width: 399px) {
@@ -346,14 +350,14 @@ svg {
     gap: 1rem;
   }
   .product_card h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   .product_card h4 {
     margin-left: 0.1rem;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   .product_card .price {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   .product_card_img {
     width: auto;
@@ -362,7 +366,6 @@ svg {
     height: auto;
   }
   .filter-section button {
-    width: 14%;
-    height: 2rem;
+    padding: 8px;
   }
 }

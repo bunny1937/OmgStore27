@@ -29,6 +29,7 @@ import Order from "./OMG/shoppingcart/components/UserProfile/Order";
 import Profile1 from "./OMG/shoppingcart/components/UserProfile/Basic/Basic";
 import Checkoutold from "./OMG/shoppingcart/components/Checkoutold";
 import Cursor from "./OMG/Cursor";
+import CategoryType from "./OMG/Hero/Category/CategoryType";
 
 function App() {
   const containerRef = useRef(null);
@@ -55,11 +56,11 @@ function App() {
                   <Route path="/Home" element={<Home />} />
                   <Route path="/Details/:id" element={<Details />} />
                   <Route path="/Favourites" element={<Favourites />} />
-
                   <Route
                     path="/category/:categoryName"
                     element={<CategoryPage key={Math.random()} />}
-                  />
+                  />{" "}
+                  <Route path="/products/:type" element={<CategoryType />} />
                   <Route path="/Cart" element={<Cart />} />
                   <Route path="/Checkoutold" element={<Checkoutold />} />
                   <Route path="/Payment" element={<Payment />} />
