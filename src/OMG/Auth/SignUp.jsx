@@ -11,6 +11,8 @@ import {
   signOut,
   RecaptchaVerifier,
   signInWithPhoneNumber,
+  browserLocalPersistence,
+  setPersistence,
 } from "firebase/auth";
 import { firebaseApp } from "../db/Firebase";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
@@ -48,6 +50,12 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
   // Ref for recaptcha container
   const recaptchaContainerRef = useRef(null);
   const recaptchaVerifierRef = useRef(null);
+  useEffect(() => {
+    setPersistence(auth, browserLocalPersistence).catch((error) => {
+      console.error("Error setting persistence:", error);
+    });
+  }, []);
+
   useEffect(() => {
     // Only initialize if we're showing the phone signup method
     if (signupMethod === "phone" && !recaptchaVerifierRef.current) {
@@ -168,38 +176,61 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
       setLoading(false);
     }
   };
-  // Handle Google Redirect Result
+
   useEffect(() => {
     const handleRedirectResult = async () => {
+      // Check if we're expecting a redirect result
+      const authInProgress = sessionStorage.getItem("authInProgress");
+      if (!authInProgress) return;
+
       try {
         const result = await getRedirectResult(auth);
         if (result) {
-          const user = result.user;
-
-          const userDoc = await getDoc(doc(db, "users", user.uid));
-          if (!userDoc.exists()) {
-            await setDoc(doc(db, "users", user.uid), {
-              uid: user.uid,
-              email: user.email,
-              firstName: "",
-              lastName: "",
-              phoneNumber: "",
-              createdAt: new Date(),
-            });
-          }
-
-          setUser(user); // Set user in the context
-          onClose && onClose(); // Close the modal
-          toast.success("Sign up successfully");
-          navigate("/Home");
+          await handleGoogleAuthSuccess(result.user);
+          sessionStorage.removeItem("authInProgress");
         }
       } catch (error) {
-        toast.error(error.message);
-        setError("Failed to process Google Sign-In redirect.");
+        console.error("Redirect Error:", error);
+        toast.error(error.message || "Failed to complete Google Sign-In");
+        sessionStorage.removeItem("authInProgress");
       }
     };
+
     handleRedirectResult();
-  }, [onClose, navigate, setUser]);
+  }, []);
+
+  // Handle Google Redirect Result
+  // useEffect(() => {
+  //   const handleRedirectResult = async () => {
+  //     try {
+  //       const result = await getRedirectResult(auth);
+  //       if (result) {
+  //         const user = result.user;
+
+  //         const userDoc = await getDoc(doc(db, "users", user.uid));
+  //         if (!userDoc.exists()) {
+  //           await setDoc(doc(db, "users", user.uid), {
+  //             uid: user.uid,
+  //             email: user.email,
+  //             firstName: "",
+  //             lastName: "",
+  //             phoneNumber: "",
+  //             createdAt: new Date(),
+  //           });
+  //         }
+
+  //         setUser(user); // Set user in the context
+  //         onClose && onClose(); // Close the modal
+  //         toast.success("Sign up successfully");
+  //         navigate("/Home");
+  //       }
+  //     } catch (error) {
+  //       toast.error(error.message);
+  //       setError("Failed to process Google Sign-In redirect.");
+  //     }
+  //   };
+  //   handleRedirectResult();
+  // }, [onClose, navigate, setUser]);
 
   const signup = async () => {
     if (!email || !password || !firstName || !lastName || !phoneNumber) {
@@ -242,31 +273,30 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
     }
   };
 
-  const signInWithGoogle = async () => {
+  const signUpWithGoogle = async () => {
     setLoading(true);
     try {
       const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+      // Set up the Google provider with proper state
+      provider.setCustomParameters({
+        prompt: "select_account",
+        state: window.btoa(
+          JSON.stringify({
+            redirectUrl: window.location.href,
+            timestamp: Date.now(),
+          })
+        ),
+      });
+
       if (isMobile) {
+        // For mobile, we'll use redirect but with proper state management
+        sessionStorage.setItem("authInProgress", "true");
         await signInWithRedirect(auth, provider);
       } else {
+        // Desktop flow remains the same
         const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (!userDoc.exists()) {
-          await setDoc(doc(db, "users", user.uid), {
-            uid: user.uid,
-            email: user.email,
-            firstName: "",
-            lastName: "",
-            phoneNumber: "",
-            createdAt: new Date(),
-          });
-        }
-
-        setUser(user); // Set user in the context
-        onClose && onClose(); // Close the modal
-        navigate("/Home");
+        await handleGoogleAuthSuccess(result.user);
       }
     } catch (error) {
       handleAuthError(error);
@@ -274,7 +304,28 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
       setLoading(false);
     }
   };
+  const handleGoogleAuthSuccess = async (user) => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          email: user.email,
+          firstName: "",
+          lastName: "",
+          phoneNumber: "",
+          createdAt: new Date(),
+        });
+      }
 
+      setUser(user);
+      onClose && onClose();
+      navigate("/Home");
+    } catch (error) {
+      console.error("Error handling Google auth success:", error);
+      throw error;
+    }
+  };
   const handleAuthError = (error) => {
     let errorMessage;
     switch (error.code) {
@@ -435,7 +486,7 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
 
             <div className="button-field">
               <button
-                onClick={signInWithGoogle}
+                onClick={signUpWithGoogle}
                 className="btn google-btn"
                 disabled={loading}
               >

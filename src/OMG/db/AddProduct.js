@@ -55,18 +55,18 @@ export const AddProducts = () => {
 
     let storageRef;
     switch (Category) {
-      case "Jeans":
-        storageRef = ref(storage, `/Products/Jeans/${productImgs.name}`);
-        break;
+      // case "Jeans":
+      //   storageRef = ref(storage, `/Products/Jeans/${productImgs.name}`);
+      //   break;
       case "Oversize":
         storageRef = ref(storage, `/Products/Oversize/${productImgs.name}`);
         break;
-      case "Pants":
-        storageRef = ref(storage, `/Products/Pants/${productImgs.name}`);
-        break;
-      case "Shirts":
-        storageRef = ref(storage, `/Products/Shirts/${productImgs.name}`);
-        break;
+      // case "Pants":
+      //   storageRef = ref(storage, `/Products/Pants/${productImgs.name}`);
+      //   break;
+      // case "Shirts":
+      //   storageRef = ref(storage, `/Products/Shirts/${productImgs.name}`);
+      //   break;
       case "Tshirts":
         storageRef = ref(storage, `/Products/Tshirts/${productImgs.name}`);
         break;
@@ -163,7 +163,7 @@ export const AddProducts = () => {
             onChange={(e) => setProductType(e.target.value)}
             value={Type}
           >
-            <option value="">Select Category</option>
+            <option value="">Select Type</option>
             <option value="Jeans">Minimalist</option>
             <option value="Oversize">Spiritual</option>
           </select>
@@ -176,10 +176,10 @@ export const AddProducts = () => {
             value={Category}
           >
             <option value="">Select Category</option>
-            <option value="Jeans">Jeans</option>
+            {/* <option value="Jeans">Jeans</option> */}
             <option value="Oversize">Oversize</option>
-            <option value="Pants">Pants</option>
-            <option value="Shirts">Shirts</option>
+            {/* <option value="Pants">Pants</option>
+            <option value="Shirts">Shirts</option> */}
             <option value="Tshirts">Tshirts</option>
             <option value="Hoodies">Hoodies</option>
           </select>

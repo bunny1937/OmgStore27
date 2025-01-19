@@ -7,6 +7,7 @@ import MainPage from "./Mainpage";
 import IntroOverlay from "./IntroOverlay";
 import Carouselwheeel from "./Caraouselwheeel";
 import CategoryShowcase from "./Categoryshowcase";
+import Loaders from "../shoppingcart/components/Loaders";
 
 export default function Heroui() {
   const [showIntro, setShowIntro] = useState(() => {
@@ -31,7 +32,7 @@ export default function Heroui() {
       ) : (
         <div className="hero">
           <MainPage />
-
+          <Loaders />
           <Carouselwheeel />
           {/* <CategoryShowcase /> */}
           <Category />

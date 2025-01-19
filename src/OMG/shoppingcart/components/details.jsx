@@ -19,6 +19,7 @@ import UserContext from "../../Auth/UserContext";
 import toast, { Toaster } from "react-hot-toast";
 import { auth } from "../../db/Firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { FidgetSpinner } from "react-loader-spinner";
 
 const db = getFirestore(firebaseApp);
 
@@ -39,6 +40,7 @@ const Details = () => {
   const [popupOpen, setPopupOpen] = useState(false); // Popup state
   const { user } = useContext(UserContext); // User context
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { cartItems } = useContext(cartContext);
   // Fetch product based on id
@@ -69,11 +71,30 @@ const Details = () => {
     return () => unsubscribe();
   }, []);
 
-  if (!product) {
+  useEffect(() => {
+    // Simulate a 2-second loading delay
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    // Cleanup the timer on unmount
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading || !product) {
     return (
       <div className="loading-state">
-        <div className="spinner"></div>
-        <p>Loading...</p>
+        <div className="loader"></div>
+        {/* <FidgetSpinner
+          visible={true}
+          backgroundColor="#1d2621"
+          ballColors={["#345635", "#6b8f71", "#aec3b0"]}
+          height="200"
+          width="200"
+          ariaLabel="fidget-spinner-loading"
+          wrapperStyle={{}}
+          wrapperClass="fidget-spinner-wrapper"
+        /> */}
       </div>
     );
   }

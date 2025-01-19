@@ -1,0 +1,222 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}
+
+button.active {
+  background-color: #d0d0d0;
+}
+
+/* Zen Circle */
+.zen-circle {
+  width: 80px;
+  height: 80px;
+  border: 4px solid #333;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: zen-spin 1.5s linear infinite;
+}
+
+@keyframes zen-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Floating Hoodie */
+.floating-hoodie {
+  width: 100px;
+  height: 120px;
+  position: relative;
+  animation: float 2s ease-in-out infinite;
+}
+
+.floating-hoodie .hood {
+  width: 60px;
+  height: 60px;
+  border: 4px solid #333;
+  border-radius: 50% 50% 0 0;
+  border-bottom: none;
+  position: absolute;
+  top: 0;
+  left: 20px;
+}
+
+.floating-hoodie .body {
+  width: 100px;
+  height: 80px;
+  background-color: #333;
+  position: absolute;
+  bottom: 0;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Breathing T-shirt */
+.breathing-tshirt {
+  width: 120px;
+  height: 100px;
+  position: relative;
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.breathing-tshirt .body {
+  width: 80px;
+  height: 100px;
+  background-color: #333;
+  position: absolute;
+  left: 20px;
+}
+
+.breathing-tshirt .sleeve {
+  width: 20px;
+  height: 40px;
+  background-color: #333;
+  position: absolute;
+  top: 0;
+}
+
+.breathing-tshirt .sleeve.left {
+  left: 0;
+}
+
+.breathing-tshirt .sleeve.right {
+  right: 0;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scaleX(1) scaleY(1);
+  }
+  50% {
+    transform: scaleX(1.1) scaleY(0.9);
+  }
+}
+
+/* Meditation Pose */
+.meditation-pose {
+  width: 80px;
+  height: 100px;
+  position: relative;
+}
+
+.meditation-pose .head {
+  width: 30px;
+  height: 30px;
+  background-color: #333;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 25px;
+}
+
+.meditation-pose .body {
+  width: 60px;
+  height: 40px;
+  background-color: #333;
+  position: absolute;
+  top: 30px;
+  left: 10px;
+}
+
+.meditation-pose .leg {
+  width: 30px;
+  height: 30px;
+  border: 4px solid #333;
+  border-top: none;
+  border-radius: 0 0 50% 50%;
+  position: absolute;
+  bottom: 0;
+}
+
+.meditation-pose .leg.left {
+  left: 5px;
+}
+
+.meditation-pose .leg.right {
+  right: 5px;
+}
+
+.meditation-pose::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background-color: #333;
+  position: absolute;
+  bottom: 15px;
+}
+
+/* Yin Yang */
+.yin-yang {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(#333 50%, #fff 50%);
+  animation: rotate 2s linear infinite;
+  position: relative;
+}
+
+.yin-yang::before,
+.yin-yang::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.yin-yang::before {
+  background: #fff;
+  top: 25%;
+}
+
+.yin-yang::after {
+  background: #333;
+  top: 75%;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
