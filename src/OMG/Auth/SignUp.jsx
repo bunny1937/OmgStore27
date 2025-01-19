@@ -275,31 +275,60 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
 
   const signUpWithGoogle = async () => {
     setLoading(true);
-    try {
-      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    setError(null);
 
-      // Set up the Google provider with proper state
+    try {
+      const provider = new GoogleAuthProvider();
       provider.setCustomParameters({
         prompt: "select_account",
-        state: window.btoa(
-          JSON.stringify({
-            redirectUrl: window.location.href,
-            timestamp: Date.now(),
-          })
-        ),
       });
 
-      if (isMobile) {
-        // For mobile, we'll use redirect but with proper state management
-        sessionStorage.setItem("authInProgress", "true");
-        await signInWithRedirect(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Create/update user document in Firestore
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          email: user.email,
+          firstName: user.displayName ? user.displayName.split(" ")[0] : "",
+          lastName: user.displayName
+            ? user.displayName.split(" ")[1] || ""
+            : "",
+          phoneNumber: user.phoneNumber || "",
+          createdAt: new Date(),
+        });
+      }
+
+      setUser(user);
+      toast.success("Sign up successful!");
+
+      if (onSignUpSuccess) {
+        onSignUpSuccess();
       } else {
-        // Desktop flow remains the same
-        const result = await signInWithPopup(auth, provider);
-        await handleGoogleAuthSuccess(result.user);
+        navigate("/Home");
+      }
+
+      if (onClose) {
+        onClose();
       }
     } catch (error) {
-      handleAuthError(error);
+      console.error("Google Sign In Error:", error);
+      let errorMessage = "Failed to sign in with Google. Please try again.";
+
+      // More specific error messages
+      if (error.code === "auth/popup-blocked") {
+        errorMessage =
+          "Please allow popups for this website to sign in with Google.";
+      } else if (error.code === "auth/popup-closed-by-user") {
+        errorMessage = "Sign in was cancelled. Please try again.";
+      } else if (error.code === "auth/network-request-failed") {
+        errorMessage = "Network error. Please check your internet connection.";
+      }
+
+      toast.error(errorMessage);
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
