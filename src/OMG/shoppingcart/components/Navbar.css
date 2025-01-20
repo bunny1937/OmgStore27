@@ -140,7 +140,7 @@ input.nosubmit {
   color: #fff;
   line-height: 1;
   font-size: 0.8rem;
-  margin: 10px 0 0 15px;
+  margin: 12px 0 0 15px;
   padding: 0.35rem 0.55rem;
   border-radius: 50%;
 }
@@ -154,7 +154,7 @@ input.nosubmit {
   color: #fff;
   position: absolute;
   right: 14px;
-  top: 24px;
+  top: 16px;
   line-height: 1;
   font-size: 0.8rem;
   margin: 10px 0 0 0;

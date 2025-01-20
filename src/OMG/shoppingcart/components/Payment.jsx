@@ -4,7 +4,14 @@ import { useEffect, useState } from "react";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { firebaseApp } from "../../db/Firebase";
-import { Package, Truck, Home, CheckCircle, AlertCircle } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faClock,
+  faSpinner,
+  faBox,
+  faTruck,
+  faCheckCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import "./Payment.css";
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
@@ -17,11 +24,11 @@ const Payment = () => {
   const [error, setError] = useState(null);
   const [showTimeline, setShowTimeline] = useState(false);
   const statusIcons = {
-    Pending: AlertCircle,
-    Processing: Package,
-    Shipped: Truck,
-    "Out for Delivery": Home,
-    Delivered: CheckCircle,
+    Pending: <FontAwesomeIcon icon={faClock} size="1x" />, // Large icon
+    Processing: <FontAwesomeIcon icon={faSpinner} size="xl" spin />, // Large with spin effect
+    Shipped: <FontAwesomeIcon icon={faBox} size="xl" />,
+    "Out for Delivery": <FontAwesomeIcon icon={faTruck} size="xl" />,
+    Delivered: <FontAwesomeIcon icon={faCheckCircle} size="xl" />,
   };
   const fetchOrders = async (uid) => {
     try {
@@ -215,7 +222,6 @@ const Payment = () => {
           {getStatusHistory(mostRecentOrder).map((statusData, index) => {
             const isActive = index === currentStatusIndex;
             const isPast = index < currentStatusIndex;
-            const StatusIcon = statusIcons[statusData.status];
 
             return (
               <div
@@ -228,7 +234,7 @@ const Payment = () => {
                 <div className="payment-status-connector"></div>
                 <div className="payment-status-dot"></div>
                 <div className="payment-status-icon">
-                  <StatusIcon size={24} />
+                  {statusIcons[statusData.status]}
                 </div>
                 <div className="payment-status-label">{statusData.status}</div>
                 <div className="payment-status-date">
