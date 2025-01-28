@@ -85,7 +85,7 @@ const Details = () => {
   if (loading || !product) {
     return (
       <div className="loading-state">
-        {/* <div className="loader"></div>
+        <div className="loader"></div>
         {/* <FidgetSpinner
           visible={true}
           backgroundColor="#1d2621"
@@ -95,8 +95,9 @@ const Details = () => {
           ariaLabel="fidget-spinner-loading"
           wrapperStyle={{}}
           wrapperClass="fidget-spinner-wrapper"
-        /> */}
-        <LoadingAnimation />
+        />
+        <LoadingAnimation />*/}
+        
       </div>
     );
   }
