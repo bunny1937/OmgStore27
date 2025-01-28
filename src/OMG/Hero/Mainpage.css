@@ -67,7 +67,8 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  max-width: 640px;
+  align-items: flex-end;
+  max-width: 800px;
 }
 .landing-image-container {
   display: flex;
@@ -126,6 +127,9 @@
 }
 
 @media (max-width: 960px) {
+  .landing-partition {
+    padding: 0.8rem;
+  }
   .landing-container {
     flex-direction: column;
     min-height: fit-content;
@@ -143,8 +147,6 @@
 
   .landing-content,
   .landing-content2 {
-    align-items: center;
-    text-align: center;
     padding: 0;
   }
 
@@ -153,10 +155,10 @@
   }
   .landing-partition:nth-child(2) {
     align-items: flex-end;
-    padding: 1rem;
   }
   .landing-description2 {
     margin-left: 2rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -165,10 +167,13 @@
     font-size: 3.5rem;
   }
 
-  .landing-description {
+  .landing-description,
+  .landing-description2 {
     font-size: 1.1rem;
   }
-
+  .landing-content2 {
+    max-width: 550px;
+  }
   .landing-image-container {
     gap: 1rem;
   }
@@ -188,7 +193,8 @@
     font-size: 3rem;
   }
 
-  .landing-description {
+  .landing-description,
+  .landing-description2 {
     font-size: 1rem;
   }
 
@@ -198,17 +204,22 @@
   .landing-image-container img {
     min-width: 150px;
   }
+  .landing-partition {
+    padding: 0.5rem;
+  }
 }
 
 @media (max-width: 399px) {
   .landing-title {
     font-size: 2.5rem;
   }
-
-  .landing-description {
-    font-size: 0.9rem;
+  .landing-description,
+  .landing-description2 {
+    font-size: 0.8rem;
   }
-
+  .landing-description2 {
+    max-width: 240px;
+  }
   .landing-image-container {
     gap: 0.25rem;
   }

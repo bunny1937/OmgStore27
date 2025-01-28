@@ -28,6 +28,7 @@
   align-items: center;
   margin: 0 1rem;
 }
+
 .navbar-logo img {
   width: 6rem;
   height: 6rem;
@@ -107,18 +108,7 @@ input.nosubmit {
   width: 2rem;
   cursor: pointer;
 }
-.dropdown-menu {
-  position: absolute; /* Position dropdown absolute to its container */
-  top: 5rem; /* Adjust as needed */
-  right: 8rem; /* Align to the right edge of the container */
-  width: 7rem;
-  text-align: center;
-  color: #ffffff;
-  background-color: #38423a;
-  border-radius: 10px;
-  padding: 10px;
-  z-index: 1;
-}
+
 .bag-icon {
   background-image: url(./pages/photos/shopping-cart-white.svg);
   height: 2rem;
@@ -274,68 +264,6 @@ input.nosubmit {
   transition: width 0.3s ease-in-out;
 }
 
-/* Dropdown Content */
-.dropdown-content {
-  display: block;
-  position: absolute;
-  top: 2.5rem;
-  left: 0;
-  z-index: 10;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  min-width: 200px;
-  visibility: hidden;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  pointer-events: none; /* Prevent accidental hiding */
-}
-
-.dropdown-wrapper:hover .dropdown-content,
-.dropdown-wrapper .dropdown-content.active {
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto; /* Enable interaction */
-}
-.submenu-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #1b216b;
-}
-
-.submenu-link {
-  display: block;
-  font-size: 1.1rem;
-  text-decoration: none;
-  color: #333;
-  margin-bottom: 5px;
-}
-.dropdown-submenu h4 {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.dropdown-submenu ul {
-  list-style: none;
-  padding: 0;
-  color: #242424;
-  margin: 0;
-}
-
-.dropdown-submenu ul li {
-  margin: 5px 0;
-}
-
-.dropdown-submenu ul li a:hover {
-  text-decoration: underline;
-}
-.submenu-link:hover {
-  color: #1b216b;
-}
-
 /* Responsive Design */
 @media (min-width: 768px) {
 }
@@ -418,7 +346,7 @@ input.nosubmit {
     width: 100%;
     height: 20vh;
     position: absolute;
-    top: 80px;
+    top: 60px;
     left: -100%;
     opacity: 1;
     transition: all 0.5s ease;
@@ -459,17 +387,17 @@ input.nosubmit {
   }
   .nav-menu.active {
     padding: 1rem;
-    background: #5e6b61;
+    background: linear-gradient(to bottom, #1d2621, #5e6b61);
     left: 0;
     width: 40%;
-    color: #111;
+    color: #efefef;
     height: 100vh;
     opacity: 1;
     transition: all 0.5s ease;
     z-index: 1;
   }
   .nav-menu.active p {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   .navbar-logo {
     margin: 0 2.5rem;
@@ -546,7 +474,9 @@ input.nosubmit {
     height: auto; /* Allow height to adjust */
     padding: 0.2rem 0;
   }
-
+  .nav-menu.active p {
+    font-size: 1.4rem;
+  }
   .menu-icon {
     position: absolute;
     left: 1rem; /* Move menu icon to the left */
@@ -611,7 +541,7 @@ input.nosubmit {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 7rem;
+    top: 5.5rem;
     width: 50%;
     padding: 1rem;
   }
@@ -632,6 +562,7 @@ input.nosubmit {
   }
   .nav-menu.active {
     width: 100%;
+    top: 5rem;
   }
   .user-icon,
   .bag-icon {

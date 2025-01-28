@@ -9,8 +9,8 @@ import SkeletonCard from "./Skeleton";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const firestore = getFirestore(firebaseApp);
-
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [sortBy, setSortBy] = useState("none");
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -34,6 +34,7 @@ const Home = () => {
         setFilteredProducts(productsData);
       } catch (error) {
         console.error("Error fetching products:", error);
+        setError("Failed to fetch products. Please check your connection.");
       } finally {
         setIsLoading(false);
       }
@@ -112,6 +113,7 @@ const Home = () => {
   return (
     <>
       <section id="home">
+        {error && <p className="error-message">{error}</p>}
         <div className="home-container">
           <div className="filter-section">
             <button onClick={handleToggleFilter}>Filters</button>

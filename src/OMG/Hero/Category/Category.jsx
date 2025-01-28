@@ -6,25 +6,22 @@ import "./Category.css";
 
 const Category = () => {
   const [hoveredProducts, setHoveredProducts] = useState({});
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+  const [products, setProducts] = useState({
+    Hoodies: [],
+    Tshirts: [],
+    Oversize: [],
+  });
+
   const sliderRefs = {
     Hoodies: useRef(null),
     Tshirts: useRef(null),
     Oversize: useRef(null),
   };
 
-  const [products, setProducts] = useState({
-    Hoodies: [],
-    Tshirts: [],
-    Oversize: [],
-  });
-  // Track touch and scroll position
+  // Simplified touch tracking
   const touchRef = useRef({
     startX: 0,
     scrollLeft: 0,
-    isScrolling: false,
   });
 
   const navigate = useNavigate();
@@ -54,51 +51,33 @@ const Category = () => {
     fetchProducts();
   }, [firestore]);
 
-  const handleMouseDown = (e, category) => {
-    setIsDragging(true);
-    setStartX(e.pageX - sliderRefs[category].current.offsetLeft);
-    setScrollLeft(sliderRefs[category].current.scrollLeft);
-  };
-
-  const handleMouseMove = (e, category) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - sliderRefs[category].current.offsetLeft;
-    const scroll = scrollLeft - (x - startX);
-    sliderRefs[category].current.scrollLeft = scroll;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
   const handleTouchStart = (e, category) => {
     const touch = e.touches[0];
+    const slider = sliderRefs[category].current;
+
     touchRef.current = {
       startX: touch.clientX,
-      scrollLeft: sliderRefs[category].current.scrollLeft,
-      isScrolling: true,
+      scrollLeft: slider.scrollLeft,
     };
   };
 
   const handleTouchMove = (e, category) => {
-    if (!touchRef.current.isScrolling) return;
-
-    e.preventDefault();
     const touch = e.touches[0];
-    const delta = touchRef.current.startX - touch.clientX;
+    const slider = sliderRefs[category].current;
 
-    // Use requestAnimationFrame for smooth scrolling
-    requestAnimationFrame(() => {
-      if (sliderRefs[category].current) {
-        sliderRefs[category].current.scrollLeft =
-          touchRef.current.scrollLeft + delta;
-      }
-    });
+    if (!touchRef.current.startX) return;
+
+    const x = touch.clientX;
+    const walk = (touchRef.current.startX - x) * 1.5; // Multiply by 1.5 for faster scrolling
+
+    slider.scrollLeft = touchRef.current.scrollLeft + walk;
   };
 
   const handleTouchEnd = () => {
-    touchRef.current.isScrolling = false;
+    touchRef.current = {
+      startX: 0,
+      scrollLeft: 0,
+    };
   };
 
   const handleScroll = (category, direction) => {
@@ -110,12 +89,12 @@ const Category = () => {
       container.scrollLeft +
       (direction === "right" ? scrollAmount : -scrollAmount);
 
-    // Smooth scroll with native behavior
     container.scrollTo({
       left: targetScroll,
       behavior: "smooth",
     });
   };
+
   const handleSeeAll = (category) => {
     navigate(`/category/${category}`);
   };
@@ -151,10 +130,6 @@ const Category = () => {
           <div
             className="category-slider"
             ref={sliderRefs[category]}
-            onMouseDown={(e) => handleMouseDown(e, category)}
-            onMouseMove={(e) => handleMouseMove(e, category)}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseLeave}
             onTouchStart={(e) => handleTouchStart(e, category)}
             onTouchMove={(e) => handleTouchMove(e, category)}
             onTouchEnd={handleTouchEnd}

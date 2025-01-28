@@ -166,3 +166,12 @@
     border-right: 1px solid #ddd;
   }
 }
+@media (max-width: 1024px) {
+  .footer {
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+  .email-footer {
+    flex-direction: column;
+  }
+}

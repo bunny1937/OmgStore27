@@ -20,6 +20,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { auth } from "../../db/Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { FidgetSpinner } from "react-loader-spinner";
+import LoadingAnimation from "./Loading/Loader";
 
 const db = getFirestore(firebaseApp);
 
@@ -84,7 +85,7 @@ const Details = () => {
   if (loading || !product) {
     return (
       <div className="loading-state">
-        <div className="loader"></div>
+        {/* <div className="loader"></div>
         {/* <FidgetSpinner
           visible={true}
           backgroundColor="#1d2621"
@@ -95,6 +96,7 @@ const Details = () => {
           wrapperStyle={{}}
           wrapperClass="fidget-spinner-wrapper"
         /> */}
+        <LoadingAnimation />
       </div>
     );
   }
@@ -334,7 +336,7 @@ const Details = () => {
                 </button>
               </div>
               <button onClick={handleCheckout} className="details-checkout">
-                Checkout
+                Buy now
               </button>
             </div>
             <div className="description-box">

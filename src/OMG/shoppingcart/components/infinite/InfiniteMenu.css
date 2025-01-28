@@ -1,0 +1,116 @@
+.Infinite-main {
+  height: 100vh;
+  background-color: #111; /* Darker background for better contrast */
+}
+
+#infinite-grid-menu-canvas {
+  cursor: grab;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+}
+
+#infinite-grid-menu-canvas:active {
+  cursor: grabbing;
+}
+
+.face-title {
+  user-select: none;
+  position: absolute;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 4.5vw, 4rem); /* Responsive font size */
+  color: white;
+  left: 15%;
+  top: 10%; /* Position from top instead of center */
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+}
+
+.face-description {
+  user-select: none;
+  position: absolute;
+  font-size: clamp(1.5rem, 2.5vw, 1.5rem); /* Responsive font size */
+  color: white;
+  left: 17%;
+  top: 20%; /* Position below title */
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 600px;
+  text-align: center;
+  z-index: 10;
+}
+
+.action-button {
+  position: absolute;
+  left: 50%;
+  bottom: 20%; /* Position from bottom */
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  background: cyan;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 5px solid #000;
+  z-index: 10;
+}
+
+.action-button-icon {
+  user-select: none;
+  position: relative;
+  color: #060606;
+  font-size: 26px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Active/Inactive states */
+.face-title.active,
+.face-description.active {
+  opacity: 1;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  transition: 0.5s ease;
+}
+
+.face-title.inactive,
+.face-description.inactive {
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.1s ease;
+}
+
+.action-button.active {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+  transition: 0.5s ease;
+}
+
+.action-button.inactive {
+  transform: translateX(-50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.1s ease;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .face-title {
+    top: 15%;
+  }
+
+  .face-description {
+    top: 30%;
+    width: 90%;
+  }
+
+  .action-button {
+    bottom: 15%;
+  }
+}

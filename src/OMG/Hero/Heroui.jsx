@@ -7,8 +7,10 @@ import MainPage from "./Mainpage";
 import IntroOverlay from "./IntroOverlay";
 import Carouselwheeel from "./Caraouselwheeel";
 import CategoryShowcase from "./Categoryshowcase";
-import Loaders from "../shoppingcart/components/Loaders";
-
+import Lenis from "../shoppingcart/components/Lenis";
+import ImageGallery from "../shoppingcart/components/Loadergsap";
+import InfiniteMenu from "../shoppingcart/components/infinite/InfiniteMenu";
+import UImain from "../shoppingcart/components/infinite/UImain";
 export default function Heroui() {
   const [showIntro, setShowIntro] = useState(() => {
     return sessionStorage.getItem("introShown") !== "true";
@@ -32,9 +34,9 @@ export default function Heroui() {
       ) : (
         <div className="hero">
           <MainPage />
-          <Loaders />
+          {/* <UImain /> */}
           <Carouselwheeel />
-          {/* <CategoryShowcase /> */}
+          <ImageGallery />
           <Category />
           <SuggestionComponent />
           <Footer />

@@ -24,10 +24,10 @@ const Footer = () => {
               <a href="/category/Hoodies">Hoodies</a>
             </li>
             <li>
-              <a href="/accessories">Minimalist</a>
+              <a href="/products/Minimalist">Minimalist</a>
             </li>
             <li>
-              <a href="/accessories">Spiritual</a>
+              <a href="products/Spiritual">Spiritual</a>
             </li>
             {/* <li>
               <a href="/sale">Sale</a>

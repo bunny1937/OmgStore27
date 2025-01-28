@@ -30,56 +30,61 @@ import Profile1 from "./OMG/shoppingcart/components/UserProfile/Basic/Basic";
 import Checkoutold from "./OMG/shoppingcart/components/Checkoutold";
 import Cursor from "./OMG/Cursor";
 import CategoryType from "./OMG/Hero/Category/CategoryType";
+import NetworkProvider from "./OMG/Network/NetworkProvider";
+import NetworkStatusBanner from "./OMG/Network/NetworkStatus";
 
 function App() {
   const containerRef = useRef(null);
 
   return (
     <>
-      <BackButtonProvider>
-        <UserProvider>
-          <ParallaxProvider>
-            <FavouritesProvider>
-              <CartProvider>
-                <Cursor />
-                <Header />
-                <Routes>
-                  <Route path="/" element={<Heroui />} />
-                  <Route path="/SignUp" element={<Signup />} />
-                  <Route path="UserProfile" element={<UserProfile />} />
-                  <Route path="/UserProfile1/*" element={<UserProfile1 />} />
-                  <Route path="/Profile1" element={<Profile1 />} />
-                  <Route path="/Support" element={<Support />} />
-                  <Route path="/Order" element={<Order />} />
-                  <Route path="/Sidebar" element={<Sidebar />} />
-                  <Route path="/SignIn" element={<SignIn />} />
-                  <Route path="/Home" element={<Home />} />
-                  <Route path="/Details/:id" element={<Details />} />
-                  <Route path="/Favourites" element={<Favourites />} />
-                  <Route
-                    path="/category/:categoryName"
-                    element={<CategoryPage key={Math.random()} />}
-                  />{" "}
-                  <Route path="/products/:type" element={<CategoryType />} />
-                  <Route path="/Cart" element={<Cart />} />
-                  <Route path="/Checkoutold" element={<Checkoutold />} />
-                  <Route path="/Payment" element={<Payment />} />
-                  <Route path="/AdminDash" element={<AdminDash />} />
-                  {/* Protected Route for Admin */}
-                  <Route
-                    path="/AdminDash"
-                    element={
-                      <ProtectedRoute adminOnly={true}>
-                        <AdminDash />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-              </CartProvider>
-            </FavouritesProvider>
-          </ParallaxProvider>
-        </UserProvider>
-      </BackButtonProvider>
+      <NetworkProvider>
+        <NetworkStatusBanner />
+        <BackButtonProvider>
+          <UserProvider>
+            <ParallaxProvider>
+              <FavouritesProvider>
+                <CartProvider>
+                  <Cursor />
+                  <Header />
+                  <Routes>
+                    <Route path="/" element={<Heroui />} />
+                    <Route path="/SignUp" element={<Signup />} />
+                    <Route path="UserProfile" element={<UserProfile />} />
+                    <Route path="/UserProfile1/*" element={<UserProfile1 />} />
+                    <Route path="/Profile1" element={<Profile1 />} />
+                    <Route path="/Support" element={<Support />} />
+                    <Route path="/Order" element={<Order />} />
+                    <Route path="/Sidebar" element={<Sidebar />} />
+                    <Route path="/SignIn" element={<SignIn />} />
+                    <Route path="/Home" element={<Home />} />
+                    <Route path="/Details/:id" element={<Details />} />
+                    <Route path="/Favourites" element={<Favourites />} />
+                    <Route
+                      path="/category/:categoryName"
+                      element={<CategoryPage key={Math.random()} />}
+                    />{" "}
+                    <Route path="/products/:type" element={<CategoryType />} />
+                    <Route path="/Cart" element={<Cart />} />
+                    <Route path="/Checkoutold" element={<Checkoutold />} />
+                    <Route path="/Payment" element={<Payment />} />
+                    <Route path="/AdminDash" element={<AdminDash />} />
+                    {/* Protected Route for Admin */}
+                    <Route
+                      path="/AdminDash"
+                      element={
+                        <ProtectedRoute adminOnly={true}>
+                          <AdminDash />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Routes>
+                </CartProvider>
+              </FavouritesProvider>
+            </ParallaxProvider>
+          </UserProvider>
+        </BackButtonProvider>
+      </NetworkProvider>
     </>
   );
 }
