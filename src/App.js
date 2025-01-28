@@ -32,12 +32,13 @@ import Cursor from "./OMG/Cursor";
 import CategoryType from "./OMG/Hero/Category/CategoryType";
 import NetworkProvider from "./OMG/Network/NetworkProvider";
 import NetworkStatusBanner from "./OMG/Network/NetworkStatus";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
-  const containerRef = useRef(null);
-
   return (
     <>
+      <Analytics />
+
       <NetworkProvider>
         <NetworkStatusBanner />
         <BackButtonProvider>
