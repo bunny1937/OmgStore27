@@ -85,7 +85,7 @@ const Details = () => {
   if (loading || !product) {
     return (
       <div className="loading-state">
-        {/* <div className="loader"></div>
+        <div className="loader"></div>
         {/* <FidgetSpinner
           visible={true}
           backgroundColor="#1d2621"
@@ -96,7 +96,6 @@ const Details = () => {
           wrapperStyle={{}}
           wrapperClass="fidget-spinner-wrapper"
         /> */}
-        <LoadingAnimation />
       </div>
     );
   }
@@ -212,16 +211,6 @@ const Details = () => {
     setSelectedImage(imgUrl); // Update main image when thumbnail is clicked
   };
 
-  // const settings = {
-  //   infinite: true,
-  //   autoplay: true,
-  //   autoplaySpeed: 3000,
-  //   arrows: true,
-  //   cssEase: "linear",
-  //   speed: 500,
-  //   slidesToShow: 1,
-  //   slidesToScroll: 1,
-  // };
   return (
     <>
       <Toaster
