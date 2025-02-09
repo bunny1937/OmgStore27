@@ -40,12 +40,13 @@ import Settings from "./OMG/admin/Components/Settings";
 import AddProducts from "./OMG/db/AddProduct";
 import OrdersDash from "./OMG/admin/Components/OrdersDash";
 import Checkoutnew from "./OMG/shoppingcart/components/Checkoutnew";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
   return (
     <>
       <Analytics />
-
+      <SpeedInsights />
       <NetworkProvider>
         <NetworkStatusBanner />
         <BackButtonProvider>
