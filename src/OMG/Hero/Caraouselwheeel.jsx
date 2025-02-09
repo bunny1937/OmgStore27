@@ -1,64 +1,41 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { firebaseApp } from "../db/Firebase";
 import "./RollingGallery.css";
-import img1 from "./photos/rollingwheel/Awasome (back).png";
-import img2 from "./photos/rollingwheel/Big Ganpati navy blue (back).png";
-import img3 from "./photos/rollingwheel/Belive edition.png";
-import img4 from "./photos/rollingwheel/Colored Baapa White (Back).png";
-import img5 from "./photos/rollingwheel/Make Day Epic (back).png";
-import img6 from "./photos/rollingwheel/Colored Baapa White (Front).png";
-import img7 from "./photos/rollingwheel/Monkey (back).png";
-import img8 from "./photos/rollingwheel/navy blue Baapa (Front).png";
-import img9 from "./photos/rollingwheel/Old school Edition.png";
-import img10 from "./photos/rollingwheel/white Om (back).png";
-
 const Carouselwheeel = () => {
+  const [products, setProducts] = useState([]);
   const [progress, setProgress] = useState(50);
   const [startX, setStartX] = useState(0);
   const [active, setActive] = useState(0);
   const [isDown, setIsDown] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const itemsRef = useRef([]);
-  const cursorsRef = useRef([]);
+  const firestore = getFirestore(firebaseApp);
 
   const SPEED_WHEEL = 0.02;
   const SPEED_DRAG = -0.1;
 
-  const items = [
-    { img: img1 },
-    {
-      title: "",
-      num: "",
-      img: img6,
-    },
-    {
-      title: "",
-      num: "",
-      img: img3,
-    },
-    { title: "", num: "", img: img4 },
-    {
-      title: "",
-      num: "",
-      img: img5,
-    },
-    { title: "", num: "", img: img2 },
-    {
-      title: "",
-      num: "",
-      img: img7,
-    },
-    {
-      title: "",
-      num: "",
-      img: img8,
-    },
-    {
-      title: "",
-      num: "",
-      img: img9,
-    },
-    { title: "", num: "", img: img10 },
-  ];
+  // Fetch products from Firestore
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(firestore, "Products"));
+        const productsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProducts(productsData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [firestore]);
 
   const getZindex = (array, index) => {
     return array.map((_, i) =>
@@ -67,18 +44,18 @@ const Carouselwheeel = () => {
   };
 
   const displayItems = () => {
-    const zIndexes = getZindex(items, active);
+    const zIndexes = getZindex(products, active);
     itemsRef.current.forEach((item, index) => {
       if (item) {
         item.style.setProperty("--zIndex", zIndexes[index]);
-        item.style.setProperty("--active", (index - active) / items.length);
+        item.style.setProperty("--active", (index - active) / products.length);
       }
     });
   };
 
   const animate = () => {
     const newProgress = Math.max(0, Math.min(progress, 100));
-    const newActive = Math.floor((newProgress / 100) * (items.length - 1));
+    const newActive = Math.floor((newProgress / 100) * (products.length - 1));
     setProgress(newProgress);
     setActive(newActive);
     displayItems();
@@ -90,13 +67,6 @@ const Carouselwheeel = () => {
   };
 
   const handleMouseMove = (e) => {
-    if (e.type === "mousemove") {
-      cursorsRef.current.forEach((cursor) => {
-        if (cursor) {
-          cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-        }
-      });
-    }
     if (!isDown) return;
     const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
     const mouseProgress = (x - startX) * SPEED_DRAG;
@@ -114,14 +84,22 @@ const Carouselwheeel = () => {
   };
 
   const handleItemClick = (index) => {
-    setProgress((index / items.length) * 100 + 10);
+    setProgress((index / products.length) * 100 + 10);
   };
-
+  const preventDragHandler = (e) => {
+    e.preventDefault();
+    return false;
+  };
   useEffect(() => {
     animate();
   }, [progress, active]);
 
   useEffect(() => {
+    const carousel = document.querySelector(".carousel");
+    if (carousel) {
+      carousel.addEventListener("dragstart", preventDragHandler);
+      carousel.addEventListener("drop", preventDragHandler);
+    }
     document.addEventListener("wheel", handleWheel);
     document.addEventListener("mousedown", handleMouseDown);
     document.addEventListener("mousemove", handleMouseMove);
@@ -131,6 +109,10 @@ const Carouselwheeel = () => {
     document.addEventListener("touchend", handleMouseUp);
 
     return () => {
+      if (carousel) {
+        carousel.removeEventListener("dragstart", preventDragHandler);
+        carousel.removeEventListener("drop", preventDragHandler);
+      }
       document.removeEventListener("wheel", handleWheel);
       document.removeEventListener("mousedown", handleMouseDown);
       document.removeEventListener("mousemove", handleMouseMove);
@@ -141,21 +123,40 @@ const Carouselwheeel = () => {
     };
   }, [isDown, startX]);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="caraousel-box1">
       <div className="carousel">
-        {items.map((item, index) => (
+        {products.map((product, index) => (
           <div
-            key={index}
+            key={product.id}
             className="carousel-item"
             ref={(el) => (itemsRef.current[index] = el)}
             onClick={() => handleItemClick(index)}
           >
-            <div className="carousel-box">
-              <div className="title">{item.title}</div>
-              <div className="num">{item.num}</div>
-              <img src={item.img} alt={item.title} />
-            </div>
+            <Link to={`/Details/${product.id}`}>
+              <div className="carousel-box">
+                <img
+                  src={product.ImgUrls[0]} // Using the first image from ImgUrls array
+                  alt={product.name}
+                  draggable="false" // Prevent image dragging
+                  onDragStart={preventDragHandler}
+                  style={{ userSelect: "none" }}
+                  onError={(e) => {
+                    e.target.src = "path/to/fallback/image.jpg"; // Add a fallback image path
+                    console.error("Error loading image:", product.ImgUrls[0]);
+                  }}
+                />
+
+                <div className="title">{product.name}</div>
+                <div className="price">₹{product.price}</div>
+                <div className="category">{product.Category}</div>
+                <div className="gender">{product.Gender}</div>
+              </div>
+            </Link>
           </div>
         ))}
       </div>

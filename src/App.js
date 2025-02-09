@@ -1,6 +1,6 @@
 // App.js
 import "./App.css";
-import React, { useRef } from "react";
+import React, { useEffect } from "react";
 import Header from "./OMG/shoppingcart/components/Header";
 import Home from "./OMG/shoppingcart/pages/Home";
 import Heroui from "./OMG/Hero/Heroui";

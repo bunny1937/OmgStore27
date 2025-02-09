@@ -213,11 +213,23 @@ const ReviewComponent = () => {
             accept="image/*"
             onChange={(e) => setPhoto(e.target.files[0])}
           />
-          <button onClick={handleRemovePhoto}>x</button>
+          {photo && (
+            <button className="reset-button" onClick={handleRemovePhoto}>
+              x
+            </button>
+          )}
         </div>
-        {photo && <img src={URL.createObjectURL(photo)} alt="Preview" />}
+
+        {photo && (
+          <img
+            className="photo-box-img"
+            src={URL.createObjectURL(photo)}
+            alt="Preview"
+          />
+        )}
         <div className="rating-input">
           <label>Rating: </label>
+
           <div className="stars-input">
             <div className="stars">
               {renderStars(rating).map((star, index) => (
@@ -230,9 +242,11 @@ const ReviewComponent = () => {
                 </span>
               ))}
             </div>
-            <button className="reset-button" onClick={handleResetRating}>
-              x
-            </button>
+            {rating > 0 && (
+              <button className="reset-button" onClick={handleResetRating}>
+                x
+              </button>
+            )}
           </div>
         </div>
         <button className="review-submit" onClick={handleAddReview}>

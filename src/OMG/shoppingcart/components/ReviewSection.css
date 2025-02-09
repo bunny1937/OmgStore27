@@ -82,7 +82,9 @@
 .reset-button {
   width: 1.6rem;
   color: black;
+  padding: 0 4px;
   font-size: 1.2rem;
+  margin-left: -27px;
 }
 .star {
   width: 32px;
@@ -147,22 +149,18 @@
   border: none;
   height: auto;
 }
+.photo-box-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
 .photo-preview img {
   width: 200px;
   height: 200px;
   object-fit: contain;
   border-radius: 8px;
 }
-.photo-box button {
-  align-self: flex-start;
-  padding: 0 10px;
-  color: #000000;
 
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
 .review-submit {
   margin: 1rem 0;
   padding: 0.6rem;
@@ -220,6 +218,14 @@
     align-self: stretch;
   }
 }
+@media screen and (max-width: 399px) {
+  .add-review input {
+    font-size: 0.8rem;
+  }
+  .no-reviews h2 {
+    padding: 0;
+  }
+}
 @media screen and (max-width: 164px) {
   .reviews-section {
     margin: 0.5rem 0;
@@ -265,17 +271,13 @@
   .add-review input {
     font-size: 0.6rem;
   }
-  .photo-box button {
-    padding: 0 2px;
-    width: 0.8rem;
-    height: 15px;
-    font-size: 0.8rem;
-  }
+
   .reset-button {
     padding: 0 2px;
     width: 0.8rem;
     height: 15px;
     margin-top: 6px;
+
     border-radius: 8px;
     font-size: 0.8rem;
   }

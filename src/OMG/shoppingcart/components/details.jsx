@@ -86,19 +86,6 @@ const Details = () => {
     return (
       <div className="loading-state">
         <div className="loader"></div>
-        <div className="loader"></div>
-        {/* <FidgetSpinner
-          visible={true}
-          backgroundColor="#1d2621"
-          ballColors={["#345635", "#6b8f71", "#aec3b0"]}
-          height="200"
-          width="200"
-          ariaLabel="fidget-spinner-loading"
-          wrapperStyle={{}}
-          wrapperClass="fidget-spinner-wrapper"
-        />
-        <LoadingAnimation />*/}
-        /> */}
       </div>
     );
   }

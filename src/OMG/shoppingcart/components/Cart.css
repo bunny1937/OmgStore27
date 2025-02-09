@@ -269,7 +269,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 20px;
   border-bottom: 1px solid #1d2621;
 }
 
@@ -417,6 +416,7 @@
 .clear_cart_btn {
   background-color: #ff4136;
   color: #fff;
+  font-size: 0.7rem;
 }
 
 .clear_cart_btn:hover {
