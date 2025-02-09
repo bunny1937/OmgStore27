@@ -28,11 +28,18 @@ import Support from "./OMG/shoppingcart/components/UserProfile/Support/Support";
 import Order from "./OMG/shoppingcart/components/UserProfile/Order";
 import Profile1 from "./OMG/shoppingcart/components/UserProfile/Basic/Basic";
 import Checkoutold from "./OMG/shoppingcart/components/Checkoutold";
-import Cursor from "./OMG/Cursor";
 import CategoryType from "./OMG/Hero/Category/CategoryType";
 import NetworkProvider from "./OMG/Network/NetworkProvider";
 import NetworkStatusBanner from "./OMG/Network/NetworkStatus";
 import { Analytics } from "@vercel/analytics/react";
+import Users from "./OMG/admin/Components/Users";
+import Categories from "./OMG/admin/Components/Categories";
+// import Discounts from "./Components/Discounts";
+import AdminAnalytics from "./OMG/admin/Components/Analytics";
+import Settings from "./OMG/admin/Components/Settings";
+import AddProducts from "./OMG/db/AddProduct";
+import OrdersDash from "./OMG/admin/Components/OrdersDash";
+import Checkoutnew from "./OMG/shoppingcart/components/Checkoutnew";
 
 function App() {
   return (
@@ -46,7 +53,6 @@ function App() {
             <ParallaxProvider>
               <FavouritesProvider>
                 <CartProvider>
-                  <Cursor />
                   <Header />
                   <Routes>
                     <Route path="/" element={<Heroui />} />
@@ -67,7 +73,7 @@ function App() {
                     />{" "}
                     <Route path="/products/:type" element={<CategoryType />} />
                     <Route path="/Cart" element={<Cart />} />
-                    <Route path="/Checkoutold" element={<Checkoutold />} />
+                    <Route path="/Checkout" element={<Checkoutnew />} />
                     <Route path="/Payment" element={<Payment />} />
                     <Route path="/AdminDash" element={<AdminDash />} />
                     {/* Protected Route for Admin */}
@@ -79,6 +85,16 @@ function App() {
                         </ProtectedRoute>
                       }
                     />
+                    <Route path="/users" element={<Users />} />
+                    <Route path="/addproducts" element={<AddProducts />} />
+                    <Route path="/adminorders" element={<OrdersDash />} />
+                    <Route path="/categories" element={<Categories />} />
+                    {/* <Route path="/discounts" element={<Discounts />} /> */}
+                    <Route
+                      path="/adminanalytics"
+                      element={<AdminAnalytics />}
+                    />
+                    <Route path="/settings" element={<Settings />} />
                   </Routes>
                 </CartProvider>
               </FavouritesProvider>

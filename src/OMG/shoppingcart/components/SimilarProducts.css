@@ -4,15 +4,15 @@
 }
 
 .products-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  justify-content: center;
 }
 
 .product-card {
   width: 12rem;
   height: 17rem;
-  margin: 10px;
   padding: 2px;
   background-color: #28361836;
   border: 1px solid #ddd;
@@ -27,7 +27,7 @@
   border-radius: 10px;
 }
 .product-card h2 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 400;
 }
 

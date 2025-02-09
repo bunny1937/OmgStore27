@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
         setUser(firebaseUser);
-        setIsAdmin(firebaseUser.email === "admin@example.com"); // Set admin status
+        setIsAdmin(firebaseUser.email === "admin@gmail.com"); // Set admin status
       } else {
         setUser(null);
         setIsAdmin(false);

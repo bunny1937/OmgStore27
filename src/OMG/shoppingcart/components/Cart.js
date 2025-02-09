@@ -136,20 +136,22 @@ const Cart = () => {
                       </figure>
                       <div className="cart_items_info">
                         <h4>{Name}</h4>
-                        <h4>{Category}</h4>
-                        <h3 className="size">Size:{size || "N/A"}</h3>
-                        <h3 className="price">
-                          ₹ {itemTotal.toLocaleString()} ||
-                          <span> ₹ {price}</span>
-                        </h3>
-                        <div className="cart_items_quantity">
-                          <span onClick={() => decrementItem(id, size)}>
-                            &#8722;
-                          </span>
-                          <b>{quantity}</b>
-                          <span onClick={() => incrementItem(id, size)}>
-                            &#43;
-                          </span>
+                        <h3>{Category}</h3>
+                        <h2 className="size">Size:{size || "N/A"}</h2>
+                        <div className="price-quantity">
+                          <h3 className="price">
+                            ₹ {itemTotal.toLocaleString()} ||
+                            <span> ₹ {price}</span>
+                          </h3>
+                          <div className="cart_items_quantity">
+                            <span onClick={() => decrementItem(id, size)}>
+                              &#8722;
+                            </span>
+                            <b>{quantity}</b>
+                            <span onClick={() => incrementItem(id, size)}>
+                              &#43;
+                            </span>
+                          </div>
                         </div>
                       </div>
 
@@ -170,23 +172,25 @@ const Cart = () => {
                 <b>₹ {cartTotal.toLocaleString()}</b>
               </h3>
               {/* Clear Cart Button */}
-              <button
-                type="button"
-                className="clear_cart_btn"
-                onClick={clearCart} // Trigger clearCart function here
-                disabled={cartQuantity === 0}
-              >
-                Clear All
-              </button>
-              <Link to={"/Checkoutold"}>
+              <div className="cart_btns">
                 <button
                   type="button"
-                  className="checkout_btn"
+                  className="clear_cart_btn"
+                  onClick={clearCart} // Trigger clearCart function here
                   disabled={cartQuantity === 0}
                 >
-                  Checkout
+                  Clear All
                 </button>
-              </Link>
+                <Link to={"/Checkout"}>
+                  <button
+                    type="button"
+                    className="checkout_btn"
+                    disabled={cartQuantity === 0}
+                  >
+                    Checkout
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

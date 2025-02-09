@@ -173,13 +173,13 @@ const PremiumCheckout = () => {
                 onClick={() => handleQuantityChange(item, item.quantity - 1)}
                 disabled={item.quantity <= 1}
               >
-                <FaMinus />
+                +
               </button>
               <span>{item.quantity}</span>
               <button
                 onClick={() => handleQuantityChange(item, item.quantity + 1)}
               >
-                <FaPlus />
+                -
               </button>
             </div>
           </div>

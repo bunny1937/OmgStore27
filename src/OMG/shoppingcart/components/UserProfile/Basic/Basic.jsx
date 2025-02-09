@@ -4,6 +4,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Profile from "../Profile";
 import Address from "../Address";
 import Order from "../Order";
+import Payment from "../Payments";
 
 function Profile1() {
   const [activeAccordion, setActiveAccordion] = useState(null); // Track the active accordion
@@ -78,6 +79,26 @@ function Profile1() {
           <Collapse in={activeAccordion === "order"}>
             <div className="accordion-content">
               <Order />
+            </div>
+          </Collapse>
+        </div>
+
+        {/* Payments Accordion */}
+        <div>
+          <h3
+            onClick={() => handleAccordionClick("payment")}
+            className="accordion-header"
+          >
+            Payments
+            <ExpandMoreIcon
+              className={`expand-icon ${
+                activeAccordion === "payment" ? "expanded" : ""
+              }`}
+            />
+          </h3>
+          <Collapse in={activeAccordion === "payment"}>
+            <div className="accordion-content">
+              <Payment />
             </div>
           </Collapse>
         </div>

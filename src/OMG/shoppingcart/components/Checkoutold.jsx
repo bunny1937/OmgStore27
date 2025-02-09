@@ -12,7 +12,7 @@ import "./Checkout.css";
 
 const Checkoutold = () => {
   const navigate = useNavigate();
-  const { cartItems, updateCartItem, removeItem } = useContext(cartContext);
+  const { cartItems, removeItem } = useContext(cartContext);
   const [userId, setUserId] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [showAddressDetails, setShowAddressDetails] = useState(false);
@@ -44,7 +44,6 @@ const Checkoutold = () => {
         if (userDoc.exists()) {
           setUserInfo(userDoc.data());
         } else {
-          console.error("User document does not exist");
         }
       } else {
         setUserInfo(null);
@@ -90,10 +89,8 @@ const Checkoutold = () => {
               state: prevState.state || "",
             }));
           } else {
-            console.log("No matching user document found");
           }
         } catch (error) {
-          console.error("Error fetching user data:", error);
           toast.error("Failed to load user information");
         }
       } else {
@@ -120,7 +117,6 @@ const Checkoutold = () => {
           setSavedAddresses(addresses);
         } catch (error) {
           toast.error("Error loading saved addresses");
-          console.error("Error fetching addresses:", error);
         }
       };
       fetchAddresses();
@@ -157,7 +153,7 @@ const Checkoutold = () => {
         toast.error("Error saving order data:", error);
       }
     } else {
-      console.log("User info or user ID is missing, cannot submit order.");
+      toast.error("Please login to save shipping information.");
     }
   };
   const handleAddressSelection = (addressId) => {
@@ -178,7 +174,6 @@ const Checkoutold = () => {
   };
 
   const handleAddAddressClick = () => {
-    console.log("Add address clicked. Current userInfo:", userInfo);
     setShowForm(!showForm);
 
     // Only update if we're showing the form and have userInfo
@@ -186,8 +181,6 @@ const Checkoutold = () => {
       const fullName = userInfo.firstName;
       const email = userInfo.email || "";
       const phoneNumber = userInfo.phoneNumber || "";
-
-      console.log("Pre-filling form with:", { fullName, email, phoneNumber });
 
       setShippingInfo((prev) => ({
         ...prev,
@@ -224,12 +217,9 @@ const Checkoutold = () => {
           },
         };
 
-        console.log("Saving order to Firestore:", newOrder);
         await addDoc(orderRef, newOrder);
         // navigate("/Payment");
-      } catch (error) {
-        console.error("Error saving order:", error);
-      }
+      } catch (error) {}
     } else {
       alert("Please select an address and ensure the cart is not empty.");
     }

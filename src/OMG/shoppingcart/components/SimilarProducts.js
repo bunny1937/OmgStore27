@@ -36,7 +36,7 @@ const SimilarProducts = ({ category, id }) => {
         );
 
         // Define the number of products to display
-        const numSimilarProducts = 5;
+        const numSimilarProducts = 6;
 
         // Calculate number of products to display from the same category (70%)
         const numSameCategoryProducts = Math.min(

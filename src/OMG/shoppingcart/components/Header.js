@@ -244,7 +244,7 @@ const Header = () => {
         </div>
         <div className="header-links user-container">
           <div onClick={handleDropdown} className="user-icon">
-            {user && isAdmin && <span>Admin</span>}
+            {user && isAdmin}
           </div>
 
           {dropdown && (

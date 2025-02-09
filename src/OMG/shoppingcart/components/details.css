@@ -103,6 +103,7 @@
   font-weight: 600;
   font-size: 3rem;
   color: #1d2621;
+  margin: -0.8rem 0;
 }
 .details-actions > h3 {
   font-size: 1.5rem;
@@ -110,6 +111,7 @@
 }
 .details-actions > p {
   font-size: 1.5rem;
+  margin-top: -0.4rem;
   font-weight: 700;
   color: #111;
 }
@@ -304,26 +306,7 @@
 .loader::after {
   margin: 8px;
 }
-svg path {
-  fill: transparent;
-  stroke: #fff;
-  stroke-width: 0.1;
-  stroke-dasharray: 50;
-  stroke-dashoffset: 50;
-  animation: textanimation 4s ease-in-out 1s forwards;
-}
-@keyframes textanimation {
-  0% {
-    stroke-dashoffset: 50;
-  }
-  80% {
-    fill: transparent;
-  }
-  100% {
-    fill: #fff;
-    stroke-dashoffset: 0;
-  }
-}
+
 /* Icon styles */
 .feature-item img {
   width: 20px;

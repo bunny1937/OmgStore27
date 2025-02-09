@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import UserContext from "./UserContext";
 import AddProducts from "../db/AddProduct";
+import AdminDashboard from "../admin/AdminLayout";
 
 function AdminDash() {
   const { isAdmin } = useContext(UserContext);
@@ -12,7 +13,7 @@ function AdminDash() {
   return (
     <div>
       <h1>Hello Admin</h1>
-      <AddProducts />
+      <AdminDashboard />
     </div>
   );
 }

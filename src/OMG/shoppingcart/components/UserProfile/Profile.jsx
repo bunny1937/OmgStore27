@@ -1,7 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
 import { firebaseApp } from "../../../db/Firebase"; // Adjust this path to your Firebase initialization
 import { motion } from "framer-motion"; // For animations
 import "./Userstyles/Profile.css";
@@ -15,8 +21,11 @@ function Profile() {
     lastName: "",
     phoneNumber: "",
   });
-  const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const fetchUserDetails = async () => {
     const user = auth.currentUser;
     if (user) {
@@ -73,7 +82,38 @@ function Profile() {
     // Clean up the listener
     return () => unsubscribe();
   }, []);
+
+  const handleChangePassword = async () => {
+    setLoading(true);
+    const user = auth.currentUser;
+    if (!user) {
+      alert("User not authenticated");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Reauthenticate user
+      const credential = EmailAuthProvider.credential(
+        user.email,
+        currentPassword
+      );
+      await reauthenticateWithCredential(user, credential);
+
+      // Update password
+      await updatePassword(user, newPassword);
+      alert("Password changed successfully!");
+      setCurrentPassword("");
+      setNewPassword("");
+    } catch (error) {
+      console.error("Error updating password:", error);
+      alert(error.message);
+    }
+    setLoading(false);
+  };
+
   if (loading) return <div>Loading...</div>;
+
   return (
     <motion.section
       className="profile-card"
@@ -143,6 +183,34 @@ function Profile() {
             Cancel
           </button>
         )}
+      </div>
+      <div className="password-change">
+        <h2>Change Password</h2>
+        <label>
+          Current Password:
+          <input
+            type="password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            className="input"
+          />
+        </label>
+        <label>
+          New Password:
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="input"
+          />
+        </label>
+        <button
+          onClick={handleChangePassword}
+          className="save-button"
+          disabled={loading}
+        >
+          {loading ? "Updating..." : "Change Password"}
+        </button>
       </div>
     </motion.section>
   );

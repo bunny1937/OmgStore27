@@ -91,6 +91,7 @@ body {
   height: 50px;
   border-radius: 50%;
   background-color: var(--color-light);
+  color: var(--color-dark-mid);
   border: 2px solid var(--color-light-mid);
   display: flex;
   justify-content: center;
@@ -100,14 +101,18 @@ body {
   position: relative;
   z-index: 1;
 }
-
+/* .icon-color {
+  color: var(--color-light);
+} */
 .payment-status-point.active .payment-status-icon,
 .payment-status-point.active .payment-status-dot {
   background-color: var(--color-dark);
   border-color: var(--color-dark);
   color: var(--color-light);
 }
-
+.payment-status-point.active .payment-status-icon .icon {
+  color: var(--color-light); /* Ensure the icon color is set to light */
+}
 .payment-status-point.past .payment-status-icon,
 .payment-status-point.past .payment-status-dot {
   background-color: var(--color-mid);

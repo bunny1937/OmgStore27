@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// AddProducts.js
+import React, { useState, useEffect } from "react";
 import { db } from "./Firebase.js";
 import {
   ref,
@@ -6,282 +7,443 @@ import {
   uploadBytesResumable,
   getDownloadURL as getDownloadURLFromStorage,
 } from "firebase/storage";
-import { collection, doc, setDoc, getDocs } from "./Firebase.js"; // Import the collection function
-
+import {
+  collection,
+  doc,
+  setDoc,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import "./AddProducts.css";
-import OrdersDash from "./OrdersDash.jsx";
 
-export const AddProducts = () => {
-  const [Name, setProductName] = useState("");
-  const [Description, setProductDescription] = useState("");
-  const [price, setProductPrice] = useState(0);
-  const [Category, setProductCategory] = useState("");
-  const [quantity, setProductQuantity] = useState(0);
-  const [productImgs, setProductImgs] = useState([]);
-  const [Gender, setProductGender] = useState("");
+const AddProducts = () => {
+  const [products, setProducts] = useState([]);
+  const [isAddingProduct, setIsAddingProduct] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [images, setImages] = useState([]);
+  const [productForm, setProductForm] = useState({
+    Name: "",
+    Description: "",
+    price: 0,
+    Category: "",
+    quantity: 0,
+    Gender: "",
+    Type: "",
+    size: [],
+    productImgs: [],
+  });
   const [progress, setProgress] = useState(0);
-  const [size, setProductSize] = useState([]);
-  const [Type, setProductType] = useState("");
 
-  const types = ["image/png", "image/jpg", "image/jpeg"]; // image types
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-  const productImgsHandler = (e) => {
-    let selectedFiles = Array.from(e.target.files);
-    const validFiles = selectedFiles.filter((file) =>
-      types.includes(file.type)
-    );
-
-    if (validFiles.length === selectedFiles.length) {
-      setProductImgs(validFiles);
-    } else {
-      setProductImgs([]);
+  const fetchProducts = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "Products"));
+      const productsData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProducts(productsData);
+    } catch (error) {
+      console.error("Error fetching products:", error);
     }
+  };
+
+  const sortedProducts = [...products].sort((a, b) => {
+    // Convert IDs to numbers and compare
+    return Number(a.id) - Number(b.id);
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProductForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const toggleSize = (size) => {
-    setProductSize((prevSizes) => {
-      const updatedSizes = prevSizes.includes(size)
-        ? prevSizes.filter((s) => s !== size) // Remove if already selected
-        : [...prevSizes, size]; // Add if not selected
-      return updatedSizes;
+    setProductForm((prev) => {
+      const currentSizes = [...prev.size];
+      const sizeIndex = currentSizes.indexOf(size);
+
+      if (sizeIndex === -1) {
+        // Add size if not present
+        currentSizes.push(size);
+      } else {
+        // Remove size if already present
+        currentSizes.splice(sizeIndex, 1);
+      }
+
+      console.log("Updated sizes:", currentSizes); // For debugging
+
+      return {
+        ...prev,
+        size: currentSizes,
+      };
     });
   };
 
-  // add product
-  const addProduct = async (e) => {
-    e.preventDefault();
-    const storage = getStorage(); // Get the default storage bucket
-    setProgress(new Array(productImgs.length).fill(0)); // Reset progress tracking for each image
+  const handleImageChange = (event) => {
+    const files = Array.from(event.target.files); // Convert FileList to Array
+    const updatedImages = files.map((file) => ({
+      url: URL.createObjectURL(file), // Create a preview URL
+      name: file.name,
+    }));
+    setProductForm((prev) => ({
+      ...prev,
+      productImgs: files,
+    }));
+    setImages(updatedImages);
+  };
 
-    let storageRef;
-    switch (Category) {
-      // case "Jeans":
-      //   storageRef = ref(storage, `/Products/Jeans/${productImgs.name}`);
-      //   break;
-      case "Oversize":
-        storageRef = ref(storage, `/Products/Oversize/${productImgs.name}`);
-        break;
-      // case "Pants":
-      //   storageRef = ref(storage, `/Products/Pants/${productImgs.name}`);
-      //   break;
-      // case "Shirts":
-      //   storageRef = ref(storage, `/Products/Shirts/${productImgs.name}`);
-      //   break;
-      case "Tshirts":
-        storageRef = ref(storage, `/Products/Tshirts/${productImgs.name}`);
-        break;
-      case "Hoodies":
-        storageRef = ref(storage, `/Products/Hoodies/${productImgs.name}`);
-        break;
-      default:
-        return;
+  const resetThumbnails = () => {
+    setImages([]); // Clears only the thumbnails
+  };
+
+  const handleDelete = async (productId) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        await deleteDoc(doc(db, "Products", String(productId)));
+        await fetchProducts();
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
     }
+  };
 
-    console.log("Storage Ref:", storageRef); // Add this line
+  const handleEdit = (product) => {
+    setEditingProduct(product);
+    setProductForm({
+      Name: product.Name,
+      Description: product.Description,
+      price: product.price,
+      Category: product.Category,
+      quantity: product.quantity,
+      Gender: product.Gender,
+      Type: product.Type,
+      size: product.size || [],
+      productImgs: [],
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const storage = getStorage();
 
     try {
-      // Upload each image and get URLs
-      const uploadTasks = productImgs.map((img, index) => {
-        const storageRef = ref(
-          storage,
-          `/Products/${Category}/${Date.now()}_${img.name}`
-        );
-
-        return new Promise((resolve, reject) => {
-          const uploadTask = uploadBytesResumable(storageRef, img);
-          uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              const currentProgress =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              setProgress((prevProgress) => {
-                const updatedProgress = [...prevProgress];
-                updatedProgress[index] = currentProgress;
-                return updatedProgress;
-              });
-            },
-            (error) => reject(error),
-            () => {
-              getDownloadURLFromStorage(uploadTask.snapshot.ref)
-                .then((url) => resolve(url))
-                .catch((error) => reject(error));
-            }
+      let imgUrls = [];
+      if (productForm.productImgs.length > 0) {
+        const uploadTasks = productForm.productImgs.map((img) => {
+          const storageRef = ref(
+            storage,
+            `/Products/${productForm.Category}/${Date.now()}_${img.name}`
           );
+
+          return new Promise((resolve, reject) => {
+            const uploadTask = uploadBytesResumable(storageRef, img);
+            uploadTask.on(
+              "state_changed",
+              (snapshot) => {
+                const progress =
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setProgress(progress);
+              },
+              reject,
+              () =>
+                getDownloadURLFromStorage(uploadTask.snapshot.ref).then(resolve)
+            );
+          });
         });
+
+        imgUrls = await Promise.all(uploadTasks);
+      }
+
+      const productData = {
+        Name: productForm.Name,
+        Type: productForm.Type,
+        Description: productForm.Description,
+        price: Number(productForm.price),
+        Category: productForm.Category,
+        Gender: productForm.Gender,
+        quantity: Number(productForm.quantity),
+        size: productForm.size,
+      };
+
+      if (imgUrls.length > 0) {
+        productData.ImgUrls = imgUrls;
+      }
+
+      if (editingProduct) {
+        await updateDoc(
+          doc(db, "Products", String(editingProduct.id)),
+          productData
+        );
+      } else {
+        const productsCollectionRef = collection(db, "Products");
+        const querySnapshot = await getDocs(productsCollectionRef);
+        const newId = querySnapshot.docs.length + 1;
+        await setDoc(doc(productsCollectionRef, String(newId)), {
+          id: newId,
+          ...productData,
+        });
+      }
+
+      setProductForm({
+        Name: "",
+        Description: "",
+        price: 0,
+        Category: "",
+        quantity: 0,
+        Gender: "",
+        Type: "",
+        size: [],
+        productImgs: [],
       });
-
-      const imgUrls = await Promise.all(uploadTasks);
-
-      // Save product data to Firestore
-      const productsCollectionRef = collection(db, "Products");
-      const querySnapshot = await getDocs(productsCollectionRef);
-      const newId = querySnapshot.docs.length + 1; // ID based on existing count
-      const newDocRef = doc(productsCollectionRef, String(newId));
-
-      await setDoc(newDocRef, {
-        id: newId,
-        Name,
-        Type,
-        Description,
-        price: Number(price),
-        Category,
-        Gender,
-        quantity,
-        ImgUrls: imgUrls,
-        size,
-      });
-
-      // Reset the form
-      setProductType("");
-      setProductName("");
-      setProductDescription("");
-      setProductGender();
-      setProductCategory("");
-      setProductPrice(0);
-      setProductImgs([]);
-      setProductQuantity(0);
-      setProductSize([]);
-      setProgress([]);
-      document.getElementById("file").value = ""; // Clear file input
-    } catch (err) {
-      console.error(`Error: ${err.message}`);
+      setIsAddingProduct(false);
+      setEditingProduct(null);
+      setProgress(0);
+      await fetchProducts();
+    } catch (error) {
+      console.error("Error saving product:", error);
     }
   };
 
   return (
-    <>
-      <OrdersDash />
-      <div className="add-container">
-        <br />
-        <h2>ADD PRODUCTS</h2>
-        <hr />
-        <form autoComplete="off" className="form-group" onSubmit={addProduct}>
-          <label htmlFor="product-type">Product Type</label>
-          <select
-            className="text-input"
-            required
-            onChange={(e) => setProductType(e.target.value)}
-            value={Type}
-          >
-            <option value="">Select Type</option>
-            <option value="Jeans">Minimalist</option>
-            <option value="Oversize">Spiritual</option>
-          </select>
-          <br />
-          <label htmlFor="product-category">Product Category</label>
-          <select
-            className="text-input"
-            required
-            onChange={(e) => setProductCategory(e.target.value)}
-            value={Category}
-          >
-            <option value="">Select Category</option>
-            {/* <option value="Jeans">Jeans</option> */}
-            <option value="Oversize">Oversize</option>
-            {/* <option value="Pants">Pants</option>
-            <option value="Shirts">Shirts</option> */}
-            <option value="Tshirts">Tshirts</option>
-            <option value="Hoodies">Hoodies</option>
-          </select>
-          <br />
-          <label htmlFor="product-gender">Product Gender</label>
-          <select
-            className="text-input"
-            required
-            onChange={(e) => setProductGender(e.target.value)}
-            value={Gender}
-          >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="unisex">Unisex</option>
-          </select>
-          <br />
-          <label htmlFor="product-size">Product Size</label>
-          <h2>Select Product Sizes</h2>
-          <div className="size-selector">
-            {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
-              <button
-                key={size}
-                onClick={() => toggleSize(size)}
-                className={`size-button ${
-                  size.includes(size) ? "selected" : ""
-                }`}
-              >
-                {size}
-              </button>
-            ))}
-          </div>
+    <div className="product-management">
+      <div className="addproduct-header">
+        <h1>Product Management</h1>
+        <button
+          className="addproduct-add-button"
+          onClick={() => setIsAddingProduct(true)}
+        >
+          Add New Product
+        </button>
+      </div>
 
-          {/* Debugging - show selected sizes */}
-          <p>Selected Sizes: {size.join(", ")}</p>
-
-          <br />
-          <label htmlFor="product-name">Product Name</label>
-          <input
-            type="text"
-            className="text-input"
-            required
-            onChange={(e) => setProductName(e.target.value)}
-            value={Name}
-          />
-          <br />
-          <label htmlFor="product-name">Product Description</label>
-          <input
-            type="text"
-            className="text-input"
-            required
-            onChange={(e) => setProductDescription(e.target.value)}
-            value={Description}
-          />
-          <br />
-          <label htmlFor="product-price">Product Price</label>
-          <input
-            type="number"
-            className="form-control"
-            required
-            onChange={(e) => setProductPrice(e.target.value)}
-            value={price}
-          />
-          <br />
-          <label htmlFor="product-img">Product Image</label>
-          <input
-            type="file"
-            className="form-control"
-            id="file"
-            multiple
-            required
-            onChange={productImgsHandler}
-          />
-          <br />
-          <label htmlFor="product-quantity">Product Quantity</label>
-          <input
-            type="number"
-            className="form-control"
-            required
-            onChange={(e) => setProductQuantity(e.target.value)}
-            value={quantity}
-          />
-          <br />
-          <button type="submit" className="btn btn-success btn-md mybtn">
-            ADD
-          </button>
-          {progress > 0 && (
-            <div className="progress">
-              <div
-                className="progress-bar progress-bar-striped bg-success"
-                role="progressbar"
-                style={{ width: `${progress}%` }}
-                aria-valuenow={progress}
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                {progress}% uploaded
+      <div className="addproduct-products-grid">
+        {sortedProducts.map((product) => (
+          <div key={product.id} className="addproduct-product-card">
+            <div className="addproduct-product-id">ID: {product.id}</div>
+            <div className="addproduct-product-image">
+              {product.ImgUrls && product.ImgUrls[0] && (
+                <img src={product.ImgUrls[0]} alt={product.Name} />
+              )}
+            </div>
+            <div className="addproduct-product-info">
+              <h3>{product.Name}</h3>
+              <p className="addproduct-description">
+                Desc:-{product.Description}
+              </p>
+              <p className="addproduct-price">₹{product.price}</p>
+              <div className="addproduct-details">
+                <span>{product.Type}</span>
+                <span>{product.Category}</span>
+                <span>{product.Gender}</span>
+                <span>{product.quantity} no.</span>
+              </div>
+              <div className="addproduct-sizes">
+                {product.size &&
+                  product.size.map((size) => (
+                    <span key={size} className="addproduct-size-tag">
+                      {size}
+                    </span>
+                  ))}
+              </div>
+              <div className="addproduct-actions">
+                <button
+                  className="addproduct-edit-button"
+                  onClick={() => handleEdit(product)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="addproduct-delete-button"
+                  onClick={() => handleDelete(product.id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
-          )}
-        </form>
+          </div>
+        ))}
       </div>
-    </>
+
+      {(isAddingProduct || editingProduct) && (
+        <div className="addproduct-modal-overlay">
+          <div className="addproduct-modal">
+            <div className="addproduct-modal-image-section">
+              <label className="addproduct-file-input-wrapper">
+                <input
+                  type="file"
+                  multiple
+                  className="file-input"
+                  onChange={handleImageChange}
+                  accept="image/*"
+                />
+                <div className="addproduct-file-input-label">
+                  <span>Click or drag images here</span>
+                  <br />
+                  <small>Upload product images</small>
+                  {/* Show Uploaded Images */}
+                  <div className="uploaded-images">
+                    <div className="uploaded-images-list">
+                      {images.map((image, index) => (
+                        <div key={index} className="image-thumbnail">
+                          <span>{index + 1} - </span>
+                          <img src={image.url} alt={`Uploaded ${index + 1}`} />
+                        </div>
+                      ))}
+                    </div>
+                    {images.length > 0 && (
+                      <button
+                        onClick={resetThumbnails}
+                        className="addproduct-reset-button"
+                      >
+                        x
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </label>
+            </div>
+
+            <form onSubmit={handleSubmit} className="addproduct-modal-content">
+              <div className="addproduct-product-form-header">
+                <input
+                  type="text"
+                  name="Name"
+                  placeholder="Product Name"
+                  value={productForm.Name}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="Description"
+                  placeholder="Product Description"
+                  value={productForm.Description}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="addproduct-price-section">
+                <span>₹</span>
+                <input
+                  type="number"
+                  name="price"
+                  className="addproduct-product-price-input"
+                  value={productForm.price}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="addproduct-product-details-grid">
+                <select
+                  name="Type"
+                  value={productForm.Type}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Type</option>
+                  <option value="Minimalist">Minimalist</option>
+                  <option value="Spiritual">Spiritual</option>
+                </select>
+
+                <select
+                  name="Category"
+                  value={productForm.Category}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Category</option>
+                  <option value="Oversize">Oversize</option>
+                  <option value="Tshirts">Tshirts</option>
+                  <option value="Hoodies">Hoodies</option>
+                </select>
+
+                <select
+                  name="Gender"
+                  value={productForm.Gender}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="unisex">Unisex</option>
+                </select>
+
+                <input
+                  type="number"
+                  name="quantity"
+                  placeholder="Quantity"
+                  value={productForm.quantity}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="addproduct-form-group">
+                <label>Sizes</label>
+                <div className="addproduct-size-buttons">
+                  {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
+                    <button
+                      type="button"
+                      key={size}
+                      className={`addproduct-size-button ${
+                        productForm.size.includes(size) ? "active" : ""
+                      }`}
+                      onClick={() => toggleSize(size)}
+                    >
+                      {size}
+                      {productForm.size.includes(size) && (
+                        <span className="addproduct-checkmark">✓</span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+                <div className="addproduct-selected-sizes">
+                  Selected sizes: {productForm.size.join(", ")}
+                </div>
+              </div>
+
+              {progress > 0 && (
+                <div className="addproduct-progress-bar">
+                  <div
+                    className="addproduct-progress"
+                    style={{ width: `${progress}%` }}
+                  >
+                    {progress}% uploaded
+                  </div>
+                </div>
+              )}
+
+              <div className="addproduct-modal-actions">
+                <button type="submit" className="addproduct-save-button">
+                  {editingProduct ? "Update" : "Add"} Product
+                </button>
+                <button
+                  type="button"
+                  className="addproduct-cancel-button"
+                  onClick={() => {
+                    setIsAddingProduct(false);
+                    setEditingProduct(null);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
+
 export default AddProducts;

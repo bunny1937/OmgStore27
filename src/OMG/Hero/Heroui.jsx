@@ -11,6 +11,8 @@ import Lenis from "../shoppingcart/components/Lenis";
 import ImageGallery from "../shoppingcart/components/Loadergsap";
 import InfiniteMenu from "../shoppingcart/components/infinite/InfiniteMenu";
 import UImain from "../shoppingcart/components/infinite/UImain";
+import BackgroundPaths from "../shoppingcart/components/AniComponent2";
+import Checkoutnew from "../shoppingcart/components/Checkoutnew";
 export default function Heroui() {
   const [showIntro, setShowIntro] = useState(() => {
     return sessionStorage.getItem("introShown") !== "true";
@@ -36,7 +38,6 @@ export default function Heroui() {
           <MainPage />
           {/* <UImain /> */}
           <Carouselwheeel />
-          <ImageGallery />
           <Category />
           <SuggestionComponent />
           <Footer />

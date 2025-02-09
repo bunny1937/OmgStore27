@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { firestore } from "./Firebase";
+import { firestore } from "../../db/Firebase";
 import {
   collectionGroup,
   onSnapshot,

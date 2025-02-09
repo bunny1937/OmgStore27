@@ -24,11 +24,19 @@ const Payment = () => {
   const [error, setError] = useState(null);
   const [showTimeline, setShowTimeline] = useState(false);
   const statusIcons = {
-    Pending: <FontAwesomeIcon icon={faClock} size="1x" />, // Large icon
-    Processing: <FontAwesomeIcon icon={faSpinner} size="xl" spin />, // Large with spin effect
-    Shipped: <FontAwesomeIcon icon={faBox} size="xl" />,
-    "Out for Delivery": <FontAwesomeIcon icon={faTruck} size="xl" />,
-    Delivered: <FontAwesomeIcon icon={faCheckCircle} size="xl" />,
+    Pending: (
+      <FontAwesomeIcon icon={faClock} size="1x" className="icon-color" />
+    ), // Large icon
+    Processing: (
+      <FontAwesomeIcon icon={faSpinner} size="xl" spin className="icon-color" />
+    ), // Large with spin effect
+    Shipped: <FontAwesomeIcon icon={faBox} size="xl" className="icon-color" />,
+    "Out for Delivery": (
+      <FontAwesomeIcon icon={faTruck} size="xl" className="icon-color" />
+    ),
+    Delivered: (
+      <FontAwesomeIcon icon={faCheckCircle} size="xl" className="icon-color" />
+    ),
   };
   const fetchOrders = async (uid) => {
     try {
@@ -74,7 +82,11 @@ const Payment = () => {
         )[0]
       : null;
 
-  const calculateEstimatedDate = (currentStatus, targetStatus) => {
+  const calculateEstimatedDate = (
+    orderCreatedAt,
+    currentStatus,
+    targetStatus
+  ) => {
     const statusOrder = [
       "Pending",
       "Processing",
@@ -85,31 +97,30 @@ const Payment = () => {
     const currentIndex = statusOrder.indexOf(currentStatus);
     const targetIndex = statusOrder.indexOf(targetStatus);
 
+    const orderDate = orderCreatedAt?.seconds
+      ? new Date(orderCreatedAt.seconds * 1000)
+      : new Date();
+
     // If the target status is before or equal to current status, return actual date
     if (targetIndex <= currentIndex) {
       return new Date();
     }
 
-    // Calculate days difference between statuses
-    const daysBetweenStatuses = {
-      Pending: 0,
-      Processing: 1,
-      Shipped: 2,
-      "Out for Delivery": 1,
-      Delivered: 1,
+    const processingTimes = {
+      "Pending-Processing": 1, // 1 day from Pending to Processing
+      "Processing-Shipped": 2, // 2 days from Processing to Shipped
+      "Shipped-Out for Delivery": 2, // 2 days from Shipped to Out for Delivery
+      "Out for Delivery-Delivered": 0, // 1 day from Out for Delivery to Delivered
     };
 
     // Calculate total days to add from current status
-    let totalDaysToAdd = 0;
-    for (let i = currentIndex + 1; i <= targetIndex; i++) {
-      totalDaysToAdd += daysBetweenStatuses[statusOrder[i]];
+    let daysToAdd = 0;
+    for (let i = currentIndex; i < targetIndex; i++) {
+      const transition = `${statusOrder[i]}-${statusOrder[i + 1]}`;
+      daysToAdd += processingTimes[transition] || 0;
     }
-
-    // Use current date as base for future estimates
-    const now = new Date();
-    const estimatedDate = new Date(
-      now.getTime() + totalDaysToAdd * 24 * 60 * 60 * 1000
-    );
+    const estimatedDate = new Date(orderDate.getTime());
+    estimatedDate.setDate(estimatedDate.getDate() + daysToAdd);
 
     return estimatedDate;
   };
@@ -118,7 +129,6 @@ const Payment = () => {
     if (!order || !order.orderCreatedAt) return [];
 
     const currentStatus = order.status || "Pending";
-    const now = new Date();
 
     return [
       {
@@ -127,7 +137,6 @@ const Payment = () => {
         description: "Order placed and payment confirmed",
         estimatedCompletion: calculateEstimatedDate(
           order.orderCreatedAt,
-          0,
           currentStatus,
           "Pending"
         ),
@@ -138,7 +147,6 @@ const Payment = () => {
         description: "The order is being prepared for shipping",
         estimatedCompletion: calculateEstimatedDate(
           order.orderCreatedAt,
-          1,
           currentStatus,
           "Processing"
         ),
@@ -149,7 +157,6 @@ const Payment = () => {
         description: "Package has left our warehouse",
         estimatedCompletion: calculateEstimatedDate(
           order.orderCreatedAt,
-          2,
           currentStatus,
           "Shipped"
         ),
@@ -160,7 +167,6 @@ const Payment = () => {
         description: "The Order is out for delivery",
         estimatedCompletion: calculateEstimatedDate(
           order.orderCreatedAt,
-          1,
           currentStatus,
           "Out for Delivery"
         ),
@@ -171,7 +177,6 @@ const Payment = () => {
         description: "Package has been delivered",
         estimatedCompletion: calculateEstimatedDate(
           order.orderCreatedAt,
-          1,
           currentStatus,
           "Delivered"
         ),
