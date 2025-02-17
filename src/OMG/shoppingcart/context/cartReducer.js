@@ -15,6 +15,52 @@ const cartReducer = (state, action) => {
         ...state,
         isLoading: action.payload,
       };
+
+    case "SET_BUY_NOW_ITEM":
+      return {
+        ...state,
+        buyNowItem: action.payload,
+      };
+
+    case "INCREMENT_BUY_NOW": {
+      if (!state.buyNowItem) return state;
+      return {
+        ...state,
+        buyNowItem: {
+          ...state.buyNowItem,
+          quantity: (state.buyNowItem.quantity || 0) + 1,
+        },
+      };
+    }
+
+    case "DECREMENT_BUY_NOW": {
+      if (!state.buyNowItem) return state;
+      const newQuantity = Math.max((state.buyNowItem.quantity || 0) - 1, 0);
+
+      // If quantity becomes 0, remove the buy now item
+      if (newQuantity === 0) {
+        return {
+          ...state,
+          buyNowItem: null,
+        };
+      }
+
+      return {
+        ...state,
+        buyNowItem: {
+          ...state.buyNowItem,
+          quantity: newQuantity,
+        },
+      };
+    }
+
+    case "REMOVE_BUY_NOW": {
+      return {
+        ...state,
+        buyNowItem: null,
+      };
+    }
+
     case "ADD_TO_CART": {
       const product = action.payload;
       const existingItemIndex = state.cartItems.findIndex(

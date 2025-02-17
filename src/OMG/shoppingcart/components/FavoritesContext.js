@@ -10,10 +10,13 @@ import {
   writeBatch, // Correct method for Firestore batch operations
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Favourites from "./Favourites";
 
 const FavouritesContext = createContext();
 
 const FavouritesProvider = ({ children }) => {
+  const [showFavourites, setShowFavourites] = useState(false);
+  const [notification, setNotification] = useState("");
   const [favouriteItems, setFavouriteItems] = useState([]);
   const [userId, setUserId] = useState(null); // Holds the user ID when authenticated
   const db = getFirestore();
@@ -131,12 +134,17 @@ const FavouritesProvider = ({ children }) => {
     <FavouritesContext.Provider
       value={{
         favouriteItems,
+        notification,
+        showFavourites,
+        setShowFavourites,
+        removeFavouriteItem,
+        removeAllFavourites,
         addFavourite,
         removeFavouriteItem,
         removeAllFavourites,
       }}
     >
-      {children}
+      {children} {showFavourites && <Favourites />}
     </FavouritesContext.Provider>
   );
 };

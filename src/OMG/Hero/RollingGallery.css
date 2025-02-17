@@ -3,6 +3,10 @@
   font-family: "Roboto", serif;
   background: linear-gradient(135deg, black, #220033);
 } */
+@font-face {
+  font-family: Genio;
+  src: url(/public/Fonts/kiltierregular-yqkgo.otf);
+}
 
 .carousel {
   position: relative;
@@ -43,7 +47,7 @@
   -ms-user-select: none;
   user-select: none;
   transform-origin: 0% 100%;
-  box-shadow: 0 10px 50px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 50px 10px rgb(0 0 0);
   background: black;
   pointer-events: all;
   transform: translate(var(--x), var(--y)) rotate(var(--rot));
@@ -70,21 +74,21 @@
   height: 100%;
   background: linear-gradient(
     to bottom,
-    rgb(0 0 0 / 14%),
+    rgba(0, 0, 0, 0.14) 0%,
     rgba(255, 125, 125, 0) 30%,
     rgba(77, 77, 77, 0) 50%,
-    rgba(36, 36, 36, 0.271),
-    100%
+    rgba(36, 36, 36, 0.271) 100%
   );
 }
 .carousel-item .title {
   position: absolute;
+  font-family: Genio;
   z-index: 1;
-  color: #fff;
-  bottom: 20px;
+  color: #111;
+  bottom: 4px;
   left: 20px;
   transition: opacity 0.8s cubic-bezier(0, 0.02, 0, 1);
-  font-size: clamp(20px, 3vw, 30px);
+  font-size: clamp(30px, 4vw, 30px);
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 }
 .carousel-item .num {

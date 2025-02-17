@@ -10,7 +10,10 @@
   align-items: center;
   margin-bottom: 2rem;
 }
-
+.chart-img {
+  width: 100%;
+  height: 100%;
+}
 .dashboard-title {
   font-size: 2rem;
   color: #1a1a1a;
@@ -107,26 +110,42 @@
 }
 
 .chart-container {
+  height: 500px; /* Explicit height for the chart */
+  border: 1px solid black;
   background: white;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
-
+canvas.chart-img {
+  padding-bottom: 2rem;
+  height: 400px;
+}
 .chart-title {
   font-size: 1.25rem;
   color: #1a1a1a;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   font-weight: 500;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .dashboard-title {
+    font-size: 1.75rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
   .analytics-container {
     padding: 1rem;
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr;
   }
 
   .charts-grid {
@@ -137,8 +156,23 @@
     flex-direction: column;
     gap: 1rem;
   }
+}
 
-  .chart-container {
-    min-height: 300px;
+@media (max-width: 576px) {
+  .dashboard-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .dashboard-header {
+    text-align: center;
+  }
+
+  .stat-card-value {
+    font-size: 1.25rem;
+  }
+
+  .chart-title {
+    font-size: 1rem;
   }
 }

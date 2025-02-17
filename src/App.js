@@ -41,6 +41,7 @@ import AddProducts from "./OMG/db/AddProduct";
 import OrdersDash from "./OMG/admin/Components/OrdersDash";
 import Checkoutnew from "./OMG/shoppingcart/components/Checkoutnew";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { SignInnew } from "./OMG/Auth/SignInnew";
 
 function App() {
   return (
@@ -64,7 +65,7 @@ function App() {
                     <Route path="/Support" element={<Support />} />
                     <Route path="/Order" element={<Order />} />
                     <Route path="/Sidebar" element={<Sidebar />} />
-                    <Route path="/SignIn" element={<SignIn />} />
+                    <Route path="/SignIn" element={<SignInnew />} />
                     <Route path="/Home" element={<Home />} />
                     <Route path="/Details/:id" element={<Details />} />
                     <Route path="/Favourites" element={<Favourites />} />
@@ -74,7 +75,7 @@ function App() {
                     />{" "}
                     <Route path="/products/:type" element={<CategoryType />} />
                     <Route path="/Cart" element={<Cart />} />
-                    <Route path="/Checkout" element={<Checkoutnew />} />
+                    <Route path="/Checkout/:mode?" element={<Checkoutnew />} />
                     <Route path="/Payment" element={<Payment />} />
                     <Route path="/AdminDash" element={<AdminDash />} />
                     {/* Protected Route for Admin */}

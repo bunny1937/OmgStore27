@@ -411,12 +411,12 @@
 .addproduct-modal-actions {
   display: flex;
   gap: 15px;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .addproduct-save-button,
 .addproduct-cancel-button {
-  padding: 12px 25px;
+  padding: 8px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -465,6 +465,46 @@
 
   .addproduct-modal {
     width: 95%;
+    padding: 20px;
+  }
+
+  .addproduct-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .addproduct-form-grid {
+    gap: 15px;
+  }
+}
+/* Responsive adjustments */
+@media (max-width: 540px) {
+  .product-management {
+    padding: 0;
+  }
+  .addproduct-products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+    padding: 10px;
+  }
+  .addproduct-product-details-grid {
+    grid-template-columns: repeat(1fr, 2fr); /* Two columns of equal width */
+    gap: 0.4rem; /* Space between items */
+    width: 140%;
+    overflow: scroll;
+  }
+  .addproduct-product-card {
+    padding: 10px;
+  }
+  .addproduct-file-input-wrapper {
+    padding: 20px 0;
+  }
+  .addproduct-modal-content {
+    padding: 20px 0;
+  }
+  .addproduct-modal {
+    width: 86%;
     padding: 20px;
   }
 

@@ -14,6 +14,15 @@
   margin-bottom: 20px;
   text-align: center;
 }
+.always-open {
+  background-color: #f5f5f5; /* Light background to make it look open */
+  font-weight: bold;
+}
+
+.always-active {
+  color: #ff5733 !important; /* Make Analytics visually distinct */
+  font-weight: bold;
+}
 
 .sidebar nav ul {
   list-style: none;

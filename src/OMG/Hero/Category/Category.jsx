@@ -180,7 +180,7 @@ const Category = () => {
 
   return (
     <div className="horizontal-category-slider">
-      {renderProductSlider("Hoodies", "Hoodies")}
+      {/* {renderProductSlider("Hoodies", "Hoodies")}*/}
       {renderProductSlider("Tshirts", "T-Shirts")}
       {renderProductSlider("Oversize", "Oversized")}
     </div>

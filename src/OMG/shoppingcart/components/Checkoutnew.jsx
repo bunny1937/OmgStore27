@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import cartContext from "../context/cartContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaPlus, FaMinus, FaTruck, FaTrash } from "react-icons/fa";
 import { firestore, db } from "../../db/Firebase";
@@ -12,14 +12,22 @@ import "./Checkoutnew.css";
 const Checkoutnew = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const steps = ["Overview", "Address", "Payment"];
-  const { cartItems, removeItem } = useContext(cartContext);
+  const { cartItems, removeItem, buyNowItem } = useContext(cartContext);
   const [userId, setUserId] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [showAddressDetails, setShowAddressDetails] = useState(false);
   const [savedAddresses, setSavedAddresses] = useState([]);
+  const [buyNowItem1, setBuyNowItem] = useState(null);
   const [selectedAddressId, setSelectedAddressId] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const { incrementItem, decrementItem } = useContext(cartContext);
+  const {
+    incrementItem,
+    decrementItem,
+    incrementBuyNowItem,
+    decrementBuyNowItem,
+    removeBuyNowItem,
+    clearCart,
+  } = useContext(cartContext);
   const [userInfo, setUserInfo] = useState(null);
   const [shippingInfo, setShippingInfo] = useState({
     city: "",
@@ -31,6 +39,10 @@ const Checkoutnew = () => {
     state: "",
     street: "",
   });
+  const navigate = useNavigate();
+  const { mode } = useParams();
+  const [checkoutMode, setCheckoutMode] = useState(mode);
+  const [localItems, setLocalItems] = useState([]);
 
   useEffect(() => {
     const auth = getAuth();
@@ -121,6 +133,52 @@ const Checkoutnew = () => {
     }
   }, [userId]);
 
+  useEffect(() => {
+    // Determine initial mode and items based on URL and available items
+    if (mode === "mode=buynow" && buyNowItem) {
+      setLocalItems([buyNowItem]);
+      setCheckoutMode("buynow");
+    } else if (cartItems.length > 0) {
+      setLocalItems(cartItems);
+      setCheckoutMode("cart");
+    }
+  }, [mode, buyNowItem, cartItems]);
+
+  // Modified effect for handling item removal
+  useEffect(() => {
+    const handleModeChange = () => {
+      if (checkoutMode === "buynow") {
+        if (!buyNowItem) {
+          // If buy now item is removed and cart has items, switch to cart
+          if (cartItems.length > 0) {
+            setCheckoutMode("cart");
+            setLocalItems(cartItems);
+            navigate("/checkout", { replace: true });
+          } else {
+            // If no items left at all, redirect to home or cart
+            navigate("/cart");
+          }
+        }
+      } else if (checkoutMode === "cart") {
+        if (cartItems.length === 0) {
+          if (buyNowItem) {
+            // If cart is empty but there's a buy now item, switch to it
+            setCheckoutMode("buynow");
+            setLocalItems([buyNowItem]);
+            navigate("/checkout/mode=buynow", { replace: true });
+          } else {
+            // If no items left at all, redirect to home or cart
+            navigate("/cart");
+          }
+        }
+      }
+    };
+
+    handleModeChange();
+  }, [buyNowItem, cartItems, checkoutMode, navigate]);
+
+  const itemsToDisplay = localItems;
+
   const handleInputChange = (e) => {
     setShippingInfo((prev) => {
       const updated = { ...prev, [e.target.name]: e.target.value };
@@ -188,20 +246,35 @@ const Checkoutnew = () => {
       }));
     }
   };
-
-  const cartTotal = cartItems
-    .map((item) => item.price * item.quantity)
-    .reduce((prevValue, currValue) => prevValue + currValue, 0);
+  // if (itemsToDisplay.length === 0) {
+  //   // Instead of showing empty checkout page
+  //   navigate("/Home"); // or navigate to order confirmation
+  // }
+  const cartTotal =
+    checkoutMode === "buynow"
+      ? buyNowItem
+        ? buyNowItem.price * buyNowItem.quantity
+        : 0
+      : itemsToDisplay.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0
+        );
 
   // Save the order details to Firestore and navigate to payment page
   const handlePayClick = async () => {
-    if (userId && selectedAddress && cartItems.length > 0) {
+    if (userId && selectedAddress && localItems.length > 0) {
       try {
         const orderRef = collection(firestore, "users", userId, "orders");
+        const itemsForOrder =
+          checkoutMode === "buynow" ? [buyNowItem] : cartItems;
+
         const newOrder = {
-          cartItems,
+          cartItems: itemsForOrder,
           shippingInfo: selectedAddress,
-          totalAmount: cartTotal,
+          totalAmount:
+            checkoutMode === "buynow"
+              ? buyNowItem.price * buyNowItem.quantity
+              : cartTotal,
           orderCreatedAt: new Date(),
           userInfo: {
             email: userInfo.email,
@@ -210,11 +283,34 @@ const Checkoutnew = () => {
             lastName: userInfo.lastName,
             userId: userId,
           },
+          orderType: checkoutMode,
         };
 
         await addDoc(orderRef, newOrder);
-        // navigate("/Payment");
-      } catch (error) {}
+
+        // const confirmPurchase = window.confirm(
+        //   `Proceed to pay for ${
+        //     checkoutMode === "buynow" ? "this item" : "cart items"
+        //   }?`
+        // );
+        // if (!confirmPurchase) return;
+
+        if (checkoutMode === "buynow") {
+          removeBuyNowItem();
+        } else {
+          clearCart();
+        }
+        toast.success(
+          `Order placed successfully! ${
+            checkoutMode === "buynow"
+              ? "You can continue shopping or check your cart items."
+              : "You can continue shopping."
+          }`
+        );
+        navigate("/payment");
+      } catch (error) {
+        toast.error("Error creating order");
+      }
     } else {
       alert("Please select an address and ensure the cart is not empty.");
     }
@@ -229,6 +325,40 @@ const Checkoutnew = () => {
   const handlePrev = () => {
     if (currentStep > 1) {
       setCurrentStep((prev) => prev - 1);
+    }
+  };
+
+  const handleIncrement = (item) => {
+    if (checkoutMode === "buynow") {
+      incrementBuyNowItem();
+    } else {
+      incrementItem(item.id, item.size);
+    }
+  };
+
+  const handleDecrement = (item) => {
+    if (checkoutMode === "buynow") {
+      decrementBuyNowItem();
+    } else {
+      decrementItem(item.id, item.size);
+    }
+  };
+
+  const handleRemove = (item) => {
+    if (checkoutMode === "buynow") {
+      removeBuyNowItem();
+      // Check if cart has items to fall back to
+      if (cartItems.length > 0) {
+        setCheckoutMode("cart");
+        setLocalItems(cartItems);
+        navigate("/checkout", { replace: true });
+      }
+    } else {
+      removeItem(item.id, item.size);
+      // Update local items immediately to reflect cart state
+      setLocalItems(
+        cartItems.filter((i) => i.id !== item.id || i.size !== item.size)
+      );
     }
   };
 
@@ -263,10 +393,10 @@ const Checkoutnew = () => {
             {currentStep === 1 && (
               <div className="form-step enter">
                 <div className="cart-view">
-                  {cartItems.map((item, index) => (
+                  {itemsToDisplay.map((item, index) => (
                     <motion.div
                       className="cart-item"
-                      key={index}
+                      key={`${checkoutMode}-${item.id}-${item.size}`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
@@ -288,23 +418,19 @@ const Checkoutnew = () => {
                         <div className="cart-item-pricing">
                           <div className="quantity-controls">
                             <button
-                              onClick={() => decrementItem(item.id, item.size)}
+                              onClick={() => handleDecrement(item)}
                               disabled={item.quantity <= 1}
                             >
                               <FaMinus />
                             </button>
                             <span>{item.quantity}</span>
-                            <button
-                              onClick={() => incrementItem(item.id, item.size)}
-                            >
+                            <button onClick={() => handleIncrement(item)}>
                               <FaPlus />
                             </button>
                           </div>
                           <button
                             className="remove-item-button"
-                            onClick={() =>
-                              removeItem(item.id, item.size || "N/A")
-                            }
+                            onClick={() => handleRemove(item)}
                           >
                             <FaTrash />
                           </button>
@@ -460,28 +586,20 @@ const Checkoutnew = () => {
                       <div className="address-details-form">
                         <h4>Address Details</h4>
                         <div>
-                          <strong>Name:</strong> {selectedAddress.name}
+                          <strong>Name:</strong> {selectedAddress.name},{" "}
+                          <strong>Number:</strong> {selectedAddress.number}
                         </div>
                         <div>
                           <strong>Email:</strong> {selectedAddress.email}
                         </div>
                         <div>
-                          <strong>Number:</strong> {selectedAddress.number}
-                        </div>
-
-                        <div>
-                          <strong>Flat No:</strong> {selectedAddress.flat}
-                        </div>
-                        <div>
+                          <strong>Flat No:</strong> {selectedAddress.flat},
                           <strong>Street Name:</strong> {selectedAddress.street}
+                          , <strong>Locality:</strong>{" "}
+                          {selectedAddress.locality}
                         </div>
                         <div>
-                          <strong>Locality:</strong> {selectedAddress.locality}
-                        </div>
-                        <div>
-                          <strong>City:</strong> {selectedAddress.city}
-                        </div>
-                        <div>
+                          <strong>City:</strong> {selectedAddress.city},
                           <strong>State:</strong> {selectedAddress.state}
                         </div>
                         <div>
@@ -507,7 +625,7 @@ const Checkoutnew = () => {
                 <div className="pay-overview">
                   <div className="checkout-left">
                     <div className="cart-view-final">
-                      {cartItems.map((item, index) => (
+                      {itemsToDisplay.map((item, index) => (
                         <motion.div
                           className="cart-item"
                           key={index}
@@ -527,29 +645,21 @@ const Checkoutnew = () => {
                             <div className="cart-item-pricing">
                               <div className="quantity-controls">
                                 <button
-                                  onClick={() =>
-                                    decrementItem(item.id, item.size)
-                                  }
+                                  onClick={() => handleDecrement(item)}
                                   disabled={item.quantity <= 1}
                                 >
                                   <FaMinus />
                                 </button>
                                 <span>{item.quantity}</span>
-                                <button
-                                  onClick={() =>
-                                    incrementItem(item.id, item.size)
-                                  }
-                                >
+                                <button onClick={() => handleIncrement(item)}>
                                   <FaPlus />
                                 </button>
                               </div>
                               <button
                                 className="remove-item-button"
-                                onClick={() =>
-                                  removeItem(item.id, item.size || "N/A")
-                                }
+                                onClick={() => handleRemove(item)}
                               >
-                                <p>Remove</p>
+                                <FaTrash />{" "}
                               </button>
                             </div>
                           </div>

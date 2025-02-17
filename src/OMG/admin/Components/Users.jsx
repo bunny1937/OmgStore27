@@ -10,7 +10,7 @@ import { getAuth } from "firebase/auth"; // Import Firebase Auth
 import { db } from "../../db/Firebase"; // Import Firestore instance
 import "./Users.css"; // Plain CSS for styling
 
-const Users = () => {
+const UsersDash = () => {
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState("all");
   const [sortOrder, setSortOrder] = useState("newest");
@@ -190,4 +190,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default UsersDash;

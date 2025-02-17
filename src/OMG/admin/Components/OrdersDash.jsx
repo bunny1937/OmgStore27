@@ -164,6 +164,7 @@ const OrdersDash = ({ userId, orderId }) => {
               <th>Total Amount</th>
               <th>Order Date</th>
               <th>Actions</th>
+              <th>view</th>
             </tr>
           </thead>
           <tbody>

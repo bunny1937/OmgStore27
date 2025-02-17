@@ -8,7 +8,7 @@
 .checkout-container {
   display: flex;
   padding: 2rem;
-  min-height: 100vh;
+  height: 88vh;
   width: 80%;
   overflow-y: auto;
   background-color: #ebebeb;
@@ -624,8 +624,11 @@ button:focus {
 }
 
 @media (max-width: 1200px) {
-  .cart-view {
+  .checkout-left {
     width: 60%;
+  }
+  .checkout-right {
+    width: 40%;
   }
 }
 /* Add these new styles to your existing CSS */
@@ -634,16 +637,27 @@ button:focus {
   .checkout-container {
     flex-direction: column;
     padding: 1rem;
+    width: 90%;
   }
-
-  .cart-view,
+  .checkout-right {
+    padding: 20px 14px;
+  }
+  .coupon-section input {
+    padding: 4px;
+    height: 1.6rem;
+    border-radius: 4px;
+  }
+  .coupon-section .apply-button {
+    padding: 4px;
+  }
+  /* .cart-view,
   .right {
     width: 100%;
   }
   .right {
     margin-top: 1rem;
     padding: 0;
-  }
+  } */
   /* Adjust existing components for better mobile view */
   .cart-item {
     align-items: center;
@@ -663,14 +677,50 @@ button:focus {
     padding-bottom: 70px;
   }
 }
-@media (max-width: 640px) {
+@media (max-width: 840px) and (min-width: 760px) {
+  .checkout-container {
+    width: 100%;
+    padding: 0.6rem;
+  }
+  .pay-overview {
+    padding: 10px;
+  }
+  .checkout-left {
+    width: 55%;
+  }
+  .checkout-right {
+    width: 45%;
+  }
+}
+/* @media (max-width: 760px) and (min-width: 540px) {
+  .cart-item {
+    padding: 0.5rem;
+  }
+  .cart-item-img {
+    margin-right: 0;
+  }
+  .cart-item-info h2 {
+    font-size: 1.1rem;
+  }
+  .cart-item-info h4 {
+    font-size: 0.9rem;
+  }
+  .quantity-controls button {
+    width: 22px;
+    height: 22px;
+  }
+  .remove-item-button {
+    padding: 4px;
+  }
+} */
+@media (max-width: 760px) {
   .checkout {
     padding: 0.4rem;
-    background-image: none;
   }
   .checkout-container {
     width: 100%;
     padding: 0.6rem;
+    height: 90vh;
   }
   .checkout-left,
   .checkout-right {
@@ -683,24 +733,27 @@ button:focus {
     flex-direction: column;
     padding: 10px;
   }
-  .cart-item-img img {
-    margin-right: 5px;
+  .cart-item-img {
+    margin-right: 0;
   }
   .cart-view-final {
     padding: 0;
   }
   .cart-item-info h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
   .cart-item-info h3 {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .cart-item-info h4 {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
-@media (max-width: 424px) {
+@media (max-width: 550px) {
+  .checkout-container {
+    height: 87vh;
+  }
   .cart-item {
     padding: 0.6rem 1rem;
   }
@@ -712,14 +765,35 @@ button:focus {
   .remove-item-button {
     padding: 6px;
   }
-  .cart-item-img img {
+  .cart-item-img {
     margin-right: 0;
   }
 }
-@media (max-width: 36px) {
-  .cart-item-img img {
+@media (max-width: 399px) and (min-width: 200px) {
+  .progress-bar {
+    margin: 1.5rem 1rem;
+  }
+  .step-circle {
+    width: 36px;
+    height: 36px;
+  }
+  .step-label {
+    font-size: 0.8rem;
+    margin-left: -0.6rem;
+  }
+  .checkout-btn {
+    padding: 10px 20px;
+  }
+}
+@media (max-width: 320px) {
+  .cart-item {
+    gap: 20px;
+    padding: 0.6rem;
+  }
+}
+@media (max-width: 290px) and (min-width: 140px) {
+  .quantity-controls {
     margin-right: 0;
-    width: 70px;
   }
 }
 @media (max-width: 164px) {

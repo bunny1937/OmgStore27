@@ -90,8 +90,8 @@
   background: #ff4d4d;
   color: white;
   border: none;
-  border-radius: 50%;
-  width: 30px;
+  border-radius: 10px;
+  width: 70px;
   height: 30px;
   font-size: 18px;
   cursor: pointer;
@@ -117,6 +117,7 @@
   border-bottom: 2px solid #ddd;
   padding-bottom: 5px;
 }
+
 /* Order by Section */
 .order-by {
   margin-bottom: 20px;
@@ -131,54 +132,31 @@
 }
 
 /* Info Grid */
-.info-user {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two columns */
-  gap: 8px; /* Spacing between items */
-}
-
-/* Individual Info Items */
-.info-item {
-  display: flex;
-  align-items: center;
-}
-
-.info-item label {
-  font-weight: bold;
-  color: #666;
-  margin-right: 10px;
-  margin-bottom: 0;
-  flex-shrink: 0; /* Prevent labels from shrinking */
-}
-
-.info-item p {
-  margin: 0;
-  color: #333;
-  text-align: left;
-  word-break: break-word; /* Prevent overflow for long data */
-}
-
-/* Info Grid */
+.info-user,
 .info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 8px;
 }
 
+.info-item,
 .info-grid div {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
+.info-item label,
 .info-grid label {
   font-weight: bold;
-  margin-bottom: 5px;
   color: #666;
+  margin-right: 10px;
+  margin-bottom: 5px;
 }
 
+.info-item p,
 .info-grid p {
   margin: 0;
-  color: #444;
+  color: #333;
 }
 
 /* Cart Items */
@@ -204,10 +182,68 @@
   color: #333;
 }
 
-.order-section ul {
-  padding-left: 20px;
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .modal-content {
+    width: 80%;
+    padding: 20px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    font-size: 14px;
+  }
+
+  .order-section h3 {
+    font-size: 16px;
+  }
 }
 
-.cart-items li {
-  list-style: disc;
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .orders-table-container {
+    max-height: 50vh;
+  }
+
+  .info-user,
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .order-section h3,
+  .order-by h2 {
+    font-size: 15px;
+  }
+
+  .cart-items li {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 10px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    font-size: 12px;
+  }
+
+  .order-section h3,
+  .order-by h2 {
+    font-size: 14px;
+  }
+
+  .total-amount {
+    font-size: 16px;
+  }
+
+  .cart-items li {
+    font-size: 13px;
+  }
 }

@@ -150,9 +150,8 @@ const Carouselwheeel = () => {
                     console.error("Error loading image:", product.ImgUrls[0]);
                   }}
                 />
+                <div className="title">{product.Name}</div>
 
-                <div className="title">{product.name}</div>
-                <div className="price">₹{product.price}</div>
                 <div className="category">{product.Category}</div>
                 <div className="gender">{product.Gender}</div>
               </div>

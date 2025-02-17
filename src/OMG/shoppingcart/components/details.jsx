@@ -33,7 +33,7 @@ const Details = () => {
   const [isAdded, setIsAdded] = useState(false);
   const [isFavourite, setIsFavourite] = useState(false);
   const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-  const { addItem } = useContext(cartContext);
+  const { addItem, setBuyNowItem } = useContext(cartContext);
   const { addFavourite } = useContext(FavouritesContext);
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [shippingOpen, setShippingOpen] = useState(false);
@@ -130,19 +130,39 @@ const Details = () => {
     }, 3000);
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!user) {
       toast.error("Please sign in to proceed to checkout.");
+      setPopupOpen(true);
       return;
     }
 
-    if (cartItems.length === 0) {
-      toast.error("Your cart is empty. Add items to proceed.");
+    if (!selectedSize) {
+      toast.error("Please select a size before proceeding to checkout.");
       return;
     }
 
-    // Proceed to checkout
-    navigate("/Checkoutold");
+    try {
+      const item = {
+        id,
+        Img: ImgUrls[0],
+        uniqueItemId: `${id}-${selectedSize}`,
+        Category,
+        Gender,
+        Name,
+        Description,
+        price: Number(price),
+        quantity: quantity,
+        size: selectedSize,
+      };
+
+      // Instead of clearing cart and adding item, set it as buyNowItem
+      setBuyNowItem(item);
+      navigate("/Checkout/mode=buynow");
+    } catch (error) {
+      console.error("Error during checkout:", error);
+      toast.error("There was an error processing your request.");
+    }
   };
 
   const handleAddToFavourites = () => {

@@ -29,7 +29,8 @@ const initialState = {
   isCartOpen: false,
   cartItems: [],
   cartQuantity: 0,
-  isLoading: true, // Add loading flag
+  isLoading: true,
+  buyNowItem: null,
 };
 
 const CartProvider = ({ children }) => {
@@ -262,25 +263,40 @@ const CartProvider = ({ children }) => {
   const clearCart = async () => {
     if (!user?.uid) return;
 
-    const userCartRef = doc(firestore, "users", user.uid);
-
     try {
       const batch = writeBatch(firestore);
-
       const cartCollection = collection(firestore, "users", user.uid, "Cart");
       const cartSnapshot = await getDocs(cartCollection);
 
-      cartSnapshot.docs.forEach((doc) => {
-        batch.delete(doc.ref);
-      });
+      // Only attempt to delete if there are documents
+      if (!cartSnapshot.empty) {
+        cartSnapshot.docs.forEach((doc) => {
+          batch.delete(doc.ref);
+        });
+        await batch.commit();
+      }
 
-      await batch.commit();
+      // Update local state
       dispatch({ type: "CLEAR_CART" });
-
-      await updateDoc(userCartRef, { cartItems: [] });
     } catch (error) {
       console.error("Error clearing cart:", error);
     }
+  };
+
+  const setBuyNowItem = (item) => {
+    dispatch({ type: "SET_BUY_NOW_ITEM", payload: item });
+  };
+
+  const incrementBuyNowItem = () => {
+    dispatch({ type: "INCREMENT_BUY_NOW" });
+  };
+
+  const decrementBuyNowItem = () => {
+    dispatch({ type: "DECREMENT_BUY_NOW" });
+  };
+
+  const removeBuyNowItem = () => {
+    dispatch({ type: "REMOVE_BUY_NOW" });
   };
 
   const values = {
@@ -296,6 +312,11 @@ const CartProvider = ({ children }) => {
     decrementItem,
     toggleCart,
     clearCart,
+    setBuyNowItem,
+    buyNowItem: state.buyNowItem,
+    incrementBuyNowItem,
+    decrementBuyNowItem,
+    removeBuyNowItem,
   };
 
   return <cartContext.Provider value={values}>{children}</cartContext.Provider>;

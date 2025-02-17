@@ -174,6 +174,7 @@ function Popupsignin({ onClose }) {
               Don't have an account?
               <Link to="/SignUp">
                 <button
+                  className="redirect-btn"
                   onClick={() =>
                     navigate("/signup", {
                       state: { redirectTo: "/popupsignin" },

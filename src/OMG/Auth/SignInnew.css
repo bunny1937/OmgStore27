@@ -1,0 +1,217 @@
+/* .signup-signup-element {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+} */
+
+/* .signup-signup-element .signup-div {
+  background-color: #ffffff;
+  height: 100vh;
+  position: relativse;
+  width: 100%;
+} */
+
+/* .signup-element .signup-home-page {
+  background-color: #ffffff;
+  height: 100vh;
+  left: 0;
+  position: relative;
+  width: 100%;
+} */
+
+.signup-element .signup-overlap-group {
+  background-image: url(../shoppingcart/components/pages/photos/sebastian-svenson-LpbyDENbQQg-unsplash.jpg);
+  background-size: 100% 100%;
+  height: 92.3vh;
+}
+
+.signup-element .signup-content {
+  -webkit-backdrop-filter: blur(24px) brightness(100%);
+  backdrop-filter: blur(10px) brightness(100%);
+  background-color: #ffffff40;
+  border-radius: 18px;
+  left: 44%;
+  overflow: hidden;
+  position: relative;
+  top: 10%;
+  width: 30rem;
+}
+.signin-container {
+  max-width: auto;
+  padding: 20px;
+  height: auto;
+  border: 1px solid #ddd;
+}
+
+/* Signin form styles */
+
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-shadow: none !important;
+}
+
+/* Header styles */
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Input field styles */
+.input-field-box {
+  width: 100%;
+}
+.input-field {
+  margin-bottom: 10px;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.input:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Button field styles */
+.signin-method-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.signin-method-toggle button {
+  background-color: transparent;
+  border: 2px solid #0a0a0a;
+  color: #333;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.signin-method-toggle button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.signin-method-toggle button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.signin-method-toggle button:focus {
+  outline: none;
+}
+
+.button-field {
+  margin: 5px !important;
+}
+.button-field {
+  margin-top: 20px;
+}
+
+.btn {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #3e8e41;
+}
+
+/* Login link styles */
+
+.login-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.text {
+  font-size: 16px;
+  color: #666;
+}
+
+.link {
+  text-decoration: none;
+  color: #337ab7;
+}
+
+.link:hover {
+  color: #23527c;
+}
+@media (max-width: 960px) {
+  .signup-element .signup-content {
+    left: 24%;
+  }
+  .signup-element .signup-overlap-group {
+    background-size: 140% 100%;
+  }
+}
+@media (max-width: 800px) {
+  .signup-element .signup-content {
+    left: 16%;
+  }
+  .signup-element .signup-overlap-group {
+    background-size: 140% 100%;
+  }
+}
+@media (max-width: 720px) {
+  .signup-element .signup-content {
+    left: 12%;
+  }
+  .signup-element .signup-overlap-group {
+    background-size: 140% 100%;
+  }
+}
+@media (max-width: 720px) {
+  .signup-element .signup-content {
+    left: 6%;
+  }
+  .signup-element .signup-overlap-group {
+    background-size: 140% 100%;
+  }
+}
+@media (max-width: 550px) {
+  .signup-element .signup-content {
+    left: 10%;
+    width: 24rem;
+  }
+  .signin-form {
+    padding: 0;
+  }
+}
+@media (max-width: 550px) {
+  .signup-element .signup-content {
+    left: 4%;
+  }
+}
+@media (max-width: 440px) {
+  .signup-element .signup-content {
+    left: 4%;
+    width: 22rem;
+  }
+}
