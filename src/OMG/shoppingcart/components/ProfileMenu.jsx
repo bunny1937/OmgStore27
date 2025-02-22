@@ -124,7 +124,7 @@ function ProfileMenu() {
       <div className="profile-page-wrapper">
         <div className="profile-menu-container">
           <div className="profile-login-header">
-            <User size={48} className="profile-login-avatar" />
+            <FaUser size={48} className="profile-login-avatar" />
             <h2 className="profile-login-header-text">Please Sign In</h2>
             <p className="profile-login-header-text">
               Sign in to access your profile and manage your account
@@ -143,7 +143,7 @@ function ProfileMenu() {
       <div className="profile-menu-container">
         <div className="profile-header">
           <div className="profile-avatar">
-            <User size={32} />
+            <FaUser size={32} />
           </div>
           <div className="profile-info">
             <h2>{`${userInfo.firstName} ${userInfo.lastName}`}</h2>
