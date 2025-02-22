@@ -44,7 +44,7 @@ function ProfileMenu() {
     },
     {
       icon: <FaMapPin />,
-      title: "Addresses",
+      title: "Address",
       description: "Save & Manage Addresses",
       link: "/profile/address",
     },
