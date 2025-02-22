@@ -19,6 +19,7 @@ import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import UserContext from "./UserContext";
 import "./SignUp.css";
 import toast, { Toaster } from "react-hot-toast";
+import signupimg from "../shoppingcart/components/pages/photos/parallax/man-1283231_1280.jpg";
 
 const auth = getAuth(firebaseApp);
 
@@ -401,6 +402,9 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
           <div className="signup-home-page">
             <div className="signup-overlap-group">
               <div className="signup-content">
+                <div className="signup-image">
+                  <img src={signupimg} />
+                </div>
                 <Toaster position="top-center" reverseOrder={false} />
                 <div className={`modal ${open ? "open" : ""}`}>
                   <div className="signup-container">
@@ -458,7 +462,10 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
                       </div>
 
                       {signupMethod === "email" ? (
-                        <form onKeyDown={handleKeyPress}>
+                        <form
+                          onKeyDown={handleKeyPress}
+                          className="signup-form"
+                        >
                           <div className="input-field">
                             <label htmlFor="email">Email</label>
                             <input
@@ -544,7 +551,7 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
                       <div className="login-link">
                         <h3>
                           <span style={{ color: "rgb(0 0 0 / 73%)" }}>
-                            Don't have an account?
+                            Already have an account?
                           </span>
                           <Link to={"/SignIn"}>
                             <span style={{ textDecoration: "underline" }}>

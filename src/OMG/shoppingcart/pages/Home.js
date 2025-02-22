@@ -227,7 +227,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <Cart />
     </>
   );
 };

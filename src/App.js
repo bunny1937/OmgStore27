@@ -42,6 +42,12 @@ import OrdersDash from "./OMG/admin/Components/OrdersDash";
 import Checkoutnew from "./OMG/shoppingcart/components/Checkoutnew";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { SignInnew } from "./OMG/Auth/SignInnew";
+import ProfileMenu from "./OMG/shoppingcart/components/ProfileMenu";
+import BasicDetails from "./OMG/shoppingcart/components/UserProfile/Profile";
+import { Payments } from "@mui/icons-material";
+import Address from "./OMG/shoppingcart/components/UserProfile/Address";
+import Orders from "./OMG/shoppingcart/components/UserProfile/Order";
+import ChangePassword from "./OMG/shoppingcart/components/UserProfile/ChangePassword";
 
 function App() {
   return (
@@ -55,10 +61,28 @@ function App() {
             <ParallaxProvider>
               <FavouritesProvider>
                 <CartProvider>
+                  <Cart />
                   <Header />
                   <Routes>
                     <Route path="/" element={<Heroui />} />
                     <Route path="/SignUp" element={<Signup />} />
+                    <Route path="/ProfileMenu" element={<ProfileMenu />} />
+                    <Route path="/profile" element={<ProfileMenu />} />
+                    <Route
+                      path="/profile/BasicDetails"
+                      element={<BasicDetails />}
+                    />
+                    <Route path="/profile/orders" element={<Orders />} />
+                    <Route path="/profile/address" element={<Address />} />
+                    <Route path="/profile/payments" element={<Payment />} />
+                    <Route
+                      path="/profile/changepassword"
+                      element={<ChangePassword />}
+                    />
+                    <Route
+                      path="/profile/Favourites"
+                      element={<Favourites />}
+                    />
                     <Route path="UserProfile" element={<UserProfile />} />
                     <Route path="/UserProfile1/*" element={<UserProfile1 />} />
                     <Route path="/Profile1" element={<Profile1 />} />

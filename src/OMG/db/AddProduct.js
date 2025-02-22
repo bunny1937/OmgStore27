@@ -275,21 +275,6 @@ const AddProducts = () => {
       {(isAddingProduct || editingProduct) && (
         <div className="addproduct-modal-overlay">
           <div className="addproduct-modal">
-            <div className="addproduct-modal-actions">
-              <button type="submit" className="addproduct-save-button">
-                {editingProduct ? "Update" : "Add"} Product
-              </button>
-              <button
-                type="button"
-                className="addproduct-cancel-button"
-                onClick={() => {
-                  setIsAddingProduct(false);
-                  setEditingProduct(null);
-                }}
-              >
-                Cancel
-              </button>
-            </div>
             <div className="addproduct-modal-image-section">
               <label className="addproduct-file-input-wrapper">
                 <input
@@ -437,6 +422,21 @@ const AddProducts = () => {
                   </div>
                 </div>
               )}
+              <div className="addproduct-modal-actions">
+                <button type="submit" className="addproduct-save-button">
+                  {editingProduct ? "Update" : "Add"} Product
+                </button>
+                <button
+                  type="button"
+                  className="addproduct-cancel-button"
+                  onClick={() => {
+                    setIsAddingProduct(false);
+                    setEditingProduct(null);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
             </form>
           </div>
         </div>

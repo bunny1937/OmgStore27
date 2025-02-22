@@ -25,17 +25,17 @@ const Payment = () => {
   const [showTimeline, setShowTimeline] = useState(false);
   const statusIcons = {
     Pending: (
-      <FontAwesomeIcon icon={faClock} size="1x" className="icon-color" />
+      <FontAwesomeIcon icon={faClock} size="2xl" className="icon-color" />
     ), // Large icon
     Processing: (
-      <FontAwesomeIcon icon={faSpinner} size="xl" spin className="icon-color" />
+      <FontAwesomeIcon icon={faSpinner} size="2xl" className="icon-color" />
     ), // Large with spin effect
-    Shipped: <FontAwesomeIcon icon={faBox} size="xl" className="icon-color" />,
+    Shipped: <FontAwesomeIcon icon={faBox} size="2xl" className="icon-color" />,
     "Out for Delivery": (
-      <FontAwesomeIcon icon={faTruck} size="xl" className="icon-color" />
+      <FontAwesomeIcon icon={faTruck} size="2xl" className="icon-color" />
     ),
     Delivered: (
-      <FontAwesomeIcon icon={faCheckCircle} size="xl" className="icon-color" />
+      <FontAwesomeIcon icon={faCheckCircle} size="2xl" className="icon-color" />
     ),
   };
   const fetchOrders = async (uid) => {

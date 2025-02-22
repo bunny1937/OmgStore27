@@ -197,7 +197,7 @@ function SignIn({ open }) {
       } else {
         setIsAdmin(false);
         toast.success("Welcome!"); // Default success message
-        navigate("/Home");
+        navigate("/AdminDash");
       }
     } catch (error) {
       toast.error(error.message); // Show error message

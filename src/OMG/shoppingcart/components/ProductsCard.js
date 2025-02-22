@@ -18,7 +18,7 @@ const ProductsCard = ({ id, Name, Category, price, ImgUrls }) => {
     slidesToScroll: 1,
   };
   return (
-    <>
+    <z>
       <div className="product_card">
         <Link to={`/Details/${id}`}>
           <div className="product_card_img">
@@ -44,7 +44,7 @@ const ProductsCard = ({ id, Name, Category, price, ImgUrls }) => {
           <h4>{Category}</h4>
         </Link>
       </div>
-    </>
+    </z>
   );
 };
 

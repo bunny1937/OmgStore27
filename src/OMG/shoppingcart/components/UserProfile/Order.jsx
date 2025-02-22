@@ -9,7 +9,7 @@ import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
-function Order() {
+function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedOrderId, setExpandedOrderId] = useState(null);
@@ -199,4 +199,4 @@ function Order() {
   );
 }
 
-export default Order;
+export default Orders;

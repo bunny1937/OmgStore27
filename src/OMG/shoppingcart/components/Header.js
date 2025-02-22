@@ -22,6 +22,8 @@ const Header = () => {
   const searchContainerRef = useRef(null);
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 960);
+  const [activeTab, setActiveTab] = useState("home"); // Default active tab
 
   const handleDropdown = () => {
     setDropdown(!dropdown);
@@ -32,6 +34,14 @@ const Header = () => {
       setDropdown(false);
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 960);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     document.addEventListener("click", closeDropdown);
@@ -251,12 +261,6 @@ const Header = () => {
             <ul className="dropdown-menu">
               {user ? (
                 <>
-                  {/* <Link to={"/UserProfile"}>
-                    <p>Profile</p>
-                  </Link>
-                  <Link to={"/UserProfile1"}>
-                    <p>ProfileNew</p>
-                  </Link> */}
                   <Link to={"/Profile1"}>
                     <p>Profile</p>
                   </Link>
@@ -298,6 +302,60 @@ const Header = () => {
             {cartQuantity >= 1 && <span className="badge">{cartQuantity}</span>}
           </div>
         </div>
+        {isMobile && (
+          <div className="mobile-bottom-nav">
+            <Link
+              to="/"
+              className={`mobile-nav-item ${
+                activeTab === "home" ? "active" : ""
+              }`}
+              onClick={() => setActiveTab("home")}
+            >
+              <i className="fas fa-home"></i>
+              <span>Home</span>
+            </Link>
+
+            <Link
+              to="/Home"
+              className={`mobile-nav-item ${
+                activeTab === "products" ? "active" : ""
+              }`}
+              onClick={() => setActiveTab("products")}
+            >
+              <i className="fas fa-headset"></i>
+              <span>Products</span>
+            </Link>
+
+            <div
+              className={`mobile-nav-item ${
+                activeTab === "cart" ? "active" : ""
+              }`}
+              onClick={() => {
+                setActiveTab("cart");
+                handleToggleCart();
+              }}
+            >
+              <div className="mobile-icon-container">
+                <i className="fas fa-shopping-bag"></i>
+                {cartQuantity > 0 && (
+                  <span className="mobile-badge">{cartQuantity}</span>
+                )}
+              </div>
+              <span>Cart</span>
+            </div>
+
+            <Link
+              to="/ProfileMenu"
+              className={`mobile-nav-item ${
+                activeTab === "profile" ? "active" : ""
+              }`}
+              onClick={() => setActiveTab("profile")}
+            >
+              <i className="fas fa-user"></i>
+              <span>Profile</span>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

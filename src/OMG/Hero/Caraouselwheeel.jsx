@@ -141,7 +141,7 @@ const Carouselwheeel = () => {
               <div className="carousel-box">
                 <img
                   src={product.ImgUrls[0]} // Using the first image from ImgUrls array
-                  alt={product.name}
+                  alt="Product"
                   draggable="false" // Prevent image dragging
                   onDragStart={preventDragHandler}
                   style={{ userSelect: "none" }}
@@ -150,10 +150,9 @@ const Carouselwheeel = () => {
                     console.error("Error loading image:", product.ImgUrls[0]);
                   }}
                 />
-                <div className="title">{product.Name}</div>
-
+                {/* <div className="title">{product.Name}</div> 
                 <div className="category">{product.Category}</div>
-                <div className="gender">{product.Gender}</div>
+                <div className="gender">{product.Gender}</div> */}
               </div>
             </Link>
           </div>

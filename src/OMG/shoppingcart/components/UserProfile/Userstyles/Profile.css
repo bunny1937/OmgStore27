@@ -1,7 +1,6 @@
 .profile-card {
   margin: auto;
-  padding: 0.5rem;
-  background-color: #ebeae4;
+  padding: 1rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   border-radius: 2px;
 }
@@ -9,16 +8,24 @@
 .input-grid,
 .shipping-form-grid {
   display: grid;
+  border-radius: 15px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
 }
 
 .profile-grid {
   display: grid;
+  background-color: #ebeae4;
+  border-radius: 10px;
+  padding: 1rem;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
-
+.password-change {
+  background-color: #ebeae4;
+  border-radius: 10px;
+  padding: 1rem;
+}
 .input,
 input[type="email"] {
   width: 100%;
@@ -41,13 +48,16 @@ input[type="email"]:focus {
   cursor: not-allowed;
 }
 
-.edit-button {
+.edit-button,
+.save-button {
   background-color: #29342a;
   color: wheat;
   padding: 0.4rem;
   font-size: 1.2rem;
 }
-
+.save-button {
+  margin-top: 0.6rem;
+}
 .edit-button:hover {
   transform: scale(1.1);
 }

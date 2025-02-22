@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import UserContext from "./UserContext";
 import AddProducts from "../db/AddProduct";
 import AdminDashboard from "../admin/AdminLayout";
+import AdminSidebar from "../admin/Components/Sidebar";
 
-function AdminDash() {
+function AdminDash1() {
   const { isAdmin } = useContext(UserContext);
 
   if (!isAdmin) {
@@ -13,9 +14,9 @@ function AdminDash() {
   return (
     <div>
       <h1>Hello Admin</h1>
-      <AdminDashboard />
+      <AdminSidebar />
     </div>
   );
 }
 
-export default AdminDash;
+export default AdminDash1;

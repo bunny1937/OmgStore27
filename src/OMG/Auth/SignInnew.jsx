@@ -15,6 +15,7 @@ import { firebaseApp } from "../db/Firebase";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import UserContext from "./UserContext";
 import "./SignInnew.css";
+import signinimg from "../shoppingcart/components/pages/photos/parallax/pexels-olly-837140.jpg";
 
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
@@ -297,11 +298,14 @@ export function SignInnew({ open }) {
   };
   return (
     <div className="signup-element">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="signup-div">
         <div className="signup-home-page">
           <div className="signup-overlap-group">
             <div className="signup-content">
-              <Toaster position="top-center" reverseOrder={false} />
+              <div className="signin-image">
+                <img src={signinimg} />
+              </div>
               <div className={`modal ${open ? "open" : ""}`}>
                 <div className="signin-container">
                   <div className="signin-form">
@@ -366,6 +370,15 @@ export function SignInnew({ open }) {
                             {loading ? "Signing in..." : "Login"}
                           </button>
                         </div>
+                        <div className="button-field">
+                          <button
+                            onClick={signInWithGoogle}
+                            className="btn google-btn"
+                            disabled={loading}
+                          >
+                            {loading ? "Signing in..." : "Sign In with Google"}
+                          </button>
+                        </div>
                       </form>
                     ) : (
                       <>
@@ -421,15 +434,6 @@ export function SignInnew({ open }) {
                         )}
                       </>
                     )}
-                    <div className="button-field">
-                      <button
-                        onClick={signInWithGoogle}
-                        className="btn google-btn"
-                        disabled={loading}
-                      >
-                        {loading ? "Signing in..." : "Sign In with Google"}
-                      </button>
-                    </div>
 
                     <div className="login-link">
                       <h3>
