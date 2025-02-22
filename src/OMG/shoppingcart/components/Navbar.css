@@ -44,7 +44,6 @@
   list-style: none;
   text-align: center;
   width: 40vw;
-  margin-left: 1rem;
   justify-content: center;
 }
 
@@ -693,7 +692,7 @@ input.nosubmit {
     margin-top: 2.2rem;
   }
   .search-icon {
-    left: 4.6rem;
+    left: 4.2rem;
     z-index: 1;
     top: -0.3em;
   }
@@ -724,6 +723,11 @@ input.nosubmit {
   }
   .nav-menu .favourites-text {
     display: block;
+  }
+}
+@media screen and (max-width: 300px) and (min-width: 200px) {
+  .search-icon {
+    left: 3.8rem;
   }
 }
 @media screen and (max-width: 200px) {

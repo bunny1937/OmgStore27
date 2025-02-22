@@ -6,7 +6,7 @@ import {
   FaCreditCard,
   FaKey,
   FaHeart,
-  FaCheck,
+  FaSignOutAlt,
   FaArrowRight,
   FaMapPin,
 } from "react-icons/fa";
@@ -168,7 +168,7 @@ function ProfileMenu() {
         </div>
 
         <button className="profile-logout-button" onClick={logout}>
-          <FaCheck />
+          <FaSignOutAlt />
           <span>Logout</span>
         </button>
       </div>

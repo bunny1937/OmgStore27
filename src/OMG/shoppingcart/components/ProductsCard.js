@@ -7,6 +7,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const ProductsCard = ({ id, Name, Category, price, ImgUrls }) => {
+  const [loaded, setLoaded] = useState(false);
+
   const settings = {
     infinite: true,
     autoplay: true,
@@ -28,6 +30,8 @@ const ProductsCard = ({ id, Name, Category, price, ImgUrls }) => {
                   <div key={index}>
                     <img
                       src={imgUrl}
+                      onLoad={() => setLoaded(true)}
+                      style={{ visibility: loaded ? "visible" : "hidden" }}
                       alt={`${Name || "Product Image"} ${index + 1}`}
                     />
                   </div>

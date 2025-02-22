@@ -7,7 +7,10 @@
   font-family: Genio;
   src: url(/public/Fonts/kiltierregular-yqkgo.otf);
 }
-
+@font-face {
+  font-family: Sherdan;
+  src: url(/public/Fonts/rombera.otf);
+}
 .carousel {
   position: relative;
   z-index: 1;
@@ -35,7 +38,7 @@
   --opacity: calc(var(--zIndex) / var(--items) * 3 - 2);
   overflow: hidden;
   position: absolute;
-  z-index: var(--zIndex);
+  z-index: 4;
   width: var(--width);
   height: var(--height);
   margin: calc(var(--height) * -0.5) 0 0 calc(var(--width) * -0.5);
@@ -107,7 +110,25 @@
   object-fit: cover;
   pointer-events: none;
 }
-
+.carousel-instructions {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 30px;
+  margin-bottom: 1rem;
+}
+.carousel-instructions p,
+.carousel-instructions h2 {
+  font-family: Sherdan;
+  font-size: 3rem;
+  z-index: 10;
+}
+.carousel-instructions p {
+  width: 30%;
+  text-align: right;
+  color: #b4b4b4;
+  font-size: 1.4rem !important;
+}
 .layout {
   position: absolute;
   z-index: 0;
@@ -232,6 +253,9 @@
     --width: clamp(220px, 32vw, 380px);
     --height: clamp(220px, 42vw, 480px);
   }
+  .carousel-instructions h2 {
+    font-size: 2.1rem;
+  }
 }
 
 /* 1024px to 960px */
@@ -251,6 +275,13 @@
     --width: clamp(300px, 30vw, 370px);
     --height: clamp(320px, 42vw, 440px);
   }
+  .carousel-instructions h2 {
+    font-size: 1.6rem;
+  }
+  .carousel-instructions p {
+    font-size: 1rem !important;
+    width: 40%;
+  }
 }
 
 /* 760px to 540px */
@@ -262,10 +293,17 @@
     --width: clamp(280px, 30vw, 340px);
     --height: clamp(280px, 34vw, 360px);
   }
+  .carousel-instructions h2 {
+    font-size: 1.4rem;
+  }
+  .carousel-instructions p {
+    font-size: 0.7rem !important;
+    width: 40%;
+  }
 }
 
 /* 540px to 399px */
-@media (max-width: 540px) and (min-width: 399px) {
+@media (max-width: 560px) and (min-width: 399px) {
   .carousel {
     height: 60vh;
   }
@@ -275,6 +313,16 @@
   }
   .carousel-item .title {
     font-size: clamp(22px, 3vw, 30px);
+  }
+  .carousel-instructions {
+    padding: 10px;
+  }
+  .carousel-instructions h2 {
+    font-size: 1rem;
+  }
+  .carousel-instructions p {
+    font-size: 0.5rem !important;
+    width: 50%;
   }
 }
 
@@ -286,5 +334,15 @@
   .carousel-item {
     --width: clamp(160px, 12vw, 200px);
     --height: clamp(180px, 25vw, 300px);
+  }
+  .carousel-instructions {
+    padding: 10px;
+  }
+  .carousel-instructions h2 {
+    font-size: 0.8rem;
+  }
+  .carousel-instructions p {
+    font-size: 0.4rem !important;
+    width: 50%;
   }
 }

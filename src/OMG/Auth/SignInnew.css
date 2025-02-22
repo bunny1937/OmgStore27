@@ -21,46 +21,48 @@
   width: 100%;
 } */
 
-.signup-element .signup-overlap-group {
+/* .signup-element .signup-overlap-group {
   background-image: url(../shoppingcart/components/pages/photos/dried-leaves-gray-blank-background.jpg);
   background-size: 100% 100%;
   height: 91.7vh;
-}
+} */
 
-.signup-element .signup-content {
-  background-color: #f3f1f0;
-  border-radius: 18px;
-  left: 10%;
+.signup-element {
+  height: 91.6vh;
+  --_mesh-gradient-blur: 0px;
+  --_mesh-gradient-blend-mode: normal;
+
+  background: radial-gradient(at 85% 87%, #ebd4ce 0px, transparent 50%),
+    radial-gradient(at 80% 34%, #ebe3ce 0px, transparent 50%),
+    radial-gradient(at 69% 82%, #e5ebce 0px, transparent 50%),
+    radial-gradient(
+      at 27.387640784833255% 81.98019852339237%,
+      #cee5eb 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 32% 32%, #d4ceeb 0px, transparent 50%) #000000;
+  mix-blend-mode: var(--_mesh-gradient-blend-mode);
+  filter: blur(var(--_mesh-gradient-blur));
+  padding: 4rem 0;
   display: flex;
-  overflow: hidden;
-  align-items: center;
-  gap: 20px;
-  position: relative;
-  top: 6%;
-  width: 80%;
-}
-.header {
   justify-content: center;
+  align-items: center;
+}
+.signup-element .signup-content {
+  -webkit-backdrop-filter: blur(24px) brightness(100%);
+  backdrop-filter: blur(10px) brightness(100%);
+  background-color: #ffffff40;
+  border-radius: 18px;
+  overflow: hidden;
+  width: 30rem;
 }
 .signin-container {
-  width: 100%;
+  max-width: auto;
+  padding: 20px;
   height: auto;
+  border: 1px solid #ddd;
 }
-.signin-image {
-  width: 64%;
-  height: 40rem;
-}
-.signin-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-top-right-radius: 18px;
-  border-bottom-right-radius: 18px;
-}
-/* Signin form styles */
-.modal {
-  width: 40%;
-}
+
 .signin-form {
   display: flex;
   flex-direction: column;
@@ -177,44 +179,12 @@
   color: #23527c;
 }
 @media (max-width: 960px) {
-  .signup-element .signup-content {
-    left: 10%;
-    gap: 6px;
-  }
-  .signin-image {
-    width: 50%;
-  }
-  .modal {
-    width: 50%;
-  }
-  .signup-element .signup-overlap-group {
-    background-size: 140% 100%;
-  }
 }
 @media (max-width: 800px) {
-  .signup-element .signup-overlap-group {
-    background-size: 140% 100%;
-  }
 }
 @media (max-width: 720px) {
-  .signup-element .signup-overlap-group {
-    background-size: 140% 100%;
-  }
 }
 @media (max-width: 630px) {
-  .signup-element .signup-content {
-    flex-direction: column;
-  }
-  .signin-image {
-    width: 100%;
-    height: 20rem;
-  }
-  .signin-image img {
-    border-bottom-left-radius: 18px;
-  }
-  .modal {
-    width: 100%;
-  }
   .header h1 {
     margin-bottom: 0;
   }
@@ -226,17 +196,17 @@
   }
 }
 @media (max-width: 550px) {
-  .signup-element .signup-content {
+  /* .signup-element .signup-content {
     left: 10%;
     width: 24rem;
-  }
+  } */
   .signin-form {
-    padding: 0;
+    padding: 20px;
   }
 }
 @media (max-width: 400px) {
-  .signup-element .signup-content {
+  /* .signup-element .signup-content {
     left: 4%;
     width: 20rem;
-  }
+  } */
 }

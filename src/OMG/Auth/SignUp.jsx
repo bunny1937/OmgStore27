@@ -397,171 +397,157 @@ function SignUp({ onClose, open, onSignUpSuccess }) {
   };
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="signup-element">
-        <div className="signup-div">
-          <div className="signup-home-page">
-            <div className="signup-overlap-group">
-              <div className="signup-content">
-                <div className="signup-image">
-                  <img src={signupimg} />
+        <div className="signup-content">
+          <div className={`modal ${open ? "open" : ""}`}>
+            <div className="signup-container">
+              <div className="signup-form">
+                <div className="signup-header">
+                  <h1 className="title">Signup</h1>
+                  <div className="error-message">{error && <p>{error}</p>}</div>
                 </div>
-                <Toaster position="top-center" reverseOrder={false} />
-                <div className={`modal ${open ? "open" : ""}`}>
-                  <div className="signup-container">
-                    <div className="signup-form">
-                      <div className="signup-header">
-                        <h1 className="title">Signup</h1>
-                        <div className="error-message">
-                          {error && <p>{error}</p>}
-                        </div>
-                      </div>
-                      <div className="signup-method-toggle">
-                        <button
-                          onClick={() => setSignupMethod("email")}
-                          className={signupMethod === "email" ? "active" : ""}
-                        >
-                          Email
-                        </button>
-                        <button
-                          onClick={() => setSignupMethod("phone")}
-                          className={signupMethod === "phone" ? "active" : ""}
-                        >
-                          Phone
-                        </button>
-                      </div>
+                <div className="signup-method-toggle">
+                  <button
+                    onClick={() => setSignupMethod("email")}
+                    className={signupMethod === "email" ? "active" : ""}
+                  >
+                    Email
+                  </button>
+                  <button
+                    onClick={() => setSignupMethod("phone")}
+                    className={signupMethod === "phone" ? "active" : ""}
+                  >
+                    Phone
+                  </button>
+                </div>
 
-                      <div className="input-field">
-                        <label htmlFor="first-name">First Name</label>
-                        <input
-                          type="text"
-                          value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
-                          placeholder="First Name"
-                          className="input"
-                        />
-                      </div>
-                      <div className="input-field">
-                        <label htmlFor="last-name">Last Name</label>
-                        <input
-                          type="text"
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
-                          placeholder="Last Name"
-                          className="input"
-                        />
-                      </div>
-                      <div className="input-field">
-                        <label htmlFor="phone-number">Phone Number</label>
-                        <input
-                          type="tel"
-                          value={phoneNumber}
-                          onChange={(e) => setPhoneNumber(e.target.value)}
-                          placeholder="Phone Number (e.g., +1234567890)"
-                          className="input"
-                        />
-                      </div>
+                <div className="input-field">
+                  <label htmlFor="first-name">First Name</label>
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="First Name"
+                    className="input"
+                  />
+                </div>
+                <div className="input-field">
+                  <label htmlFor="last-name">Last Name</label>
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Last Name"
+                    className="input"
+                  />
+                </div>
+                <div className="input-field">
+                  <label htmlFor="phone-number">Phone Number</label>
+                  <input
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="Phone Number (e.g., +1234567890)"
+                    className="input"
+                  />
+                </div>
 
-                      {signupMethod === "email" ? (
-                        <form
-                          onKeyDown={handleKeyPress}
-                          className="signup-form"
-                        >
-                          <div className="input-field">
-                            <label htmlFor="email">Email</label>
-                            <input
-                              type="email"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
-                              placeholder="Email"
-                              className="input"
-                            />
-                          </div>
-                          <div className="input-field">
-                            <label htmlFor="password">Password</label>
-                            <input
-                              type="password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                              placeholder="Password"
-                              className="input"
-                            />
-                          </div>
-                          <div className="button-field">
-                            <button
-                              onClick={signup}
-                              className="btn"
-                              disabled={loading}
-                            >
-                              {loading ? "Signing Up..." : "Sign Up with Email"}
-                            </button>
-                          </div>
-                        </form>
-                      ) : (
-                        <>
-                          {!showVerificationInput ? (
-                            <div className="button-field">
-                              <button
-                                id="phone-sign-in-button"
-                                onClick={startPhoneVerification}
-                                className="btn"
-                                disabled={loading}
-                              >
-                                {loading
-                                  ? "Sending Code..."
-                                  : "Send Verification Code"}
-                              </button>
-                            </div>
-                          ) : (
-                            <>
-                              <div className="input-field">
-                                <input
-                                  type="text"
-                                  value={verificationCode}
-                                  onChange={(e) =>
-                                    setVerificationCode(e.target.value)
-                                  }
-                                  placeholder="Enter verification code"
-                                  className="input"
-                                />
-                              </div>
-                              <div className="button-field">
-                                <button
-                                  onClick={verifyPhoneNumber}
-                                  className="btn"
-                                  disabled={loading}
-                                >
-                                  {loading ? "Verifying..." : "Verify Code"}
-                                </button>
-                              </div>
-                            </>
-                          )}
-                        </>
-                      )}
-                      <div ref={recaptchaContainerRef}></div>
+                {signupMethod === "email" ? (
+                  <form onKeyDown={handleKeyPress} className="signup-form">
+                    <div className="input-field">
+                      <label htmlFor="email">Email</label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email"
+                        className="input"
+                      />
+                    </div>
+                    <div className="input-field">
+                      <label htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                        className="input"
+                      />
+                    </div>
+                    <div className="button-field">
+                      <button
+                        onClick={signup}
+                        className="btn"
+                        disabled={loading}
+                      >
+                        {loading ? "Signing Up..." : "Sign Up with Email"}
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <>
+                    {!showVerificationInput ? (
                       <div className="button-field">
                         <button
-                          onClick={signUpWithGoogle}
-                          className="btn google-btn"
+                          id="phone-sign-in-button"
+                          onClick={startPhoneVerification}
+                          className="btn"
                           disabled={loading}
                         >
-                          {loading ? "Loading..." : "Sign Up with Google"}
+                          {loading
+                            ? "Sending Code..."
+                            : "Send Verification Code"}
                         </button>
                       </div>
+                    ) : (
+                      <>
+                        <div className="input-field">
+                          <input
+                            type="text"
+                            value={verificationCode}
+                            onChange={(e) =>
+                              setVerificationCode(e.target.value)
+                            }
+                            placeholder="Enter verification code"
+                            className="input"
+                          />
+                        </div>
+                        <div className="button-field">
+                          <button
+                            onClick={verifyPhoneNumber}
+                            className="btn"
+                            disabled={loading}
+                          >
+                            {loading ? "Verifying..." : "Verify Code"}
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+                <div ref={recaptchaContainerRef}></div>
+                <div className="button-field">
+                  <button
+                    onClick={signUpWithGoogle}
+                    className="btn google-btn"
+                    disabled={loading}
+                  >
+                    {loading ? "Loading..." : "Sign Up with Google"}
+                  </button>
+                </div>
 
-                      <div className="login-link">
-                        <h3>
-                          <span style={{ color: "rgb(0 0 0 / 73%)" }}>
-                            Already have an account?
-                          </span>
-                          <Link to={"/SignIn"}>
-                            <span style={{ textDecoration: "underline" }}>
-                              Sign In
-                            </span>
-                          </Link>
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
+                <div className="login-link">
+                  <h3>
+                    <span style={{ color: "rgb(0 0 0 / 73%)" }}>
+                      Already have an account?
+                    </span>
+                    <Link to={"/SignIn"}>
+                      <span style={{ textDecoration: "underline" }}>
+                        Sign In
+                      </span>
+                    </Link>
+                  </h3>
                 </div>
               </div>
             </div>

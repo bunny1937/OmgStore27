@@ -464,13 +464,18 @@
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 390px) {
   .cart_content {
     padding: 15px;
   }
-
   .cart_head h2 {
     font-size: 18px;
+  }
+  .clear_cart_btn {
+    width: 28%;
+  }
+  .checkout_btn {
+    width: 60%;
   }
 }
 

@@ -273,19 +273,19 @@ const Details = () => {
               <div className="feature-container">
                 <div className="feature-item ">
                   <span>240 GSM</span>
-                  <img src="icon1.svg" alt="240 GSM Icon" />
+                  <i class="fa-solid fa-check"></i>
                 </div>
                 <div className="feature-item ">
                   <span> FIT</span>
-                  <img src="icon2.svg" alt="Oversized Fit Icon" />
+                  <i class="fa-solid fa-check"></i>
                 </div>
                 <div className="feature-item">
-                  <span>UNISEX</span>
-                  <img src="icon3.svg" alt="Unisex Icon" />
+                  <span>100% Cotton</span>
+                  <i class="fa-solid fa-check"></i>
                 </div>
                 <div className="feature-item ">
                   <span>DTF</span>
-                  <img src="icon4.svg" alt="DTF Icon" />
+                  <i class="fa-solid fa-check"></i>
                 </div>
               </div>
 

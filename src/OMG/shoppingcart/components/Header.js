@@ -185,11 +185,11 @@ const Header = () => {
             </div>
             <div className="header-links">
               <Link
-                to="/category/Hoodies"
+                to="/category/Tshirts"
                 className="dropdown-link"
                 onClick={closeMobileMenu}
               >
-                <p> Hoodie</p>
+                <p> Tshirts</p>
               </Link>
             </div>
             <div className="header-links">
@@ -261,7 +261,7 @@ const Header = () => {
             <ul className="dropdown-menu">
               {user ? (
                 <>
-                  <Link to={"/Profile1"}>
+                  <Link to={"/ProfileMenu"}>
                     <p>Profile</p>
                   </Link>
                   <p style={{ cursor: "pointer" }} onClick={logout}>
@@ -322,8 +322,7 @@ const Header = () => {
               }`}
               onClick={() => setActiveTab("products")}
             >
-              <i className="fas fa-headset"></i>
-              <span>Products</span>
+              <i class="fa-solid fa-shirt"></i> <span>Products</span>
             </Link>
 
             <div

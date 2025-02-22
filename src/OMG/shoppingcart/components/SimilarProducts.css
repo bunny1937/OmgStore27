@@ -5,13 +5,14 @@
 
 .products-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px;
   justify-content: center;
+  justify-items: center;
 }
 
 .product-card {
-  width: 12rem;
+  width: 80%;
   height: 17rem;
   padding: 2px;
   background-color: #28361836;
@@ -41,45 +42,21 @@
 
 /* For screens between 1024px and 750px */
 @media (max-width: 1024px) and (min-width: 750px) {
-  .product-card {
-    width: 20%;
-    height: 100%; /* Adjust width to take up more space */
-  }
 }
 
 /* For screens between 750px and 550px */
-@media (max-width: 750px) and (min-width: 640px) {
-  .product-card {
-    width: 30%;
-    height: 100%; /* Adjust width to take up more space */
+@media (max-width: 750px) and (min-width: 430px) {
+  .products-list {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
   }
 }
 
 /* For screens between 550px and 350px */
 @media (max-width: 640px) and (min-width: 530px) {
-  .product-card {
-    width: 46%;
-    height: 100%;
-    border-radius: 10px; /* Full width for smaller screens */
-  }
-  .product-card img {
-    width: 100%;
-    height: 14rem;
-    object-fit: contain;
-    border-radius: 30px;
-  }
 }
 
 /* For screens below 350px */
 @media (max-width: 530px) {
-  .product-card img {
-    height: auto;
-    border-radius: 4px;
-  }
-  .product-card {
-    width: 45%; /* Full width for the smallest screens */
-    height: auto; /* Allow height to adjust based on content */
-  }
 }
 @media (max-width: 431px) {
   .products-list {
