@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  User,
-  Package,
-  MapPin,
-  CreditCard,
-  Key,
-  Heart,
-  LogOut,
-  ChevronRight,
-} from "lucide-react";
+  FaUser,
+  FaBox,
+  FaCreditCard,
+  FaKey,
+  FaHeart,
+  FaCheck,
+  FaArrowRight,
+  FaMapPin,
+} from "react-icons/fa";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { firebaseApp } from "../../db/Firebase";
@@ -31,37 +31,37 @@ function ProfileMenu() {
 
   const menuItems = [
     {
-      icon: <User />,
+      icon: <FaUser />,
       title: "Basic Details",
       description: "Name, Email, Phone Number",
       link: "/profile/BasicDetails",
     },
     {
-      icon: <Package />,
+      icon: <FaBox />,
       title: "My Orders",
       description: "Track, Return & Cancel Orders",
       link: "/profile/orders",
     },
     {
-      icon: <MapPin />,
+      icon: <FaMapPin />,
       title: "Addresses",
       description: "Save & Manage Addresses",
       link: "/profile/address",
     },
     {
-      icon: <CreditCard />,
+      icon: <FaCreditCard />,
       title: "Payment Methods",
       description: "Add & Manage Payment Methods",
       link: "/profile/payments",
     },
     {
-      icon: <Key />,
+      icon: <FaKey />,
       title: "Account Settings",
       description: "Password & Account Settings",
       link: "/profile/changepassword",
     },
     {
-      icon: <Heart />,
+      icon: <FaHeart />,
       title: "My Wishlist",
       description: "Your Saved Items",
       link: "/profile/Favourites",
@@ -162,13 +162,13 @@ function ProfileMenu() {
                   <p>{item.description}</p>
                 </div>
               </div>
-              <ChevronRight />
+              <FaArrowRight />
             </Link>
           ))}
         </div>
 
         <button className="profile-logout-button" onClick={logout}>
-          <LogOut />
+          <FaCheck />
           <span>Logout</span>
         </button>
       </div>
