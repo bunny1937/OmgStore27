@@ -1,15 +1,15 @@
-.sidebar {
-  width: 250px;
+.adminsidebar {
+  width: 200px;
   height: 100vh;
-  background-color: #1e1e2d;
+  background-color: #1d2621;
   color: #fff;
   position: fixed;
   left: 0;
   top: 0;
-  padding: 20px;
+  padding: 20px 10px;
 }
 
-.sidebar-title {
+.adminsidebar-title {
   font-size: 1.5rem;
   margin-bottom: 20px;
   text-align: center;
@@ -24,18 +24,18 @@
   font-weight: bold;
 }
 
-.sidebar nav ul {
+.adminsidebar nav ul {
   list-style: none;
   padding: 0;
 }
 
-.sidebar nav ul li {
+.adminsidebar nav ul li {
   margin: 15px 0;
 }
 
-.sidebar nav ul li a {
+.adminsidebar nav ul li a {
   text-decoration: none;
-  color: #b0b0c3;
+  color: #fff;
   font-size: 1rem;
   display: block;
   padding: 10px;
@@ -43,8 +43,14 @@
   transition: 0.3s;
 }
 
-.sidebar nav ul li a:hover,
-.sidebar nav ul li a.active {
+.adminsidebar nav ul li a:hover,
+.adminsidebar nav ul li a.active {
   background-color: #007bff;
   color: #fff;
+}
+@media screen and (max-width: 550px) {
+  .adminsidebar {
+    top: 4%;
+    width: 100%;
+  }
 }

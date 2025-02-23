@@ -4,21 +4,13 @@ import "./Sidebar.css"; // Plain CSS for styling
 
 const AdminSidebar = () => {
   return (
-    <div className="sidebar">
-      <h2 className="sidebar-title">Admin Panel</h2>
-      <nav>
+    <div className="adminsidebar">
+      <h2 className="adminsidebar-title">Admin Panel</h2>
+      <nav className="sidebar-nav">
         <ul>
           <li>
             <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              Dashboard
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/users"
+              to="/admin/users"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Users
@@ -26,7 +18,7 @@ const AdminSidebar = () => {
           </li>
           <li>
             <NavLink
-              to="/addproducts"
+              to="/admin/addproducts"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Add Products
@@ -34,7 +26,7 @@ const AdminSidebar = () => {
           </li>
           <li>
             <NavLink
-              to="/adminorders"
+              to="/admin/adminorders"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Orders
@@ -42,7 +34,7 @@ const AdminSidebar = () => {
           </li>
           <li>
             <NavLink
-              to="/categories"
+              to="/admin/categories"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Categories
@@ -50,7 +42,7 @@ const AdminSidebar = () => {
           </li>
           <li>
             <NavLink
-              to="/adminanalytics"
+              to="/admin/adminanalytics"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Analytics
@@ -58,7 +50,7 @@ const AdminSidebar = () => {
           </li>
           <li>
             <NavLink
-              to="/settings"
+              to="/admin/settings"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Settings

@@ -48,6 +48,8 @@ import { Payments } from "@mui/icons-material";
 import Address from "./OMG/shoppingcart/components/UserProfile/Address";
 import Orders from "./OMG/shoppingcart/components/UserProfile/Order";
 import ChangePassword from "./OMG/shoppingcart/components/UserProfile/ChangePassword";
+import WhatsappOrder from "./OMG/shoppingcart/components/WhatsappOrder";
+import AdminDashboard from "./OMG/admin/AdminLayout";
 
 function App() {
   return (
@@ -96,31 +98,42 @@ function App() {
                     <Route
                       path="/category/:categoryName"
                       element={<CategoryPage key={Math.random()} />}
-                    />{" "}
+                    />
                     <Route path="/products/:type" element={<CategoryType />} />
                     <Route path="/Cart" element={<Cart />} />
                     <Route path="/Checkout/:mode?" element={<Checkoutnew />} />
-                    <Route path="/Payment" element={<Payment />} />
+                    {/* <Route path="/Payment" element={<Payment />} /> */}
+                    <Route path="/Whatsapporder" element={<WhatsappOrder />} />
                     <Route path="/AdminDash" element={<AdminDash />} />
                     {/* Protected Route for Admin */}
                     <Route
-                      path="/AdminDash"
+                      path="/admin/*"
                       element={
                         <ProtectedRoute adminOnly={true}>
-                          <AdminDash />
+                          <AdminDashboard />
                         </ProtectedRoute>
                       }
-                    />
-                    <Route path="/users" element={<Users />} />
+                    >
+                      <Route path="dashboard" element={<AdminDash />} />
+                      <Route path="users" element={<Users />} />
+                      <Route path="addproducts" element={<AddProducts />} />
+                      <Route path="adminorders" element={<OrdersDash />} />
+                      <Route path="categories" element={<Categories />} />
+                      <Route
+                        path="adminanalytics"
+                        element={<AdminAnalytics />}
+                      />
+                      <Route path="settings" element={<Settings />} />
+                    </Route>
+                    {/* <Route path="/users" element={<Users />} />
                     <Route path="/addproducts" element={<AddProducts />} />
                     <Route path="/adminorders" element={<OrdersDash />} />
                     <Route path="/categories" element={<Categories />} />
-                    {/* <Route path="/discounts" element={<Discounts />} /> */}
                     <Route
                       path="/adminanalytics"
                       element={<AdminAnalytics />}
                     />
-                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/settings" element={<Settings />} /> */}
                   </Routes>
                 </CartProvider>
               </FavouritesProvider>

@@ -1,20 +1,30 @@
 .admin-container {
   display: flex;
-  height: 100vh;
+  height: 90vh;
   width: 100%;
 }
 
 .admin-sidebar {
-  width: 25%;
-  min-width: 250px;
+  width: 15%;
+  min-width: 170px;
   max-width: 300px;
   background-color: #f4f4f4;
   overflow-y: auto;
 }
 
 .admin-content {
-  width: 75%;
+  width: 100%;
   overflow-y: auto;
   padding: 20px;
   background-color: #ffffff;
+}
+@media screen and (max-width: 960px) {
+  .admin-sidebar {
+    display: none;
+  }
+
+  .admin-content {
+    width: 100%;
+    padding: 10px;
+  }
 }

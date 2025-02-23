@@ -1,15 +1,15 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useContext } from "react";
+import { Outlet, Navigate } from "react-router-dom";
+import UserContext from "../Auth/UserContext";
 import AdminSidebar from "./Components/Sidebar";
-import Users from "./Components/Users";
-import AddProducts from "../db/AddProduct";
-import OrdersDash from "./Components/OrdersDash";
-import Categories from "./Components/Categories";
-import Analytics from "./Components/Analytics";
-import Settings from "./Components/Settings";
 import "./AdminLayout.css";
 
 const AdminDashboard = () => {
+  const { isAdmin } = useContext(UserContext);
+
+  if (!isAdmin) {
+    return <Navigate to="/SignIn" replace />;
+  }
   return (
     <div className="admin-container">
       <div className="admin-sidebar">
@@ -17,14 +17,7 @@ const AdminDashboard = () => {
       </div>
 
       <div className="admin-content">
-        <Routes>
-          <Route path="/users" element={<Users />} />
-          <Route path="/addproducts" element={<AddProducts />} />
-          <Route path="/adminorders" element={<OrdersDash />} />
-          <Route path="/categories" element={<Categories />} />
-          <Route path="/adminanalytics" element={<Analytics />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
+        <Outlet />
       </div>
     </div>
   );

@@ -129,16 +129,15 @@ const Carouselwheeel = () => {
 
   return (
     <div className="caraousel-box1">
+      <div className="carousel-instructions">
+        <h2>Checkout our Curated Collections for You</h2>
+        <p>
+          Drag to Explore
+          <br />
+          Click for Details
+        </p>
+      </div>
       <div className="carousel">
-        <div className="carousel-instructions">
-          <h2>Checkout our Curated Collections for You</h2>
-          <p>
-            Drag to Explore
-            <br />
-            Click for Details
-          </p>
-        </div>
-
         {products.map((product, index) => (
           <div
             key={product.id}

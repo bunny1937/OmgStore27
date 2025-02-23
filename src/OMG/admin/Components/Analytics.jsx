@@ -4,6 +4,7 @@ import { Chart, registerables } from "chart.js";
 import { db } from "../../db/Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import "./Analytics.css";
+import toast from "react-hot-toast";
 
 Chart.register(...registerables);
 
@@ -50,24 +51,15 @@ const AdminAnalytics = () => {
       let weeklySalesData = {};
 
       // Debug logs
-      console.log("Starting to process users...");
 
       for (const userDoc of usersSnapshot.docs) {
         const ordersRef = collection(db, "users", userDoc.id, "orders");
         const ordersSnapshot = await getDocs(ordersRef);
 
-        // Debug log for each user's orders
-        console.log(
-          `Processing orders for user ${userDoc.id}:`,
-          ordersSnapshot.size
-        );
-
         for (const orderDoc of ordersSnapshot.docs) {
           const data = orderDoc.data();
-          console.log("Order data:", data); // Debug log for order data
 
           if (!data.orderCreatedAt || !data.totalAmount) {
-            console.log("Skipping order due to missing data:", orderDoc.id);
             continue;
           }
 
@@ -80,20 +72,11 @@ const AdminAnalytics = () => {
 
           // Process items
           if (data.cartItems && Array.isArray(data.cartItems)) {
-            console.log("Processing items for order:", data.cartItems); // Debug log for items
-
             data.cartItems.forEach((item) => {
               if (item.Name && item.quantity) {
                 totalItemsSold += item.quantity;
                 const currentCount = productSalesMap.get(item.Name) || 0;
                 productSalesMap.set(item.Name, currentCount + item.quantity);
-
-                // Debug log for each item
-                console.log(
-                  `Product ${item.Name}: quantity ${
-                    item.quantity
-                  }, new total: ${currentCount + item.quantity}`
-                );
               }
             });
           }
@@ -109,23 +92,11 @@ const AdminAnalytics = () => {
       // Find most sold product
       let maxQuantity = 0;
       let topProduct = "N/A";
-
-      // Debug log for product sales
-      console.log("Product sales map:", Array.from(productSalesMap.entries()));
-
       productSalesMap.forEach((quantity, product) => {
         if (quantity > maxQuantity) {
           maxQuantity = quantity;
           topProduct = product;
         }
-      });
-
-      console.log("Final calculations:", {
-        revenue,
-        ordersCount,
-        totalItemsSold,
-        topProduct,
-        maxQuantity,
       });
 
       // Sort sales data
@@ -149,7 +120,7 @@ const AdminAnalytics = () => {
       setAOV(ordersCount > 0 ? (revenue / ordersCount).toFixed(2) : 0);
       setNewUsers(usersSnapshot.size);
     } catch (error) {
-      console.error("Error fetching analytics data:", error);
+      toast.error("Error fetching analytics data:", error);
     }
   };
 
@@ -177,7 +148,7 @@ const AdminAnalytics = () => {
       setCategorySales(categoryCount);
       setTypeSales(typeCount);
     } catch (error) {
-      console.error("Error fetching category sales:", error);
+      toast.error("Error fetching category sales:", error);
     }
   };
 

@@ -181,18 +181,18 @@ export function SignInnew({ open }) {
 
         if (userData.role === "admin") {
           setIsAdmin(true);
-          toast.success("Welcome, Admin!"); // Success message for Admin
-          navigate("/AdminDash");
-        } else {
-          setIsAdmin(false);
-          toast.success("Welcome!"); // Success message for regular user
-          navigate("/Home");
+          localStorage.setItem("isAdmin", "true");
+          toast.success("Welcome back, Admin!");
+          navigate("/admin/dashboard"); // Changed from "/AdminDash"
+          return; // Important: Exit the function here for admin
         }
-      } else {
-        setIsAdmin(false);
-        toast.success("Welcome!"); // Default success message
-        navigate("/Home");
       }
+
+      // If not admin or no user doc exists
+      setIsAdmin(false);
+      localStorage.removeItem("isAdmin");
+      toast.success("Welcome back!");
+      navigate("/Home");
     } catch (error) {
       toast.error(error.message); // Show error message
     } finally {
@@ -228,7 +228,18 @@ export function SignInnew({ open }) {
           phoneNumber: "",
           createdAt: new Date(),
         });
+        if (userDoc.role === "admin") {
+          setIsAdmin(true);
+          localStorage.setItem("isAdmin", "true");
+          toast.success("Welcome back, Admin!");
+          navigate("/admin/dashboard"); // Changed from "/AdminDash"
+          return; // Important: Exit the function here for admin
+        }
       }
+      setIsAdmin(false);
+      localStorage.removeItem("isAdmin");
+      toast.success("Successfully signed in with Google!");
+      navigate("/Home");
       toast.success("Successfully signed in with Google!");
       navigate("/Home"); // Navigate after successful login
     } catch (error) {

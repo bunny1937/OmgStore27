@@ -112,10 +112,18 @@
 }
 .carousel-instructions {
   color: white;
+  background: linear-gradient(
+    110deg,
+    #1a1a2e,
+    #181e38,
+    #12274b,
+    #0e335e,
+    #3d3553
+  );
+  border: none;
   display: flex;
   justify-content: space-between;
   padding: 10px 30px;
-  margin-bottom: 1rem;
 }
 .carousel-instructions p,
 .carousel-instructions h2 {

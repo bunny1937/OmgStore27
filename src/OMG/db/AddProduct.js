@@ -14,6 +14,9 @@ import {
   getDocs,
   deleteDoc,
   updateDoc,
+  query,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 import "./AddProducts.css";
 
@@ -130,6 +133,29 @@ const AddProducts = () => {
     });
   };
 
+  const getNextProductId = async () => {
+    try {
+      // Get all products and sort by ID in descending order
+      const q = query(
+        collection(db, "Products"),
+        orderBy("id", "desc"),
+        limit(1)
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        return 1; // If no products exist, start with 1
+      }
+
+      // Get the highest ID and add 1
+      const highestId = querySnapshot.docs[0].data().id;
+      return highestId + 1;
+    } catch (error) {
+      console.error("Error getting next product ID:", error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const storage = getStorage();
@@ -178,20 +204,22 @@ const AddProducts = () => {
       }
 
       if (editingProduct) {
+        // Update existing product
         await updateDoc(
           doc(db, "Products", String(editingProduct.id)),
           productData
         );
       } else {
+        // Add new product with unique ID
+        const newId = await getNextProductId();
         const productsCollectionRef = collection(db, "Products");
-        const querySnapshot = await getDocs(productsCollectionRef);
-        const newId = querySnapshot.docs.length + 1;
         await setDoc(doc(productsCollectionRef, String(newId)), {
           id: newId,
           ...productData,
         });
       }
 
+      // Reset form and state
       setProductForm({
         Name: "",
         Description: "",
@@ -206,9 +234,11 @@ const AddProducts = () => {
       setIsAddingProduct(false);
       setEditingProduct(null);
       setProgress(0);
+      setImages([]);
       await fetchProducts();
     } catch (error) {
       console.error("Error saving product:", error);
+      alert("Error saving product. Please try again.");
     }
   };
 

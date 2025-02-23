@@ -307,7 +307,7 @@ const Checkoutnew = () => {
               : "You can continue shopping."
           }`
         );
-        navigate("/payment");
+        navigate("/Whatsapporder");
       } catch (error) {
         toast.error("Error creating order");
       }
@@ -723,7 +723,7 @@ const Checkoutnew = () => {
                 Next
               </button>
             ) : (
-              <Link to={"/Payment"}>
+              <Link to={"/Whatsapporder"}>
                 <motion.button
                   className="pay-button"
                   whileHover={{ scale: 1.05 }}
