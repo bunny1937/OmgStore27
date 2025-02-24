@@ -443,7 +443,7 @@
 }
 .add-address-button {
   display: inline-block;
-  margin: 20px 0;
+  margin: 6px 0;
   padding: 10px 15px;
   background-color: #007bff;
   color: #fff;
@@ -508,12 +508,6 @@ form button[type="submit"]:hover {
   border: 1px solid #ddd;
 }
 
-.address-details-form h4 {
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-  color: #333;
-}
-
 .address-details-form-final div {
   margin-bottom: 10px;
 }
@@ -525,7 +519,7 @@ form button[type="submit"]:hover {
 .selection-cancel {
   background-color: rgb(255, 173, 173);
   padding: 10px;
-  margin: 20px 0;
+  margin-top: 10px;
 }
 
 .selection-cancel:hover {
@@ -677,6 +671,7 @@ button:focus {
     padding-bottom: 70px;
   }
 }
+
 @media (max-width: 840px) and (min-width: 760px) {
   .checkout-container {
     width: 100%;
@@ -720,7 +715,10 @@ button:focus {
   .checkout-container {
     width: 100%;
     padding: 0.6rem;
-    height: 90vh;
+    height: 80vh;
+  }
+  .address-overview {
+    height: 58vh;
   }
   .checkout-left,
   .checkout-right {
@@ -732,6 +730,7 @@ button:focus {
   .pay-overview {
     flex-direction: column;
     padding: 10px;
+    overflow-x: scroll;
   }
   .cart-item-img {
     margin-right: 0;
@@ -752,7 +751,7 @@ button:focus {
 }
 @media (max-width: 550px) {
   .checkout-container {
-    height: 87vh;
+    height: 79vh;
   }
   .cart-item {
     padding: 0.6rem 1rem;

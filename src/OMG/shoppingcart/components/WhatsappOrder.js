@@ -17,10 +17,10 @@ const styles = `
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
+
 }
 
 .checkout-header {
-  margin-bottom: 20px;
   text-align: center;
 }
 
@@ -35,7 +35,6 @@ const styles = `
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
-  margin-bottom: 30px;
 }
 
 .order-summary {
@@ -56,7 +55,6 @@ const styles = `
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
   padding-bottom: 15px;
   border-bottom: 1px solid #f0f0f0;
 }
@@ -98,7 +96,7 @@ const styles = `
 .shipping-info {
   background: #f8f9fa;
   border-radius: 8px;
-  padding: 20px;
+  padding: 10px 20px;
 }
 
 .shipping-info h3 {
@@ -113,7 +111,6 @@ const styles = `
 }
 
 .total-section {
-  margin-top: 20px;
   padding-top: 15px;
   border-top: 2px solid #e1e1e1;
 }
@@ -121,7 +118,6 @@ const styles = `
 .total-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
   font-size: 16px;
   color: #333;
 }
@@ -150,7 +146,6 @@ const styles = `
   justify-content: center;
   gap: 10px;
   transition: all 0.3s ease;
-  margin-top: 20px;
 }
 
 .whatsapp-button:hover {
@@ -162,9 +157,9 @@ const styles = `
   transform: translateY(0);
 }
 .payment-section {
-  margin: 20px 0;
+  margin:6px 0;
   display: flex;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #e1e1e1;
   border-radius: 8px;
 } 
@@ -216,14 +211,18 @@ margin:4.2rem 0 0 2rem;
   }
   
   .whatsapp-checkout {
-    margin: 10px;
     padding: 15px;
+    height:80vh;
+overflow-y:scroll;
   }
-  
+  .payment-section{
+  flex-direction:column
+  }
   .item-details {
-    flex-direction: column;
     align-items: flex-start;
+    gap:20px
   }
+
 }`;
 
 const WhatsappOrder = () => {
@@ -417,11 +416,11 @@ const WhatsappOrder = () => {
                     <span className="item-quantity">
                       Quantity: {item.quantity}
                     </span>
+                    <span className="item-price">
+                      ₹{(item.price * item.quantity).toLocaleString()}
+                    </span>
                   </div>
                 </div>
-                <span className="item-price">
-                  ₹{(item.price * item.quantity).toLocaleString()}
-                </span>
               </div>
             ))}
 

@@ -91,10 +91,6 @@ const Cart = () => {
         .reduce((prevValue, currValue) => prevValue + currValue, 0)
     : 0;
 
-  if (isLoading) {
-    return <div>Loading your cart...</div>;
-  }
-
   return (
     <>
       {isCartOpen && (

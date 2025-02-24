@@ -56,6 +56,14 @@
   transform: translate(var(--x), var(--y)) rotate(var(--rot));
   transition: transform 0.8s cubic-bezier(0, 0.02, 0, 1);
 }
+.carousel-item:nth-child(2),
+.carousel-item:nth-child(3),
+.carousel-item:nth-child(4),
+.carousel-item:nth-child(9),
+.carousel-item:nth-child(12),
+.carousel-item:nth-child(13) {
+  background-color: #fff;
+}
 .carousel-item .carousel-box {
   position: absolute;
   z-index: 1;

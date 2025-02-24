@@ -240,7 +240,15 @@ const Header = () => {
                   >
                     <div className="product-details-container">
                       <div className="product-info">
-                        <h2>{product.Name}</h2>
+                        <img
+                          className="product-info-img"
+                          src={product.ImgUrls[0]}
+                        />
+                        <h2>
+                          <strong>{product.Name}</strong>
+                          <br />
+                          {product.price}/-
+                        </h2>
                       </div>
                     </div>
                   </div>

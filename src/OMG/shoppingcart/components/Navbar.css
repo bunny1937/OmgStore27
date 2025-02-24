@@ -8,7 +8,7 @@
   font-size: 1.2rem;
   position: sticky;
   top: 0;
-  z-index: 3;
+  z-index: 20;
 }
 
 .navbar-container {
@@ -84,6 +84,13 @@
 .header-links > input::placeholder {
   font-size: 1.4rem;
   padding-left: 1rem;
+}
+.product-info-img {
+  width: 100px;
+  height: 100px;
+}
+.product-info-img img {
+  object-fit: cover;
 }
 .header-links > .nav-links {
   padding: 0 2.5rem;
@@ -219,6 +226,7 @@ input.nosubmit {
 }
 .product-info {
   flex: 2;
+  display: flex;
 }
 
 .product-info h2 {

@@ -584,7 +584,6 @@ const Checkoutnew = () => {
                     ))}
                     {showAddressDetails && (
                       <div className="address-details-form">
-                        <h4>Address Details</h4>
                         <div>
                           <strong>Name:</strong> {selectedAddress.name},{" "}
                           <strong>Number:</strong> {selectedAddress.number}
