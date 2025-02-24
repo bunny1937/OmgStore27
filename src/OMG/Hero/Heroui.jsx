@@ -38,10 +38,6 @@ export default function Heroui() {
       ) : (
         <div className="hero">
           <MainPage />
-          {/* <UImain /> */}
-          <div style={{ height: "1000px", position: "relative" }}>
-            <CircularGallery bend={1} textColor="#ffffff" borderRadius={0.05} />
-          </div>
           <Carouselwheeel />
           <Category />
           <SuggestionComponent />
