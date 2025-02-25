@@ -12,10 +12,10 @@ import {
   faTruck,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Payment.css";
+import "./Trackorder.css";
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
-const Payment = () => {
+const Trackorder = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const orderData = location.state?.orderData;
@@ -396,4 +396,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default Trackorder;

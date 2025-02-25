@@ -453,8 +453,8 @@ body {
   }
 
   .payment-status-icon {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
   }
 
   .payment-status-points {
@@ -475,7 +475,7 @@ body {
   }
 
   .payment-status-dot {
-    top: 12px;
+    top: 16px;
     left: -8px;
   }
 
@@ -491,6 +491,11 @@ body {
   .payment-status-connector {
     display: none;
   }
+  /* .payment-status-connector {
+    rotate: 90deg;
+    width: 6%;
+    left: 0.3rem;
+  } */
   .payment-container {
     padding: 0.6rem;
   }

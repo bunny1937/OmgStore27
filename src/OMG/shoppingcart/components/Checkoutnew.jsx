@@ -43,6 +43,37 @@ const Checkoutnew = () => {
   const { mode } = useParams();
   const [checkoutMode, setCheckoutMode] = useState(mode);
   const [localItems, setLocalItems] = useState([]);
+  const [showCouponDialog, setShowCouponDialog] = useState(false);
+  const availableCoupons = [
+    {
+      code: "BUY2GET10",
+      description: "Buy 2 get 10% off",
+      minItems: 2,
+      discountType: "percentage",
+      value: 10,
+    },
+    {
+      code: "BUY3GET20",
+      description: "Buy 3 get 20% off",
+      minItems: 3,
+      discountType: "percentage",
+      value: 20,
+    },
+    {
+      code: "BUY4GET1FREE",
+      description: "Buy 4 get 1 free (5th item free)",
+      minItems: 5,
+      discountType: "itemFree",
+      value: 1,
+    },
+  ];
+
+  // Add these to your state declarations
+  const [localCouponCode, setLocalCouponCode] = useState("");
+  const [couponMessage, setCouponMessage] = useState("");
+  const [showApplyButton, setShowApplyButton] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [discountAmount, setDiscountAmount] = useState(0);
 
   useEffect(() => {
     const auth = getAuth();
@@ -361,6 +392,90 @@ const Checkoutnew = () => {
       );
     }
   };
+
+  const calculateDiscount = (items, coupon) => {
+    if (!coupon) return 0;
+
+    const itemCount = items.reduce((count, item) => count + item.quantity, 0);
+    const totalAmount = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    if (itemCount >= coupon.minItems) {
+      if (coupon.discountType === "percentage") {
+        return totalAmount * (coupon.value / 100);
+      } else if (coupon.discountType === "itemFree" && itemCount >= 5) {
+        // Find the cheapest item to make free
+        const sortedItems = [...items].sort((a, b) => a.price - b.price);
+        return sortedItems[0].price;
+      }
+    }
+    return 0;
+  };
+
+  const calculateFinalAmount = () => {
+    const itemsToCalculate =
+      checkoutMode === "buynow" ? [buyNowItem] : itemsToDisplay;
+    return cartTotal - discountAmount;
+  };
+
+  const handleCouponChange = (e) => {
+    const value = e.target.value.trim().toUpperCase();
+    setLocalCouponCode(value);
+    setShowApplyButton(value.length > 0);
+    if (value.length === 0) {
+      setCouponMessage("");
+    }
+  };
+
+  const handleApplyCoupon = () => {
+    if (!localCouponCode) return;
+
+    const itemsToCheck =
+      checkoutMode === "buynow" ? [buyNowItem] : itemsToDisplay;
+    const itemCount = itemsToCheck.reduce(
+      (count, item) => count + item.quantity,
+      0
+    );
+
+    const coupon = availableCoupons.find((c) => c.code === localCouponCode);
+
+    if (!coupon) {
+      toast.error("Invalid coupon code");
+      return;
+    }
+
+    if (itemCount < coupon.minItems) {
+      toast.error(`Need at least ${coupon.minItems} items for this coupon`);
+      return;
+    }
+
+    // Apply the coupon
+    setAppliedCoupon(coupon);
+    const discount = calculateDiscount(itemsToCheck, coupon);
+    setDiscountAmount(discount);
+    setCouponMessage(`Coupon applied: ${coupon.description}`);
+    setShowApplyButton(false);
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setDiscountAmount(0);
+    setLocalCouponCode("");
+    setCouponMessage("");
+    setShowApplyButton(false);
+  };
+
+  // Update your useEffect to recalculate discount when cart items change
+  useEffect(() => {
+    if (appliedCoupon) {
+      const itemsToCheck =
+        checkoutMode === "buynow" ? [buyNowItem] : itemsToDisplay;
+      const discount = calculateDiscount(itemsToCheck, appliedCoupon);
+      setDiscountAmount(discount);
+    }
+  }, [itemsToDisplay, buyNowItem, checkoutMode, appliedCoupon]);
 
   return (
     <>
@@ -684,9 +799,65 @@ const Checkoutnew = () => {
                   </div>
                   <div className="checkout-right">
                     <div className="coupon-section">
-                      <input type="text" placeholder="Coupon Code" />
-                      <button className="apply-button">Apply</button>
+                      <input
+                        type="text"
+                        placeholder="Coupon Code"
+                        value={localCouponCode}
+                        onChange={handleCouponChange}
+                      />
+
+                      <button
+                        className="apply-coupon-btn"
+                        onClick={
+                          appliedCoupon ? handleRemoveCoupon : handleApplyCoupon
+                        }
+                      >
+                        {appliedCoupon ? "Remove" : "Apply"}
+                      </button>
                     </div>
+                    <div className="coupon-message-text">{couponMessage}</div>
+                    <button
+                      className="view-coupons-button"
+                      onClick={() => setShowCouponDialog(true)}
+                    >
+                      View Available Coupons
+                    </button>
+                    {/* Add this at the end of your return statement, before the closing tags */}
+                    {showCouponDialog && (
+                      <div className="coupon-dialog-overlay">
+                        <div className="coupon-dialog">
+                          <div className="coupon-dialog-header">
+                            <h3>Available Coupons</h3>
+                            <button onClick={() => setShowCouponDialog(false)}>
+                              ×
+                            </button>
+                          </div>
+                          <div className="coupon-list">
+                            {availableCoupons.map((coupon) => (
+                              <div key={coupon.code} className="coupon-item">
+                                <div className="coupon-code">{coupon.code}</div>
+                                <div className="coupon-description">
+                                  {coupon.description}
+                                </div>
+                                <div className="coupon-requirement">
+                                  Minimum {coupon.minItems} items required
+                                </div>
+                                <button
+                                  onClick={() => {
+                                    setLocalCouponCode(coupon.code);
+                                    handleApplyCoupon();
+                                    setShowCouponDialog(false);
+                                  }}
+                                >
+                                  Apply
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="summary-details">
                       <div className="summary-row">
                         <span>Subtotal</span>
@@ -694,11 +865,17 @@ const Checkoutnew = () => {
                       </div>
                       <div className="summary-row">
                         <span>Discount</span>
-                        <span>Free</span>
+                        <span>
+                          {discountAmount > 0
+                            ? `₹ ${discountAmount.toLocaleString()}`
+                            : "Free"}
+                        </span>
                       </div>
                       <div className="summary-row total">
                         <span>Total</span>
-                        <span>₹ {cartTotal.toLocaleString()}</span>
+                        <span>
+                          ₹ {(cartTotal - discountAmount).toLocaleString()}
+                        </span>
                       </div>
                     </div>
                   </div>

@@ -6,14 +6,6 @@ import SuggestionComponent from "../shoppingcart/components/Suggestion";
 import MainPage from "./Mainpage";
 import IntroOverlay from "./IntroOverlay";
 import Carouselwheeel from "./Caraouselwheeel";
-import CategoryShowcase from "./Categoryshowcase";
-import Lenis from "../shoppingcart/components/Lenis";
-import ImageGallery from "../shoppingcart/components/Loadergsap";
-import InfiniteMenu from "../shoppingcart/components/infinite/InfiniteMenu";
-import UImain from "../shoppingcart/components/infinite/UImain";
-import BackgroundPaths from "../shoppingcart/components/AniComponent2";
-import Checkoutnew from "../shoppingcart/components/Checkoutnew";
-import BottomNav from "../shoppingcart/components/BottomNav/BottomNav";
 export default function Heroui() {
   const [showIntro, setShowIntro] = useState(() => {
     return sessionStorage.getItem("introShown") !== "true";

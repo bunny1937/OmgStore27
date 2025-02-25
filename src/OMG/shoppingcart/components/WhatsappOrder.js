@@ -384,6 +384,7 @@ const WhatsappOrder = () => {
       console.error("Error processing screenshot:", error);
     } finally {
       setUploadingScreenshot(false);
+      navigate("/Trackorder");
     }
   };
 

@@ -182,6 +182,7 @@ const Cart = () => {
                     type="button"
                     className="checkout_btn"
                     disabled={cartQuantity === 0}
+                    onClick={() => dispatch({ type: "TOGGLE_CART" })}
                   >
                     Checkout
                   </button>

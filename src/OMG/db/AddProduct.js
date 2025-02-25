@@ -28,7 +28,8 @@ const AddProducts = () => {
   const [productForm, setProductForm] = useState({
     Name: "",
     Description: "",
-    price: 0,
+    originalPrice: 0, // Updated to camelCase
+    discountedPrice: 0,
     Category: "",
     quantity: 0,
     Gender: "",
@@ -123,7 +124,8 @@ const AddProducts = () => {
     setProductForm({
       Name: product.Name,
       Description: product.Description,
-      price: product.price,
+      originalPrice: product.originalPrice || 0,
+      discountedPrice: product.discountedPrice || 0,
       Category: product.Category,
       quantity: product.quantity,
       Gender: product.Gender,
@@ -192,7 +194,8 @@ const AddProducts = () => {
         Name: productForm.Name,
         Type: productForm.Type,
         Description: productForm.Description,
-        price: Number(productForm.price),
+        originalPrice: Number(productForm.originalPrice), // Updated to camelCase
+        discountedPrice: Number(productForm.discountedPrice),
         Category: productForm.Category,
         Gender: productForm.Gender,
         quantity: Number(productForm.quantity),
@@ -223,7 +226,8 @@ const AddProducts = () => {
       setProductForm({
         Name: "",
         Description: "",
-        price: 0,
+        originalPrice: 0,
+        discountedPrice: 0,
         Category: "",
         quantity: 0,
         Gender: "",
@@ -268,7 +272,12 @@ const AddProducts = () => {
               <p className="addproduct-description">
                 Desc:-{product.Description}
               </p>
-              <p className="addproduct-price">₹{product.price}</p>
+              <div className="addproduct-price">
+                <span className="original-price">₹{product.originalPrice}</span>
+                <span className="discounted-price">
+                  ₹{product.discountedPrice}
+                </span>
+              </div>
               <div className="addproduct-details">
                 <span>{product.Type}</span>
                 <span>{product.Category}</span>
@@ -362,15 +371,31 @@ const AddProducts = () => {
               </div>
 
               <div className="addproduct-price-section">
-                <span>₹</span>
-                <input
-                  type="number"
-                  name="price"
-                  className="addproduct-product-price-input"
-                  value={productForm.price}
-                  onChange={handleInputChange}
-                  required
-                />
+                <div>
+                  <label>Original Price:</label>
+                  <span>₹</span>
+                  <input
+                    type="number"
+                    name="originalPrice" // Updated to camelCase
+                    className="addproduct-product-price-input"
+                    value={productForm.originalPrice}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label>Discounted Price:</label>
+                  <span>₹</span>
+                  <input
+                    type="number"
+                    name="discountedPrice" // Updated to camelCase
+                    className="addproduct-product-price-input"
+                    value={productForm.discountedPrice}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
               </div>
 
               <div className="addproduct-product-details-grid">

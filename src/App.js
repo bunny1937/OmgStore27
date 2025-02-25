@@ -18,7 +18,7 @@ import { ProtectedRoute } from "./OMG/shoppingcart/components/protectRoute/Prote
 import AdminDash from "./OMG/Auth/AdminDash";
 import { UserProvider } from "./OMG/Auth/UserContext";
 import Checkout from "./OMG/shoppingcart/components/Checkout";
-import Payment from "./OMG/shoppingcart/components/Payment";
+import Payment from "./OMG/shoppingcart/components/Trackorder";
 import CategoryPage from "./OMG/Hero/Category/Categorypage";
 import UserProfile from "./OMG/Auth/UserProfile";
 import UserProfile1 from "./OMG/shoppingcart/components/UserProfile/UserProfile";
@@ -50,6 +50,7 @@ import Orders from "./OMG/shoppingcart/components/UserProfile/Order";
 import ChangePassword from "./OMG/shoppingcart/components/UserProfile/ChangePassword";
 import WhatsappOrder from "./OMG/shoppingcart/components/WhatsappOrder";
 import AdminDashboard from "./OMG/admin/AdminLayout";
+import Trackorder from "./OMG/shoppingcart/components/Trackorder";
 
 function App() {
   return (
@@ -102,7 +103,7 @@ function App() {
                     <Route path="/products/:type" element={<CategoryType />} />
                     <Route path="/Cart" element={<Cart />} />
                     <Route path="/Checkout/:mode?" element={<Checkoutnew />} />
-                    {/* <Route path="/Payment" element={<Payment />} /> */}
+                    <Route path="/Trackorder" element={<Trackorder />} />
                     <Route path="/Whatsapporder" element={<WhatsappOrder />} />
                     <Route path="/AdminDash" element={<AdminDash />} />
                     {/* Protected Route for Admin */}

@@ -6,8 +6,22 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const ProductsCard = ({ id, Name, Category, price, ImgUrls }) => {
+const ProductsCard = ({
+  id,
+  Name,
+  Category,
+  originalPrice,
+  discountedPrice,
+  price,
+  ImgUrls,
+}) => {
   const [loaded, setLoaded] = useState(false);
+
+  const hasDiscount =
+    originalPrice && discountedPrice && originalPrice > discountedPrice;
+  const discountPercentage = hasDiscount
+    ? Math.round(((originalPrice - discountedPrice) / originalPrice) * 100)
+    : 0;
 
   const settings = {
     infinite: true,
@@ -40,12 +54,33 @@ const ProductsCard = ({ id, Name, Category, price, ImgUrls }) => {
             ) : (
               <div>No Images Available</div>
             )}
+            {discountPercentage > 0 && (
+              <div className="discount-tag">-{discountPercentage}%</div>
+            )}
           </div>
-          <div className="details-btn">
+          <div className="details-box">
             {id && Name ? <h3>{Name}</h3> : <h4>No Title Available</h4>}
-            <h3 className="price">₹ {price.toLocaleString()}</h3>
+
+            <h4>{Category}</h4>
+            <div className="price-container">
+              {originalPrice !== undefined ? (
+                <>
+                  <span className="original-price">
+                    ₹ {originalPrice.toLocaleString()}
+                  </span>
+                  {discountedPrice !== undefined ? (
+                    <p className="discounted-price">
+                      ₹ {discountedPrice.toLocaleString()}
+                    </p>
+                  ) : (
+                    <p className="price">₹ {originalPrice.toLocaleString()}</p>
+                  )}
+                </>
+              ) : (
+                <p className="price">Price unavailable</p>
+              )}
+            </div>
           </div>
-          <h4>{Category}</h4>
         </Link>
       </div>
     </z>
