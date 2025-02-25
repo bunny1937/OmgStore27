@@ -54,9 +54,16 @@
   transition: width 0.3s ease;
 }
 
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
 .step-circle {
   width: 40px;
-  position: relative;
   height: 40px;
   border-radius: 50%;
   color: #1d2621;
@@ -69,10 +76,11 @@
   transition: all 0.3s ease;
   border: 2px solid #1d2621;
 }
+
 .step-label {
   position: absolute;
   margin-left: -1rem;
-  margin-top: 0.2rem;
+  margin-top: 2.5rem; /* Adjust label position */
   font-size: 1rem;
   font-weight: 600;
   text-align: left;
@@ -82,14 +90,26 @@
 
 .step-circle.active {
   color: #f2e4d7;
-  background-color: #1d2621;
+  background-color: #354f42; /* Medium dark */
   transform: scale(1.1);
   border-color: #45a049;
 }
 
 .step-circle.completed {
   color: #f2e4d7;
-  background-color: #1d2621;
+  background-color: #1d2621; /* Dark */
+  border-color: #1d2621;
+}
+
+.step-label {
+  position: absolute;
+  margin-left: -1rem;
+  margin-top: 2.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  color: #000000;
+  transition: all 0.3s ease;
 }
 
 .button-group {
@@ -821,7 +841,9 @@ button:focus {
 }
 @media (max-width: 550px) {
   .checkout-container {
-    height: 79vh;
+    height: 78vh;
+    padding-bottom: 1.6rem;
+    overflow-y: scroll;
   }
   .cart-item {
     padding: 0.6rem 1rem;
@@ -848,7 +870,7 @@ button:focus {
   }
   .step-label {
     font-size: 0.8rem;
-    margin-left: -0.6rem;
+    margin-left: -0.1rem;
   }
   .checkout-btn {
     padding: 10px 20px;

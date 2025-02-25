@@ -287,6 +287,8 @@ body {
 @media (max-width: 768px) {
   .payment-container {
     padding: 1rem;
+    overflow-y: scroll;
+    height: 78vh;
   }
   .payment-header h1 {
     font-size: 1.6rem;

@@ -138,7 +138,7 @@ const styles = `
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 15px 30px;
+  padding: 12px 30px;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
@@ -216,7 +216,8 @@ const styles = `
   }
   .whatsapp-checkout {
     padding: 15px;
-    height:78vh;
+    margin:0;
+    height:76vh;
 overflow-y:scroll;
   }
   .payment-section{
@@ -471,9 +472,7 @@ const WhatsappOrder = () => {
                 <p>Phone: {selectedAddress.number}</p>
                 <p>Email: {selectedAddress.email}</p>
                 <p>
-                  {selectedAddress.flat},{selectedAddress.street}
-                </p>
-                <p>
+                  {selectedAddress.flat},{selectedAddress.street},{" "}
                   {selectedAddress.locality}, {selectedAddress.city}
                 </p>
                 <p>

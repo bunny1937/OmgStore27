@@ -342,7 +342,7 @@ const Checkoutnew = () => {
         );
         navigate("/Whatsapporder");
       } catch (error) {
-        toast.error("Error creating order");
+        console.log(error);
       }
     } else {
       alert("Please select an address and ensure the cart is not empty.");
@@ -489,12 +489,20 @@ const Checkoutnew = () => {
               {steps.map((step, index) => (
                 <div
                   key={step}
-                  className={`step ${
-                    currentStep > index + 1 ? "completed" : ""
-                  } ${currentStep === index + 1 ? "active" : ""}`}
+                  className="step"
                   onClick={() => setCurrentStep(index + 1)}
                 >
-                  <div className="step-circle">{index + 1}</div>
+                  <div
+                    className={`step-circle ${
+                      currentStep > index + 1
+                        ? "completed"
+                        : currentStep === index + 1
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    {index + 1}
+                  </div>
                   <div className="step-label">{step}</div>
                 </div>
               ))}
@@ -906,16 +914,14 @@ const Checkoutnew = () => {
                 Next
               </button>
             ) : (
-              <Link to={"/Whatsapporder"}>
-                <motion.button
-                  className="pay-button"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={handlePayClick}
-                >
-                  Pay
-                </motion.button>
-              </Link>
+              <motion.button
+                className="pay-button"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handlePayClick}
+              >
+                Pay
+              </motion.button>
             )}
           </div>
         </div>

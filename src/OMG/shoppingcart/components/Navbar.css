@@ -356,19 +356,62 @@ input.nosubmit {
     height: 56px;
     width: 100%; /* Ensure full width */
   }
+  /* Keep your existing styles but modify the nav-menu animation */
   .nav-menu {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 20vh;
+    height: 0;
     position: absolute;
     top: 60px;
-    left: -100%;
-    opacity: 1;
-    transition: all 0.5s ease;
+    left: 0;
+    opacity: 0;
+    overflow: hidden;
+    /* Use cubic-bezier for a fluid-like motion */
+    transition: height 1s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease;
     justify-content: flex-start;
     align-items: flex-start;
+    clip-path: inset(0 0 100% 0); /* Start clipped from the bottom */
+    background: linear-gradient(to bottom, #1d2621, #5e6b61);
   }
+
+  .nav-menu.active {
+    padding: 1rem;
+    background: linear-gradient(to bottom, #1d2621, #5e6b61);
+    left: 0;
+    width: 40%;
+    color: #efefef;
+    height: 100vh;
+    opacity: 1;
+    /* The filling effect animation */
+    transition: height 1s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease 0.2s;
+    clip-path: inset(0 0 0 0); /* Fully visible */
+    z-index: 1;
+  }
+
+  /* Add this to enhance the filling effect with a slight delay for content */
+  .nav-menu.active .header-links {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: 0.6s; /* Start fading in after the menu starts filling */
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Continue with your existing styles */
+  .nav-menu.active p {
+    font-size: 1.8rem;
+  }
+  /* ... rest of your existing styles ... */
+
   .search-join {
     width: 100%;
   }
@@ -402,16 +445,18 @@ input.nosubmit {
     font-size: 1rem;
     margin-left: 0.6rem;
   }
+
+  .nav-menu {
+    /* ...other properties... */
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: height 1s ease, opacity 1s ease, transform 1s ease;
+  }
+
   .nav-menu.active {
-    padding: 1rem;
-    background: linear-gradient(to bottom, #1d2621, #5e6b61);
-    left: 0;
-    width: 40%;
-    color: #efefef;
-    height: 100vh;
-    opacity: 1;
-    transition: all 0.5s ease;
-    z-index: 1;
+    /* ...other properties... */
+    transform: scaleY(1);
+    transition: height 1s ease, opacity 1s ease, transform 1s ease;
   }
   .nav-menu.active p {
     font-size: 1.8rem;
