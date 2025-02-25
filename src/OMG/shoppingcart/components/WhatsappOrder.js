@@ -17,6 +17,8 @@ const styles = `
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  height:86vh;
+  overflow-y:scroll;
 
 }
 
@@ -169,7 +171,6 @@ const styles = `
   display: block;
 } 
 .screenshot-upload {
-margin:4.2rem 0 0 2rem;
   text-align: center;
 } 
 .screenshot-preview {
@@ -199,20 +200,23 @@ margin:4.2rem 0 0 2rem;
 .error {
   color: #dc3545;
   text-align: center;
-  padding: 20px;
+  padding: 4px;
   background: #ffe5e5;
-  border-radius: 8px;
-  margin: 20px 0;
+  border-radius: 4px;
+  margin: 10px 0;
 }
 
 @media (max-width: 768px) {
   .order-details {
     grid-template-columns: 1fr;
   }
-  
+  .checkout-header h2{
+  font-size:1.4rem;
+  margin: 0.4rem 0
+  }
   .whatsapp-checkout {
     padding: 15px;
-    height:80vh;
+    height:78vh;
 overflow-y:scroll;
   }
   .payment-section{
@@ -237,6 +241,7 @@ const WhatsappOrder = () => {
   const [paymentScreenshot, setPaymentScreenshot] = useState(null);
   const [screenshotPreview, setScreenshotPreview] = useState(null);
   const [uploadingScreenshot, setUploadingScreenshot] = useState(false);
+  const [dataInitialized, setDataInitialized] = useState(false);
 
   useEffect(() => {
     const auth = getAuth();
@@ -258,7 +263,22 @@ const WhatsappOrder = () => {
             id: doc.id,
             ...doc.data(),
           }));
-
+          if (!dataInitialized && (buyNowItem || cartItems.length > 0)) {
+            // If the address info should be in sessionStorage or localStorage
+            const savedAddress =
+              sessionStorage.getItem("selectedAddress") ||
+              localStorage.getItem("selectedAddress");
+            if (savedAddress) {
+              try {
+                const parsedAddress = JSON.parse(savedAddress);
+                setSelectedAddress(parsedAddress);
+                console.log("Restored address from storage:", parsedAddress);
+              } catch (e) {
+                console.error("Failed to parse saved address:", e);
+              }
+            }
+            setDataInitialized(true);
+          }
           // Get most recent order
           if (orders.length > 0) {
             const latestOrder = orders.reduce((latest, current) => {
@@ -441,22 +461,39 @@ const WhatsappOrder = () => {
             </div>
           </div>
 
-          {selectedAddress && (
+          {selectedAddress && Object.keys(selectedAddress).length > 0 ? (
             <div className="shipping-info">
               <h3>Delivery Information</h3>
               <div className="address-details">
                 <p>
                   <strong>{selectedAddress.name}</strong>
                 </p>
-                <p>{selectedAddress.flat}</p>
-                <p>{selectedAddress.street}</p>
-                <p>{selectedAddress.locality}</p>
-                <p>
-                  {selectedAddress.city}, {selectedAddress.state} -{" "}
-                  {selectedAddress.pinCode}
-                </p>
                 <p>Phone: {selectedAddress.number}</p>
                 <p>Email: {selectedAddress.email}</p>
+                <p>
+                  {selectedAddress.flat},{selectedAddress.street}
+                </p>
+                <p>
+                  {selectedAddress.locality}, {selectedAddress.city}
+                </p>
+                <p>
+                  , {selectedAddress.state} - {selectedAddress.pinCode}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="shipping-info">
+              <h3>Delivery Information</h3>
+              <div className="address-details">
+                <p className="error">
+                  No shipping address found. Please complete checkout first.
+                </p>
+                <button
+                  className="upload-button"
+                  onClick={() => navigate("/checkout")}
+                >
+                  Add Shipping Address
+                </button>
               </div>
             </div>
           )}
@@ -489,7 +526,15 @@ const WhatsappOrder = () => {
             )}
           </div>
         </div>
-
+        {!selectedAddress && (
+          <p className="error">Please add a shipping address</p>
+        )}
+        {orderItems.length === 0 && (
+          <p className="error">No items in your order</p>
+        )}
+        {!paymentScreenshot && (
+          <p className="error">Payment screenshot required</p>
+        )}
         <button
           className="whatsapp-button"
           onClick={sendToWhatsApp}

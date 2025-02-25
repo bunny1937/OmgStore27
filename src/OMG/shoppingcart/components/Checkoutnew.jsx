@@ -245,6 +245,8 @@ const Checkoutnew = () => {
   };
   const handleAddressSelection = (addressId) => {
     const address = savedAddresses.find((addr) => addr.id === addressId);
+    sessionStorage.setItem("selectedAddress", JSON.stringify(address));
+
     if (address) {
       setSelectedAddress(address);
       setSelectedAddressId(addressId);
@@ -835,14 +837,19 @@ const Checkoutnew = () => {
                           <div className="coupon-list">
                             {availableCoupons.map((coupon) => (
                               <div key={coupon.code} className="coupon-item">
-                                <div className="coupon-code">{coupon.code}</div>
-                                <div className="coupon-description">
-                                  {coupon.description}
-                                </div>
-                                <div className="coupon-requirement">
-                                  Minimum {coupon.minItems} items required
+                                <div className="coupon-item-left">
+                                  <div className="coupon-code">
+                                    {coupon.code}
+                                  </div>
+                                  <div className="coupon-description">
+                                    {coupon.description}
+                                  </div>
+                                  <div className="coupon-requirement">
+                                    Minimum {coupon.minItems} items required
+                                  </div>
                                 </div>
                                 <button
+                                  className="dialog-coupon-apply"
                                   onClick={() => {
                                     setLocalCouponCode(coupon.code);
                                     handleApplyCoupon();

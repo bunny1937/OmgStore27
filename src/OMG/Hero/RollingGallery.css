@@ -137,7 +137,7 @@
 .carousel-instructions h2 {
   font-family: Sherdan;
   font-size: 3rem;
-  z-index: 10;
+  z-index: 2;
 }
 .carousel-instructions p {
   width: 30%;

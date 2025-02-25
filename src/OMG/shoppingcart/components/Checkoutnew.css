@@ -370,7 +370,7 @@
 
 .address-overview {
   width: 100%;
-  padding: 0 20px;
+  padding: 20px;
   background-color: #ece9e1;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -499,6 +499,7 @@ form button[type="submit"]:hover {
   background-color: rgb(255, 173, 173);
   padding: 10px;
   margin-top: 10px;
+  border-radius: 4px;
 }
 
 .selection-cancel:hover {
@@ -669,7 +670,8 @@ button:focus {
   color: #888;
 }
 
-.apply-coupon-btn {
+.apply-coupon-btn,
+.dialog-coupon-apply {
   background-color: #4a90e2;
   color: white;
   border: none;
@@ -787,6 +789,7 @@ button:focus {
   }
   .address-overview {
     height: 58vh;
+    overflow-y: scroll;
   }
   .checkout-left,
   .checkout-right {

@@ -37,71 +37,6 @@ const initialState = {
 const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
   const { user } = useContext(UserContext);
-  const [couponCode, setCouponCode] = useState("");
-  const [appliedCoupon, setAppliedCoupon] = useState(null);
-  const [discount, setDiscount] = useState(0);
-
-  const availableCoupons = [
-    {
-      code: "BUY2GET10",
-      description: "Buy 2 get 10% off",
-      minItems: 2,
-      discountType: "percentage",
-      value: 10,
-    },
-    {
-      code: "BUY3GET20",
-      description: "Buy 3 get 20% off",
-      minItems: 3,
-      discountType: "percentage",
-      value: 20,
-    },
-    {
-      code: "BUY4GET1FREE",
-      description: "Buy 4 get 1 free (5th item free)",
-      minItems: 5,
-      discountType: "itemFree",
-      value: 1,
-    },
-  ];
-
-  // Add these functions to your context provider
-  const applyCoupon = (code) => {
-    const coupon = availableCoupons.find((c) => c.code === code);
-    if (coupon) {
-      setAppliedCoupon(coupon);
-      setCouponCode(code);
-      return true;
-    }
-    return false;
-  };
-
-  const removeCoupon = () => {
-    setAppliedCoupon(null);
-    setCouponCode("");
-    setDiscount(0);
-  };
-
-  const calculateDiscount = (items, coupon) => {
-    if (!coupon) return 0;
-
-    const itemCount = items.length;
-    const totalAmount = items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-
-    if (itemCount >= coupon.minItems) {
-      if (coupon.discountType === "percentage") {
-        return totalAmount * (coupon.value / 100);
-      } else if (coupon.discountType === "itemFree" && itemCount >= 5) {
-        // Find the cheapest item to make free
-        const sortedItems = [...items].sort((a, b) => a.price - b.price);
-        return sortedItems[0].price;
-      }
-    }
-    return 0;
-  };
 
   const toggleCart = () => {
     dispatch({ type: "TOGGLE_CART" });
@@ -383,12 +318,6 @@ const CartProvider = ({ children }) => {
     incrementBuyNowItem,
     decrementBuyNowItem,
     removeBuyNowItem,
-    couponCode,
-    appliedCoupon,
-    discount,
-    applyCoupon,
-    removeCoupon,
-    calculateDiscount,
   };
 
   return <cartContext.Provider value={values}>{children}</cartContext.Provider>;

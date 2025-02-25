@@ -262,7 +262,7 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  height: 93%;
+  height: 100vh;
   overflow-y: scroll;
 }
 
@@ -388,7 +388,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 18px;
 }
 
@@ -454,6 +454,9 @@
 @media (max-width: 550px) and (min-width: 100px) {
   .cart_head {
     margin-top: 4.2rem;
+  }
+  .cart_content {
+    height: 93vh;
   }
 }
 @media (max-width: 480px) {
