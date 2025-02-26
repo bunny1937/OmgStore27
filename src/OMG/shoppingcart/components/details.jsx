@@ -8,7 +8,8 @@ import { FavouritesContext } from "./FavoritesContext";
 import SimilarProducts from "./SimilarProducts";
 import ReviewSection from "./ReviewSection";
 import { getFirestore, collection, doc, getDoc } from "firebase/firestore";
-import { firebaseApp } from "../../db/Firebase";
+import { ref, getDownloadURL } from "firebase/storage";
+import { firebaseApp, storage } from "../../db/Firebase";
 import { useParams, useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -19,8 +20,6 @@ import UserContext from "../../Auth/UserContext";
 import toast, { Toaster } from "react-hot-toast";
 import { auth } from "../../db/Firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { FidgetSpinner } from "react-loader-spinner";
-import LoadingAnimation from "./Loading/Loader";
 
 const db = getFirestore(firebaseApp);
 
@@ -42,8 +41,10 @@ const Details = () => {
   const { user } = useContext(UserContext); // User context
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { cartItems } = useContext(cartContext);
+  const [sizeChartUrl, setSizeChartUrl] = useState("");
+
   // Fetch product based on id
   useEffect(() => {
     if (id) {
@@ -81,6 +82,35 @@ const Details = () => {
     // Cleanup the timer on unmount
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const fetchSizeChart = async () => {
+      try {
+        setLoading(true);
+
+        // Check if the product category is 'Oversize' or 'Tshirts'
+        const isOversize = product.Category === "Oversize";
+
+        // Choose the correct image filename
+        const chartFileName = isOversize
+          ? "oversize-chart.png"
+          : "regular-chart.png";
+
+        // Reference the file in Firebase Storage
+        const imageRef = ref(storage, `size-chart/${chartFileName}`);
+
+        // Get the download URL
+        const url = await getDownloadURL(imageRef);
+        setSizeChartUrl(url);
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    fetchSizeChart();
+  }, [product]);
 
   if (loading || !product) {
     return (
@@ -367,7 +397,7 @@ const Details = () => {
                     onClick={() => toggleContent("shipping")}
                     className="accordion-header"
                   >
-                    Shipping & Returns
+                    Size Chart
                     <ExpandMoreIcon
                       className={`expand-icon ${
                         shippingOpen ? "expanded" : ""
@@ -376,10 +406,11 @@ const Details = () => {
                   </h3>
                   <Collapse in={shippingOpen}>
                     <div className="accordion-content">
-                      <p>
-                        This is the shipping and return details. Add details
-                        such as estimated delivery time, return policy, etc.
-                      </p>
+                      <img
+                        src={sizeChartUrl}
+                        alt={`${product.Category} Size Chart`}
+                        className="size-chart-img"
+                      />
                     </div>
                   </Collapse>
                 </div>

@@ -17,9 +17,8 @@ const styles = `
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-      height: calc(100vh - 160px);
+  height:auto;
 
-  overflow-y:scroll;
 
 }
 
@@ -218,7 +217,6 @@ const styles = `
   .whatsapp-checkout {
     padding: 15px;
     margin:0;
-    height: calc(100vh - 150px);
     overflow-y:scroll;
   }
   .whatsapp-button{
@@ -231,7 +229,11 @@ const styles = `
     align-items: flex-start;
     gap:20px
   }
-
+}
+   @media (max-height: 600px) {
+  .whatsapp-checkout {
+    height: calc(90vh - 120px);
+  }
 }`;
 
 const WhatsappOrder = () => {
