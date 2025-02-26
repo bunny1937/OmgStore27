@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import cartContext from "../context/cartContext";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaPlus, FaMinus, FaTruck, FaTrash } from "react-icons/fa";
+import { FaPlus, FaMinus, FaShoppingCart, FaTrash } from "react-icons/fa";
 import { firestore, db } from "../../db/Firebase";
 import { collection, doc, getDocs, getDoc, addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -295,57 +295,66 @@ const Checkoutnew = () => {
 
   // Save the order details to Firestore and navigate to payment page
   const handlePayClick = async () => {
-    if (userId && selectedAddress && localItems.length > 0) {
-      try {
-        const orderRef = collection(firestore, "users", userId, "orders");
-        const itemsForOrder =
-          checkoutMode === "buynow" ? [buyNowItem] : cartItems;
+    if (!userId) {
+      toast.error("Please log in to complete your purchase.");
+      return;
+    }
 
-        const newOrder = {
-          cartItems: itemsForOrder,
-          shippingInfo: selectedAddress,
-          totalAmount:
-            checkoutMode === "buynow"
-              ? buyNowItem.price * buyNowItem.quantity
-              : cartTotal,
-          orderCreatedAt: new Date(),
-          userInfo: {
-            email: userInfo.email,
-            phoneNumber: userInfo.phoneNumber,
-            firstName: userInfo.firstName,
-            lastName: userInfo.lastName,
-            userId: userId,
-          },
-          orderType: checkoutMode,
-        };
+    if (!selectedAddress) {
+      toast.error("Please select a delivery address.");
+      return;
+    }
 
-        await addDoc(orderRef, newOrder);
+    if (localItems.length === 0) {
+      toast.error("Your cart is empty. Please add items before proceeding.");
+      return;
+    }
 
-        // const confirmPurchase = window.confirm(
-        //   `Proceed to pay for ${
-        //     checkoutMode === "buynow" ? "this item" : "cart items"
-        //   }?`
-        // );
-        // if (!confirmPurchase) return;
+    try {
+      const orderRef = collection(firestore, "users", userId, "orders");
+      const itemsForOrder =
+        checkoutMode === "buynow" ? [buyNowItem] : cartItems;
 
-        if (checkoutMode === "buynow") {
-          removeBuyNowItem();
-        } else {
-          clearCart();
-        }
-        toast.success(
-          `Order placed successfully! ${
-            checkoutMode === "buynow"
-              ? "You can continue shopping or check your cart items."
-              : "You can continue shopping."
-          }`
-        );
-        navigate("/Whatsapporder");
-      } catch (error) {
-        console.log(error);
+      const newOrder = {
+        cartItems: itemsForOrder,
+        shippingInfo: selectedAddress,
+        totalAmount:
+          checkoutMode === "buynow"
+            ? buyNowItem.price * buyNowItem.quantity
+            : cartTotal,
+        orderCreatedAt: new Date(),
+        userInfo: {
+          email: userInfo?.email || "",
+          phoneNumber: userInfo?.phoneNumber || "",
+          firstName: userInfo?.firstName || "",
+          lastName: userInfo?.lastName || "",
+          userId: userId,
+        },
+        orderType: checkoutMode,
+        discountAmount: discountAmount || 0,
+        appliedCoupon: appliedCoupon ? appliedCoupon.code : null,
+      };
+
+      await addDoc(orderRef, newOrder);
+
+      if (checkoutMode === "buynow") {
+        removeBuyNowItem();
+      } else {
+        clearCart();
       }
-    } else {
-      alert("Please select an address and ensure the cart is not empty.");
+
+      toast.success(" Redirecting to WhatsApp order...");
+
+      // Add a small delay before navigation to ensure the toast is seen
+      setTimeout(() => {
+        navigate("/Whatsapporder");
+      }, 1500);
+    } catch (error) {
+      console.error("Error processing order:", error);
+      toast.error(
+        "Unable to process your order. Please try again later.",
+        error
+      );
     }
   };
 
@@ -518,55 +527,68 @@ const Checkoutnew = () => {
             {currentStep === 1 && (
               <div className="form-step enter">
                 <div className="cart-view">
-                  {itemsToDisplay.map((item, index) => (
-                    <motion.div
-                      className="cart-item"
-                      key={`${checkoutMode}-${item.id}-${item.size}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <figure className="cart-item-img">
-                        <img src={item.Img} alt={item.Name} />
-                      </figure>
-                      <div className="cart-item-info">
-                        <h2>{item.Name}</h2>
-                        <h4>
-                          ₹{(item.price * item.quantity).toLocaleString()} {""}
-                          ||
-                          <span style={{ color: "#4e4e4e" }}>
-                            {" "}
-                            ₹ {item.price.toLocaleString()}{" "}
-                          </span>
-                        </h4>
-                        <h4>Size : {item.size}</h4>
-                        <div className="cart-item-pricing">
-                          <div className="quantity-controls">
+                  {itemsToDisplay.length > 0 ? (
+                    itemsToDisplay.map((item, index) => (
+                      <motion.div
+                        className="cart-item"
+                        key={`${checkoutMode}-${item.id}-${item.size}`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <figure className="cart-item-img">
+                          <img src={item.Img} alt={item.Name} />
+                        </figure>
+                        <div className="cart-item-info">
+                          <h2>{item.Name}</h2>
+                          <h4>
+                            ₹{(item.price * item.quantity).toLocaleString()}{" "}
+                            {""}
+                            ||
+                            <span style={{ color: "#4e4e4e" }}>
+                              {" "}
+                              ₹ {item.price.toLocaleString()}{" "}
+                            </span>
+                          </h4>
+                          <h4>Size : {item.size}</h4>
+                          <div className="cart-item-pricing">
+                            <div className="quantity-controls">
+                              <button
+                                onClick={() => handleDecrement(item)}
+                                disabled={item.quantity <= 1}
+                              >
+                                <FaMinus />
+                              </button>
+                              <span>{item.quantity}</span>
+                              <button onClick={() => handleIncrement(item)}>
+                                <FaPlus />
+                              </button>
+                            </div>
                             <button
-                              onClick={() => handleDecrement(item)}
-                              disabled={item.quantity <= 1}
+                              className="remove-item-button"
+                              onClick={() => handleRemove(item)}
                             >
-                              <FaMinus />
-                            </button>
-                            <span>{item.quantity}</span>
-                            <button onClick={() => handleIncrement(item)}>
-                              <FaPlus />
+                              <FaTrash />
                             </button>
                           </div>
-                          <button
-                            className="remove-item-button"
-                            onClick={() => handleRemove(item)}
-                          >
-                            <FaTrash />
-                          </button>
                         </div>
+                      </motion.div>
+                    ))
+                  ) : (
+                    <div className="empty-cart-message">
+                      <div className="empty-cart-msg">
+                        <FaShoppingCart size={50} />
+                        <h3>Your cart is empty</h3>
                       </div>
-                    </motion.div>
-                  ))}
+
+                      <Link to="/Home" className="continue-shopping-btn">
+                        Continue Shopping
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
-
             {currentStep === 2 && (
               <div className="form-step enter">
                 <div className="address-overview">
@@ -743,7 +765,6 @@ const Checkoutnew = () => {
                 </div>
               </div>
             )}
-
             {currentStep === 3 && (
               <div className="form-step enter">
                 <div className="pay-overview">

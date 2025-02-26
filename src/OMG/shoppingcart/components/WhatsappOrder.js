@@ -17,7 +17,8 @@ const styles = `
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  height:86vh;
+      height: calc(100vh - 160px);
+
   overflow-y:scroll;
 
 }
@@ -217,11 +218,14 @@ const styles = `
   .whatsapp-checkout {
     padding: 15px;
     margin:0;
-    height:76vh;
-overflow-y:scroll;
+    height: calc(100vh - 150px);
+    overflow-y:scroll;
+  }
+  .whatsapp-button{
+    font-size:16px;
   }
   .payment-section{
-  flex-direction:column
+    flex-direction:column
   }
   .item-details {
     align-items: flex-start;
