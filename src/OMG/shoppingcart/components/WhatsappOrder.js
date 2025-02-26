@@ -216,7 +216,7 @@ const styles = `
   }
   .whatsapp-checkout {
     padding: 15px;
-    margin:0;
+    height: calc(90vh - 100px);
     overflow-y:scroll;
   }
   .whatsapp-button{

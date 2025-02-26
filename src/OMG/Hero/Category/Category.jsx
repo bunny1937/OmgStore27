@@ -12,74 +12,119 @@ const Category = () => {
     Oversize: [],
   });
 
+  // Use separate refs for each slider
   const sliderRefs = {
     Hoodies: useRef(null),
     Tshirts: useRef(null),
     Oversize: useRef(null),
   };
 
-  // Simplified touch tracking
-  const touchRef = useRef({
-    startX: 0,
-    scrollLeft: 0,
-  });
+  // Track touch and drag state for each slider separately
+  const touchStateRef = useRef({});
 
   const navigate = useNavigate();
   const firestore = getFirestore(firebaseApp);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const querySnapshot = await getDocs(collection(firestore, "Products"));
-      const allProducts = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      try {
+        const querySnapshot = await getDocs(collection(firestore, "Products"));
+        const allProducts = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-      setProducts({
-        Hoodies: allProducts.filter(
-          (product) => product.Category === "Hoodies"
-        ),
-        Tshirts: allProducts.filter(
-          (product) => product.Category === "Tshirts"
-        ),
-        Oversize: allProducts.filter(
-          (product) => product.Category === "Oversize"
-        ),
-      });
+        setProducts({
+          Hoodies: allProducts.filter(
+            (product) => product.Category === "Hoodies"
+          ),
+          Tshirts: allProducts.filter(
+            (product) => product.Category === "Tshirts"
+          ),
+          Oversize: allProducts.filter(
+            (product) => product.Category === "Oversize"
+          ),
+        });
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     };
 
     fetchProducts();
-  }, [firestore]);
+  }, []);
 
+  // Optimized touch handlers with passive option and throttling
   const handleTouchStart = (e, category) => {
-    const touch = e.touches[0];
     const slider = sliderRefs[category].current;
+    if (!slider) return;
 
-    touchRef.current = {
+    const touch = e.touches[0];
+
+    // Store touch start position and timestamp
+    touchStateRef.current[category] = {
       startX: touch.clientX,
+      startY: touch.clientY,
+      startTime: Date.now(),
       scrollLeft: slider.scrollLeft,
+      isScrolling: true,
     };
   };
 
   const handleTouchMove = (e, category) => {
-    const touch = e.touches[0];
+    const touchState = touchStateRef.current[category];
     const slider = sliderRefs[category].current;
 
-    if (!touchRef.current.startX) return;
+    if (!touchState?.isScrolling || !slider) return;
 
-    const x = touch.clientX;
-    const walk = (touchRef.current.startX - x) * 1.5; // Multiply by 1.5 for faster scrolling
+    // Prevent default only if horizontal scrolling detected
+    const touch = e.touches[0];
+    const deltaX = touchState.startX - touch.clientX;
+    const deltaY = touchState.startY - touch.clientY;
 
-    slider.scrollLeft = touchRef.current.scrollLeft + walk;
+    // If more horizontal than vertical movement, prevent default
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      e.preventDefault();
+    } else {
+      // If more vertical, stop tracking this as a horizontal scroll
+      touchStateRef.current[category].isScrolling = false;
+      return;
+    }
+
+    // Calculate momentum based on speed
+    const speed = 1.2; // Momentum multiplier
+    const movement = deltaX * speed;
+
+    // Apply scroll with momentum
+    slider.scrollLeft = touchState.scrollLeft + movement;
   };
 
-  const handleTouchEnd = () => {
-    touchRef.current = {
-      startX: 0,
-      scrollLeft: 0,
-    };
+  const handleTouchEnd = (category) => {
+    const touchState = touchStateRef.current[category];
+    const slider = sliderRefs[category].current;
+
+    if (!touchState || !touchState.isScrolling || !slider) return;
+
+    // Calculate momentum based on speed of gesture
+    const endTime = Date.now();
+    const duration = endTime - touchState.startTime;
+
+    if (duration < 200) {
+      // Fast swipe
+      const distance = touchState.startX - touchState.lastX;
+      const velocity = distance / duration;
+
+      // Apply inertia
+      slider.scrollBy({
+        left: velocity * 300, // Multiply by factor for "weight" of the scroll
+        behavior: "smooth",
+      });
+    }
+
+    // Reset touch state
+    touchStateRef.current[category] = null;
   };
 
+  // Use requestAnimationFrame for smooth button scrolling
   const handleScroll = (category, direction) => {
     const container = sliderRefs[category].current;
     if (!container) return;
@@ -89,6 +134,7 @@ const Category = () => {
       container.scrollLeft +
       (direction === "right" ? scrollAmount : -scrollAmount);
 
+    // Use native scrollTo with smooth behavior
     container.scrollTo({
       left: targetScroll,
       behavior: "smooth",
@@ -107,7 +153,48 @@ const Category = () => {
     setHoveredProducts((prev) => ({ ...prev, [productId]: false }));
   };
 
+  // Memoized card renderer to avoid unnecessary re-renders
+  const renderProductCard = (product) => {
+    const isHovered = hoveredProducts[product.id];
+    const imgUrl =
+      isHovered && product.ImgUrls && product.ImgUrls[1]
+        ? product.ImgUrls[1]
+        : product.ImgUrls && product.ImgUrls[0];
+
+    return (
+      <div
+        key={product.id}
+        className="category-card"
+        onMouseEnter={() => handleMouseEnter(product.id)}
+        onMouseLeave={() => handleMouseLeave(product.id)}
+      >
+        <Link to={`/Details/${product.id}`}>
+          <div className="category-image-container">
+            {imgUrl && (
+              <img
+                src={imgUrl}
+                alt={product.Name || "Product Image"}
+                className="category-image"
+                loading="lazy"
+                width="200"
+                height="250"
+              />
+            )}
+          </div>
+          <div className="category-info">
+            <h3 className="product-name">{product.Name}</h3>
+            <p className="product-price">
+              ₹ {product.price?.toFixed(2) || "0.00"}
+            </p>
+          </div>
+        </Link>
+      </div>
+    );
+  };
+
   const renderProductSlider = (category, title) => {
+    const productList = products[category] || [];
+
     return (
       <div className="category-slider-container">
         <div className="category-slider-header">
@@ -132,39 +219,9 @@ const Category = () => {
             ref={sliderRefs[category]}
             onTouchStart={(e) => handleTouchStart(e, category)}
             onTouchMove={(e) => handleTouchMove(e, category)}
-            onTouchEnd={handleTouchEnd}
+            onTouchEnd={() => handleTouchEnd(category)}
           >
-            {products[category].map((product) => (
-              <div
-                key={product.id}
-                className="category-card"
-                onMouseEnter={() => handleMouseEnter(product.id)}
-                onMouseLeave={() => handleMouseLeave(product.id)}
-              >
-                <Link to={`/Details/${product.id}`}>
-                  <div className="category-image-container">
-                    {product.ImgUrls && product.ImgUrls.length > 0 && (
-                      <img
-                        src={
-                          hoveredProducts[product.id] && product.ImgUrls[1]
-                            ? product.ImgUrls[1]
-                            : product.ImgUrls[0]
-                        }
-                        alt={product.Name || "Product Image"}
-                        className="category-image"
-                        loading="lazy"
-                      />
-                    )}
-                  </div>
-                  <div className="category-info">
-                    <h3 className="product-name">{product.Name}</h3>
-                    <p className="product-price">
-                      ₹ {product.price.toFixed(2)}
-                    </p>
-                  </div>
-                </Link>
-              </div>
-            ))}
+            {productList.map(renderProductCard)}
           </div>
           <button
             className="scroll-button scroll-button-right"

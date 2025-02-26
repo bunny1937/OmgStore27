@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Monteserrat;
+  src: url(/public/Fonts/Montserrat-VariableFont_wght.ttf);
+}
+
 .horizontal-category-slider {
   width: 100%;
   max-width: 1800px;
@@ -49,9 +54,9 @@
   gap: 20px;
   padding: 10px;
   scroll-snap-type: x mandatory;
+  will-change: scroll-position;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
-  will-change: transform;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -62,16 +67,14 @@
 .category-card {
   flex: 0 0 auto;
   width: 280px;
-  scroll-snap-align: start;
-  transition: transform 0.2s;
   background-color: transparent;
   padding: 1px;
   border-radius: 5px;
   cursor: pointer;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 0.2s ease;
 }
 
 .category-image-container {
@@ -94,6 +97,7 @@
   user-select: none;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
+  will-change: transform;
   transition: transform 0.3s ease;
 }
 
@@ -106,6 +110,7 @@
 }
 
 .product-name {
+  font-family: Monteserrat;
   font-size: 1.2rem;
   font-weight: 600;
   color: #111;
@@ -184,6 +189,7 @@
 
 @media (max-width: 640px) {
   .category-card {
+    scroll-snap-align: start;
     width: 160px;
   }
 
@@ -193,6 +199,7 @@
 
   .category-slider {
     padding: 5px;
+    scroll-snap-type: x mandatory;
     gap: 10px;
   }
 

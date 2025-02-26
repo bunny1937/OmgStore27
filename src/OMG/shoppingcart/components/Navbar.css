@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Jun;
+  src: url(/public/Fonts/jun-regular.otf);
+}
+
 .navbar {
   background: #1d2621;
   color: #f2e4d7;
@@ -73,6 +78,10 @@
 
 .menu-icon {
   display: none;
+}
+
+.header-links p {
+  font-family: Jun;
 }
 
 .header-links > input {
