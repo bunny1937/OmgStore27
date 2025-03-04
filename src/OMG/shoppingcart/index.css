@@ -138,12 +138,44 @@ svg {
 }
 
 /* Filter Section */
-.filter-section button {
-  padding: 12px;
-  background-color: #1d2621;
-  color: #f2e4d7;
-  border: none;
+.filter-sort-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-size: 14px;
   cursor: pointer;
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.filter-button {
+  padding: 8px 16px;
+  background-color: #1d1d1d;
+  color: #e9e9e9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  background-color: #e9e9e9;
 }
 
 .filter-container {

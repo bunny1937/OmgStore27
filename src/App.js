@@ -51,6 +51,8 @@ import ChangePassword from "./OMG/shoppingcart/components/UserProfile/ChangePass
 import WhatsappOrder from "./OMG/shoppingcart/components/WhatsappOrder";
 import AdminDashboard from "./OMG/admin/AdminLayout";
 import Trackorder from "./OMG/shoppingcart/components/Trackorder";
+import PrintOnDemand from "./OMG/shoppingcart/components/PrintonDemand";
+import PrintOnDemandAdmin from "./OMG/admin/Components/AdminPrintonDemand";
 
 function App() {
   return (
@@ -86,6 +88,7 @@ function App() {
                       path="/profile/Favourites"
                       element={<Favourites />}
                     />
+                    <Route path="/PrintonDemand" element={<PrintOnDemand />} />
                     <Route path="UserProfile" element={<UserProfile />} />
                     <Route path="/UserProfile1/*" element={<UserProfile1 />} />
                     <Route path="/Profile1" element={<Profile1 />} />
@@ -125,6 +128,7 @@ function App() {
                         element={<AdminAnalytics />}
                       />
                       <Route path="settings" element={<Settings />} />
+                      <Route path="p-o-d" element={<PrintOnDemandAdmin />} />
                     </Route>
                     {/* <Route path="/users" element={<Users />} />
                     <Route path="/addproducts" element={<AddProducts />} />

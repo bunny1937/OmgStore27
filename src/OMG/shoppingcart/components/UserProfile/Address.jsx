@@ -283,10 +283,10 @@ function Address() {
                 <strong>Pin Code:</strong> {info.pinCode}
               </p>
               <button
-                className="shipping-edit-button"
+                className="shipping-edit-button1"
                 onClick={() => enableEditing(index)}
               >
-                <FaEdit />
+                Edit
               </button>
             </div>
           )}

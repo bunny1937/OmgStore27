@@ -56,6 +56,14 @@ const AdminSidebar = () => {
               Settings
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/admin/p-o-d"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Print on Demand
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </div>

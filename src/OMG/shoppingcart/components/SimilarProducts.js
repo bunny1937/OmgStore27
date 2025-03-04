@@ -81,8 +81,7 @@ const SimilarProducts = ({ category, id }) => {
             <Link to={`/Details/${product.id}`}>
               <h2>{product.Name}</h2>
             </Link>
-            <p>{product.Category}</p>
-            <p>₹ {product.price.toLocaleString()}</p>
+            <p>{product.Category}</p>₹{product.discountedPrice.toLocaleString()}
           </div>
         ))}
       </div>

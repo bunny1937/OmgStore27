@@ -31,37 +31,37 @@ function ProfileMenu() {
 
   const menuItems = [
     {
-      icon: <FaUser />,
+      icon: <FaUser size={32} />,
       title: "Basic Details",
       description: "Name, Email, Phone Number",
       link: "/profile/BasicDetails",
     },
     {
-      icon: <FaBox />,
+      icon: <FaBox size={32} />,
       title: "My Orders",
       description: "Track, Return & Cancel Orders",
       link: "/profile/orders",
     },
     {
-      icon: <FaMapPin />,
+      icon: <FaMapPin size={32} />,
       title: "Address",
       description: "Save & Manage Addresses",
       link: "/profile/address",
     },
     {
-      icon: <FaCreditCard />,
+      icon: <FaCreditCard size={32} />,
       title: "Payment Methods",
       description: "Add & Manage Payment Methods",
       link: "/profile/payments",
     },
     {
-      icon: <FaKey />,
+      icon: <FaKey size={32} />,
       title: "Account Settings",
       description: "Password & Account Settings",
       link: "/profile/changepassword",
     },
     {
-      icon: <FaHeart />,
+      icon: <FaHeart size={32} />,
       title: "My Wishlist",
       description: "Your Saved Items",
       link: "/profile/Favourites",

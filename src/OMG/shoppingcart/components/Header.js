@@ -194,6 +194,15 @@ const Header = () => {
             </div>
             <div className="header-links">
               <Link
+                to={"/PrintonDemand"}
+                className="navbar-links"
+                onClick={closeMobileMenu}
+              >
+                <p> Print on Demand</p>
+              </Link>
+            </div>
+            <div className="header-links">
+              <Link
                 to={"/Support"}
                 className="navbar-links"
                 onClick={closeMobileMenu}

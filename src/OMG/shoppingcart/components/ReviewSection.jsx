@@ -14,6 +14,7 @@ import UserContext from "../../Auth/UserContext";
 import { getAuth } from "firebase/auth";
 import { firebaseApp } from "../../db/Firebase";
 import "./ReviewSection.css";
+import { ReviewSkeleton } from "../pages/Skeleton";
 
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
@@ -28,6 +29,7 @@ const ReviewComponent = () => {
   const { user } = useContext(UserContext);
   const [photo, setPhoto] = useState(null);
   const [rating, setRating] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
@@ -47,6 +49,9 @@ const ReviewComponent = () => {
         })
         .catch((error) => {
           console.error("Error fetching product:", error);
+        })
+        .finally(() => {
+          setIsLoading(false); // Set loading to false when done
         });
     }
   }, [id]);
@@ -70,7 +75,9 @@ const ReviewComponent = () => {
     };
     fetchUserDetails();
   }, []);
-
+  if (isLoading) {
+    return <ReviewSkeleton />;
+  }
   const handlePhotoUpload = async () => {
     if (!photo) return null;
     const photoRef = ref(storage, `reviews/${id}/${photo.name}`);

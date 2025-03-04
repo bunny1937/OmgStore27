@@ -19,7 +19,7 @@ const Home = () => {
   const [selectedGenders, setSelectedGenders] = useState([]);
   const [selectedSizes, setSelectedSizes] = useState([]);
   const availableSizes = ["XS", "S", "M", "L", "XL", "XXL"];
-  const availableGenders = ["Male", "Female", "Unisex"];
+  const availableGenders = ["Male", "female", "unisex"];
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -29,7 +29,16 @@ const Home = () => {
           id: doc.id,
           ...doc.data(),
         }));
-
+        productsData.forEach((product) => {
+          if (
+            !product.Gender ||
+            !product.discountedPrice ||
+            !product.Category ||
+            !product.size
+          ) {
+            console.log("Product with missing data:", product.id, product);
+          }
+        });
         setProducts(productsData);
         setFilteredProducts(productsData);
       } catch (error) {
@@ -43,9 +52,11 @@ const Home = () => {
     fetchProducts();
   }, [firestore]);
 
-  // Filter Products Dynamically
+  // Filter and Sort Products Dynamically
   useEffect(() => {
-    const filtered = products.filter((product) => {
+    console.log("Filtering products...");
+
+    let filtered = products.filter((product) => {
       const matchesGender =
         selectedGenders.length === 0 ||
         selectedGenders.includes(product.Gender);
@@ -55,7 +66,8 @@ const Home = () => {
         product.size?.some((size) => selectedSizes.includes(size));
 
       const matchesPrice =
-        product.price >= priceRange[0] && product.price <= priceRange[1];
+        product.discountedPrice >= priceRange[0] &&
+        product.discountedPrice <= priceRange[1];
 
       const matchesCategory =
         selectedCategory === "" || product.Category === selectedCategory;
@@ -64,13 +76,29 @@ const Home = () => {
     });
 
     // Apply sorting
-    if (sortBy === "priceLowToHigh") {
-      filtered.sort((a, b) => a.price - b.price);
-    } else if (sortBy === "priceHighToLow") {
-      filtered.sort((a, b) => b.price - a.price);
+    if (sortBy !== "none") {
+      filtered = [...filtered].sort((a, b) => {
+        switch (sortBy) {
+          case "lowToHigh":
+            return a.discountedPrice - b.discountedPrice;
+          case "highToLow":
+            return b.discountedPrice - a.discountedPrice;
+          // case "bestSelling":
+          //   // Sort by the 'salesCount' field if it exists, otherwise keep original order
+          //   return (b.salesCount || 0) - (a.salesCount || 0);
+          // case "featured":
+          //   // Sort by the 'isFeatured' field, featured products first
+          //   return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
+          default:
+            return 0;
+        }
+      });
     }
 
     setFilteredProducts(filtered);
+    console.log(
+      `Products before filtering: ${products.length}, after filtering: ${filtered.length}`
+    );
   }, [
     products,
     selectedGenders,
@@ -110,13 +138,31 @@ const Home = () => {
     setIsFilterOpen(false);
   };
 
+  console.log(products);
   return (
     <>
       <section id="home">
         {error && <p className="error-message">{error}</p>}
         <div className="home-container">
-          <div className="filter-section">
-            <button onClick={handleToggleFilter}>Filters</button>
+          <div className="filter-sort-section">
+            <button className="filter-button" onClick={handleToggleFilter}>
+              Filters
+            </button>
+            <div className="sort-container">
+              <label htmlFor="sort-select">Sort By:</label>
+              <select
+                id="sort-select"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="sort-select"
+              >
+                <option value="none">Default</option>
+                <option value="lowToHigh">Price: Low to High</option>
+                <option value="highToLow">Price: High to Low</option>
+                {/* <option value="bestSelling">Best Selling</option>
+                <option value="Featured">Featured</option> */}
+              </select>
+            </div>
           </div>
           <div className={`filter-container ${isFilterOpen ? "open" : ""}`}>
             <h2>Filters</h2>

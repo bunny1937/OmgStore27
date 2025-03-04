@@ -20,6 +20,7 @@ import UserContext from "../../Auth/UserContext";
 import toast, { Toaster } from "react-hot-toast";
 import { auth } from "../../db/Firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { DetailsSkeleton } from "../pages/Skeleton";
 
 const db = getFirestore(firebaseApp);
 
@@ -77,7 +78,7 @@ const Details = () => {
     // Simulate a 2-second loading delay
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 10000);
 
     // Cleanup the timer on unmount
     return () => clearTimeout(timer);
@@ -102,7 +103,7 @@ const Details = () => {
         // Get the download URL
         const url = await getDownloadURL(imageRef);
         setSizeChartUrl(url);
-        setLoading(false);
+        setLoading(true);
       } catch (err) {
         setError(err);
         setLoading(false);
@@ -113,13 +114,17 @@ const Details = () => {
   }, [product]);
 
   if (loading || !product) {
-    return (
-      <div className="loading-state">
-        <div className="loader"></div>
-      </div>
-    );
+    return <DetailsSkeleton />;
   }
-  const { ImgUrls = [], Name, Description, price, Gender, Category } = product;
+  const {
+    ImgUrls = [],
+    Name,
+    Description,
+    discountedPrice,
+    originalPrice,
+    Gender,
+    Category,
+  } = product;
 
   const handleAddToCart = () => {
     console.log("Selected size is:", selectedSize); // Debugging the size value
@@ -148,7 +153,8 @@ const Details = () => {
       Gender,
       Name,
       Description,
-      price,
+      discountedPrice: discountedPrice,
+      // originalPrice: price,
       quantity,
       size: selectedSize,
     };
@@ -181,7 +187,8 @@ const Details = () => {
         Gender,
         Name,
         Description,
-        price: Number(price),
+        discountedPrice: Number(discountedPrice),
+        // originalPrice: Number(price),
         quantity: quantity,
         size: selectedSize,
       };
@@ -215,7 +222,8 @@ const Details = () => {
       Img: ImgUrls[0], // Only the first image
       Category,
       Name,
-      price,
+      discountedPrice,
+      // originalPrice
       size: selectedSize, // Selected size
       quantity,
     };
@@ -299,7 +307,12 @@ const Details = () => {
             <div className="details-actions">
               <h2>{Name}</h2>
               <h3>{Category}</h3>
-              <p>₹ {price ? price.toLocaleString() : "Price not available"}</p>
+              <p>
+                ₹{" "}
+                {discountedPrice
+                  ? discountedPrice.toLocaleString()
+                  : "Price not available"}
+              </p>
               <div className="feature-container">
                 <div className="feature-item ">
                   <span>240 GSM</span>

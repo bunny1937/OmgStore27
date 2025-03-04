@@ -5,7 +5,7 @@ import {
   onSnapshot,
   doc,
   updateDoc,
-  getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import "./OrdersDash.css";
 import { FidgetSpinner } from "react-loader-spinner";
@@ -118,6 +118,27 @@ const OrdersDash = ({ userId, orderId }) => {
   );
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const deleteOrder = async (orderId, userId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this order?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      setLoading(true);
+      const orderRef = doc(firestore, "users", userId, "orders", orderId);
+      await deleteDoc(orderRef);
+      setOrders((prevOrders) =>
+        prevOrders.filter((order) => order.id !== orderId)
+      );
+      setLoading(false);
+    } catch (error) {
+      console.error("Error deleting order:", error);
+      setError("Failed to delete order. Please try again.");
+      setLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <FidgetSpinner
@@ -196,6 +217,12 @@ const OrdersDash = ({ userId, orderId }) => {
                   <td>
                     <button onClick={() => setSelectedOrder(order)}>
                       View Details
+                    </button>
+                    <button
+                      onClick={() => deleteOrder(order.id, order.userId)}
+                      className="delete-button"
+                    >
+                      Delete
                     </button>
                   </td>
                 </tr>

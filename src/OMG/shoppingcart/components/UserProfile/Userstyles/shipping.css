@@ -1,8 +1,13 @@
+.shipping-section {
+  padding: 2rem;
+}
+
 .shipping-info-li {
   list-style: none;
   background-color: rgb(222, 227, 223);
   border-radius: 10px;
   padding: 1rem;
+  width: 50vw;
   margin-bottom: 1rem;
   color: #111;
 }
@@ -20,10 +25,12 @@
 .shipping-info-display p {
   margin: 0.5rem 0;
 }
-.shipping-edit-button {
+.shipping-edit-button1 {
   background-color: rgb(40, 51, 43);
   color: wheat;
   padding: 0.2rem;
+  font-weight: 600;
+  font-size: 1rem;
   width: 20%;
 }
 .edit-button {
@@ -46,7 +53,8 @@
 .button-container .cancel-button {
   background-color: red;
   color: white;
-  padding: 0.5rem;
+  font-weight: 600;
+  padding: 0.1rem 0.5rem;
 }
 
 .button-container .cancel-button:hover {
@@ -57,9 +65,27 @@
   background-color: green;
   color: white;
   padding: 0.5rem;
+  margin-top: 0;
 }
 
 .button-container .save-button:hover {
   background-color: white;
   color: green;
+}
+@media screen and (max-width: 960px) {
+  .shipping-info-li {
+    width: auto;
+  }
+}
+@media screen and (max-width: 420px) {
+  .shipping-info-grid {
+    grid-template-columns: 1fr;
+  }
+  .shipping-section {
+    height: 85vh;
+    padding: 0 1rem;
+  }
+  .shipping-info-grid {
+    gap: 0.3rem;
+  }
 }

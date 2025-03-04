@@ -82,6 +82,7 @@
 
 .header-links p {
   font-family: Jun;
+  font-size: 1.3rem;
 }
 
 .header-links > input {
@@ -305,6 +306,18 @@ input.nosubmit {
     height: 5rem;
   }
 }
+@media screen and (max-width: 1400px) and (min-width: 960px) {
+  .nav-menu {
+    margin-left: 5rem;
+    width: auto;
+  }
+  .header-links p {
+    font-size: 1rem;
+  }
+  .user-icon {
+    margin-left: 0;
+  }
+}
 @media screen and (min-width: 1150px) and (max-width: 960px) {
   .search-input {
     width: 19rem;
@@ -320,7 +333,6 @@ input.nosubmit {
 @media screen and (max-width: 1150px) and (min-width: 960px) {
   .nav-menu {
     width: 40vw;
-    margin-left: 4rem;
   }
   .search-input {
     width: 17rem;
