@@ -87,7 +87,7 @@ const Cart = () => {
   const cartQuantity = cartItems ? cartItems.length : 0;
   const cartTotal = cartItems
     ? cartItems
-        .map((item) => item.price * item.quantity)
+        .map((item) => item.discountedPrice * item.quantity)
         .reduce((prevValue, currValue) => prevValue + currValue, 0)
     : 0;
 
@@ -118,12 +118,12 @@ const Cart = () => {
                     Img,
                     Category,
                     Name,
-                    price,
+                    discountedPrice,
                     quantity,
                     uniqueItemId,
                     size,
                   } = item;
-                  const itemTotal = price * quantity;
+                  const itemTotal = discountedPrice * quantity;
 
                   return (
                     <div className="cart_items" key={uniqueItemId}>
@@ -137,7 +137,7 @@ const Cart = () => {
                         <div className="price-quantity">
                           <h3 className="price">
                             ₹ {itemTotal.toLocaleString()} ||
-                            <span> ₹ {price}</span>
+                            <span> ₹ {discountedPrice}</span>
                           </h3>
                           <div className="cart_items_quantity">
                             <span onClick={() => decrementItem(id, size)}>

@@ -286,10 +286,10 @@ const Checkoutnew = () => {
   const cartTotal =
     checkoutMode === "buynow"
       ? buyNowItem
-        ? buyNowItem.price * buyNowItem.quantity
+        ? buyNowItem.discountedPrice * buyNowItem.quantity
         : 0
       : itemsToDisplay.reduce(
-          (total, item) => total + item.price * item.quantity,
+          (total, item) => total + item.discountedPrice * item.quantity,
           0
         );
 
@@ -314,14 +314,19 @@ const Checkoutnew = () => {
       const orderRef = collection(firestore, "users", userId, "orders");
       const itemsForOrder =
         checkoutMode === "buynow" ? [buyNowItem] : cartItems;
+      const finalCartTotal =
+        checkoutMode === "buynow"
+          ? buyNowItem.discountedPrice * buyNowItem.quantity
+          : cartTotal;
+
+      const finalDiscountAmount = Math.round(discountAmount || 0);
+      const finalTotalAmount = Math.round(finalCartTotal - finalDiscountAmount);
 
       const newOrder = {
         cartItems: itemsForOrder,
         shippingInfo: selectedAddress,
-        totalAmount:
-          checkoutMode === "buynow"
-            ? buyNowItem.price * buyNowItem.quantity
-            : cartTotal,
+        totalAmount: finalTotalAmount, // Rounded total amount
+        subTotal: finalCartTotal,
         orderCreatedAt: new Date(),
         userInfo: {
           email: userInfo?.email || "",
@@ -331,7 +336,7 @@ const Checkoutnew = () => {
           userId: userId,
         },
         orderType: checkoutMode,
-        discountAmount: discountAmount || 0,
+        discountAmount: finalDiscountAmount || 0,
         appliedCoupon: appliedCoupon ? appliedCoupon.code : null,
       };
 
@@ -407,19 +412,34 @@ const Checkoutnew = () => {
   const calculateDiscount = (items, coupon) => {
     if (!coupon) return 0;
 
-    const itemCount = items.reduce((count, item) => count + item.quantity, 0);
-    const totalAmount = items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
+    // Make sure items is an array and doesn't contain null/undefined values
+    const validItems = Array.isArray(items)
+      ? items.filter((item) => item != null)
+      : [];
+
+    // Calculate item count
+    const itemCount = validItems.reduce(
+      (count, item) => count + (item.quantity || 0),
+      0
+    );
+
+    // Calculate total amount
+    const totalAmount = validItems.reduce(
+      (sum, item) => sum + (item.discountedPrice || 0) * (item.quantity || 0),
       0
     );
 
     if (itemCount >= coupon.minItems) {
       if (coupon.discountType === "percentage") {
-        return totalAmount * (coupon.value / 100);
+        // Round to 2 decimal places to avoid floating point issues
+        return Math.round(totalAmount * (coupon.value / 100));
       } else if (coupon.discountType === "itemFree" && itemCount >= 5) {
-        // Find the cheapest item to make free
-        const sortedItems = [...items].sort((a, b) => a.price - b.price);
-        return sortedItems[0].price;
+        if (validItems.length > 0) {
+          const sortedItems = [...validItems].sort(
+            (a, b) => (a.discountedPrice || 0) - (b.discountedPrice || 0)
+          );
+          return Math.round(sortedItems[0].discountedPrice || 0);
+        }
       }
     }
     return 0;
@@ -429,15 +449,6 @@ const Checkoutnew = () => {
     const itemsToCalculate =
       checkoutMode === "buynow" ? [buyNowItem] : itemsToDisplay;
     return cartTotal - discountAmount;
-  };
-
-  const handleCouponChange = (e) => {
-    const value = e.target.value.trim().toUpperCase();
-    setLocalCouponCode(value);
-    setShowApplyButton(value.length > 0);
-    if (value.length === 0) {
-      setCouponMessage("");
-    }
   };
 
   const handleApplyCoupon = () => {
@@ -464,12 +475,23 @@ const Checkoutnew = () => {
 
     // Apply the coupon
     setAppliedCoupon(coupon);
+
+    // Ensure this is calculating correctly
     const discount = calculateDiscount(itemsToCheck, coupon);
+    console.log("Calculated discount:", discount); // Add this debug log
+
     setDiscountAmount(discount);
     setCouponMessage(`Coupon applied: ${coupon.description}`);
     setShowApplyButton(false);
   };
-
+  const handleCouponChange = (e) => {
+    const value = e.target.value.trim().toUpperCase();
+    setLocalCouponCode(value);
+    setShowApplyButton(value.length > 0);
+    if (value.length === 0) {
+      setCouponMessage("");
+    }
+  };
   const handleRemoveCoupon = () => {
     setAppliedCoupon(null);
     setDiscountAmount(0);
@@ -542,12 +564,15 @@ const Checkoutnew = () => {
                         <div className="cart-item-info">
                           <h2>{item.Name}</h2>
                           <h4>
-                            ₹{(item.price * item.quantity).toLocaleString()}{" "}
+                            ₹
+                            {(
+                              item.discountedPrice * item.quantity
+                            ).toLocaleString()}{" "}
                             {""}
                             ||
                             <span style={{ color: "#4e4e4e" }}>
                               {" "}
-                              ₹ {item.price.toLocaleString()}{" "}
+                              ₹ {item.discountedPrice.toLocaleString()}{" "}
                             </span>
                           </h4>
                           <h4>Size : {item.size}</h4>
@@ -784,7 +809,16 @@ const Checkoutnew = () => {
                           <div className="cart-item-info">
                             <h2>{item.Name}</h2>
                             <h4>
-                              ₹{(item.price * item.quantity).toLocaleString()}
+                              ₹
+                              {(
+                                item.discountedPrice * item.quantity
+                              ).toLocaleString()}{" "}
+                              {""}
+                              ||
+                              <span style={{ color: "#4e4e4e" }}>
+                                {" "}
+                                ₹ {item.discountedPrice.toLocaleString()}{" "}
+                              </span>
                             </h4>
                             <h4>Size : {item.size}</h4>
                             <div className="cart-item-pricing">
@@ -903,14 +937,17 @@ const Checkoutnew = () => {
                         <span>Discount</span>
                         <span>
                           {discountAmount > 0
-                            ? `₹ ${discountAmount.toLocaleString()}`
-                            : "Free"}
+                            ? `₹ ${Math.round(discountAmount).toLocaleString()}`
+                            : "₹ 0"}
                         </span>
                       </div>
                       <div className="summary-row total">
                         <span>Total</span>
                         <span>
-                          ₹ {(cartTotal - discountAmount).toLocaleString()}
+                          ₹{" "}
+                          {Math.round(
+                            cartTotal - discountAmount
+                          ).toLocaleString()}
                         </span>
                       </div>
                     </div>

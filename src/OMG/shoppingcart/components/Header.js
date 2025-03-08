@@ -256,7 +256,7 @@ const Header = () => {
                         <h2>
                           <strong>{product.Name}</strong>
                           <br />
-                          {product.price}/-
+                          {product.discountedPrice}/-
                         </h2>
                       </div>
                     </div>

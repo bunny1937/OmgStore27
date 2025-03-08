@@ -88,7 +88,7 @@ const Favourites = () => {
                   </Link>
                   <p>Size - {item.size}</p>
                   <p>Quantity: {item.quantity}</p>
-                  <p>₹ {item.price.toLocaleString()}</p>
+                  <p>₹ {item.discountedPrice.toLocaleString()}</p>
                   <button
                     className="remove-btn"
                     onClick={(e) => {

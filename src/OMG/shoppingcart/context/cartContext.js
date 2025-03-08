@@ -98,7 +98,7 @@ const CartProvider = ({ children }) => {
         "id",
         "Img",
         "Name",
-        "price",
+        "discountedPrice",
         "quantity",
         "Category",
         "Gender",

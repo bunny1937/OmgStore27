@@ -18,8 +18,6 @@ const styles = `
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   height:auto;
-
-
 }
 
 .checkout-header {
@@ -215,13 +213,15 @@ const styles = `
   margin: 0.4rem 0
   }
   .whatsapp-checkout {
-    padding: 15px;
     height: calc(90vh - 100px);
     overflow-y:scroll;
   }
   .whatsapp-button{
     font-size:16px;
   }
+    .order-details{
+    padding:0;
+    }
   .payment-section{
     flex-direction:column
   }
@@ -249,6 +249,12 @@ const WhatsappOrder = () => {
   const [screenshotPreview, setScreenshotPreview] = useState(null);
   const [uploadingScreenshot, setUploadingScreenshot] = useState(false);
   const [dataInitialized, setDataInitialized] = useState(false);
+  const [orderData, setOrderData] = useState({
+    subTotal: 0,
+    discountAmount: 0,
+    totalAmount: 0,
+    appliedCoupon: "",
+  });
 
   useEffect(() => {
     const auth = getAuth();
@@ -297,6 +303,12 @@ const WhatsappOrder = () => {
 
             setOrderItems(latestOrder.cartItems || []);
             setSelectedAddress(latestOrder.shippingInfo || null);
+            setOrderData({
+              subTotal: latestOrder.subTotal || 0,
+              discountAmount: latestOrder.discountAmount || 0,
+              totalAmount: latestOrder.totalAmount || 0,
+              appliedCoupon: latestOrder.appliedCoupon || "",
+            });
           } else {
             // If no orders found, use current cart items
             setOrderItems(buyNowItem ? [buyNowItem] : cartItems);
@@ -319,7 +331,7 @@ const WhatsappOrder = () => {
 
   const calculateTotal = () => {
     return orderItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
+      (sum, item) => sum + item.discountedPrice * item.quantity,
       0
     );
   };
@@ -381,7 +393,7 @@ const WhatsappOrder = () => {
         .map(
           (item) =>
             `${item.quantity}x ${item.Name} (Size: ${item.size}) - ₹${
-              item.price * item.quantity
+              item.discountedPrice * item.quantity
             }`
         )
         .join("\n");
@@ -397,7 +409,12 @@ const WhatsappOrder = () => {
         `${selectedAddress.locality}, ${selectedAddress.city}\n` +
         `${selectedAddress.state} - ${selectedAddress.pinCode}\n\n` +
         `Order Items:\n${itemsList}\n\n` +
-        `Total Amount: ₹${calculateTotal().toLocaleString()}\n\n` +
+        `Subtotal: ₹${orderData.subTotal.toLocaleString()}\n` +
+        `Discount: -₹${orderData.discountAmount.toLocaleString()} (${
+          orderData.appliedCoupon
+        })\n` +
+        `Shipping: Free\n` +
+        `Total Amount: ₹${orderData.totalAmount.toLocaleString()}\n\n` +
         `Payment Status: Completed\n` +
         `Payment Screenshot: ${screenshotURL}`;
 
@@ -445,7 +462,7 @@ const WhatsappOrder = () => {
                       Quantity: {item.quantity}
                     </span>
                     <span className="item-price">
-                      ₹{(item.price * item.quantity).toLocaleString()}
+                      ₹{(item.discountedPrice * item.quantity).toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -455,15 +472,21 @@ const WhatsappOrder = () => {
             <div className="total-section">
               <div className="total-row">
                 <span>Subtotal</span>
-                <span>₹{calculateTotal().toLocaleString()}</span>
+                <span>₹{orderData.subTotal.toLocaleString()}</span>
               </div>
+              {orderData.discountAmount > 0 && (
+                <div className="total-row discount-row">
+                  <span>Discount ({orderData.appliedCoupon})</span>
+                  <span>-₹{orderData.discountAmount.toLocaleString()}</span>
+                </div>
+              )}
               <div className="total-row">
                 <span>Shipping</span>
                 <span>Free</span>
               </div>
               <div className="total-row final">
                 <span>Total</span>
-                <span>₹{calculateTotal().toLocaleString()}</span>
+                <span>₹{orderData.totalAmount.toLocaleString()}</span>
               </div>
             </div>
           </div>

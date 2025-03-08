@@ -44,7 +44,7 @@ function Support() {
           </Collapse>
         </div>
 
-        <div>
+        {/* <div>
           <h3
             onClick={() => toggleContent("refund")}
             className="accordion-header"
@@ -59,7 +59,8 @@ function Support() {
               <ReturnRefund />
             </div>
           </Collapse>
-        </div>
+        </div> */}
+
         <div>
           <h3
             onClick={() => toggleContent("terms")}

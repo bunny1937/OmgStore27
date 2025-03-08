@@ -184,7 +184,7 @@ const Category = () => {
           <div className="category-info">
             <h3 className="product-name">{product.Name}</h3>
             <p className="product-price">
-              ₹ {product.price?.toFixed(2) || "0.00"}
+              ₹ {product.discountedPrice?.toFixed(2) || "0.00"}
             </p>
           </div>
         </Link>

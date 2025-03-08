@@ -1,7 +1,37 @@
 .checkout {
   display: flex;
   padding: 1rem 2rem;
-  background-image: url(./pages/photos/my-durves-vector-new1.svg);
+  --_mesh-gradient-blur: 0px;
+  --_mesh-gradient-blend-mode: normal;
+
+  background: radial-gradient(
+      at 18.84522785672328% 70.54506956663975%,
+      #5b7469 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+      at 12.93103400807076% 19.531794314091336%,
+      #f0f8f7 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+      at 76.48355773765884% 87.21173578901372%,
+      #1d2621 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+      at 81.29510527554564% 14.640110385764777%,
+      #cbd5c3 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+        at 55.633518406816066% 62.85813767926943%,
+        #819171 0px,
+        transparent 50%
+      )
+      #000000;
+  mix-blend-mode: var(--_mesh-gradient-blend-mode);
+  filter: blur(var(--_mesh-gradient-blur));
   justify-content: center;
 }
 
@@ -12,8 +42,11 @@
   width: 80%;
   overflow: hidden;
   position: relative;
-
-  background-color: #ebebeb;
+  -webkit-backdrop-filter: blur(24px) brightness(100%);
+  backdrop-filter: blur(10px) brightness(100%);
+  background: rgba(255, 255, 255, 0.578);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   flex-direction: column;
   padding: 20px;
   border-radius: 10px;
@@ -120,10 +153,9 @@
 
 .button-group {
   position: sticky;
-  bottom: 3.2rem;
+  bottom: 2rem;
   display: flex;
   justify-content: space-between;
-  background-color: #ebebeb;
   padding: 15px 0;
   margin-top: 0;
   width: 100%;
@@ -409,8 +441,8 @@
 }
 
 .address-overview {
-  max-height: calc(100vh - 250px);
-  overflow-y: auto;
+  max-height: calc(92vh - 250px);
+  overflow-y: scroll;
   width: 100%;
   padding: 20px;
   background-color: #ece9e1;
@@ -529,6 +561,7 @@ form button[type="submit"]:hover {
   border: 1px solid #ddd;
 }
 .form-container {
+  max-height: calc(92vh - 250px);
   flex: 1;
   padding-bottom: 70px; /* Space for button group */
 }
@@ -881,12 +914,9 @@ button:focus {
     padding: 0.6rem;
     height: calc(100vh - 80px);
   }
-  .form-container {
-    padding-bottom: 60px;
-  }
 
   .address-overview {
-    height: 58vh;
+    height: 50vh;
     overflow-y: scroll;
   }
   .checkout-left,
@@ -902,7 +932,7 @@ button:focus {
   }
   .address-overview,
   .pay-overview {
-    max-height: calc(90vh - 250px);
+    max-height: calc(87vh - 250px);
   }
   .cart-item-img {
     margin-right: 0;
@@ -923,7 +953,7 @@ button:focus {
 }
 @media (max-width: 550px) {
   .checkout-container {
-    height: calc(100vh - 80px);
+    height: calc(94vh - 80px);
     padding: 0.6rem;
   }
   .cart-item {

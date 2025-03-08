@@ -75,16 +75,6 @@ const Details = () => {
   }, []);
 
   useEffect(() => {
-    // Simulate a 2-second loading delay
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 10000);
-
-    // Cleanup the timer on unmount
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
     const fetchSizeChart = async () => {
       try {
         setLoading(true);
@@ -103,7 +93,7 @@ const Details = () => {
         // Get the download URL
         const url = await getDownloadURL(imageRef);
         setSizeChartUrl(url);
-        setLoading(true);
+        setLoading(false);
       } catch (err) {
         setError(err);
         setLoading(false);

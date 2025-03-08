@@ -98,6 +98,7 @@
 .product-info-img {
   width: 100px;
   height: 100px;
+  border-radius: 6px;
 }
 .product-info-img img {
   object-fit: cover;
@@ -229,7 +230,7 @@ input.nosubmit {
   display: flex;
   align-items: flex-start;
   gap: 20px; /* Space between the image and the details */
-  padding: 20px 0;
+  padding: 20px;
 }
 .product-hover {
   cursor: pointer;
