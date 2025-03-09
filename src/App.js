@@ -53,6 +53,8 @@ import AdminDashboard from "./OMG/admin/AdminLayout";
 import Trackorder from "./OMG/shoppingcart/components/Trackorder";
 import PrintOnDemand from "./OMG/shoppingcart/components/PrintonDemand";
 import PrintOnDemandAdmin from "./OMG/admin/Components/AdminPrintonDemand";
+import FeaturedProducts from "./OMG/admin/Components/FeaturedProduct";
+import BestSellingProducts from "./OMG/admin/Components/BestSelling";
 
 function App() {
   return (
@@ -129,6 +131,14 @@ function App() {
                       />
                       <Route path="settings" element={<Settings />} />
                       <Route path="p-o-d" element={<PrintOnDemandAdmin />} />
+                      <Route
+                        path="featuredproduct"
+                        element={<FeaturedProducts />}
+                      />
+                      <Route
+                        path="bestselling"
+                        element={<BestSellingProducts />}
+                      />
                     </Route>
                     {/* <Route path="/users" element={<Users />} />
                     <Route path="/addproducts" element={<AddProducts />} />

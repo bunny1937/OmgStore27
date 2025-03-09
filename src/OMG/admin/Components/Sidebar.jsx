@@ -64,6 +64,22 @@ const AdminSidebar = () => {
               Print on Demand
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/admin/featuredproduct"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Featured Products
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/admin/bestselling"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              Best Selling
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </div>

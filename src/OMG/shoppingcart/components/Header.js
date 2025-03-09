@@ -342,7 +342,7 @@ const Header = () => {
               <i class="fa-solid fa-shirt"></i> <span>Products</span>
             </Link>
 
-            <div
+            <a
               className={`mobile-nav-item ${
                 activeTab === "cart" ? "active" : ""
               }`}
@@ -358,7 +358,7 @@ const Header = () => {
                 )}
               </div>
               <span>Cart</span>
-            </div>
+            </a>
 
             <Link
               to="/ProfileMenu"

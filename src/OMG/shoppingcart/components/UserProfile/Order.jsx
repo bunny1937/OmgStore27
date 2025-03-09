@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
@@ -7,7 +8,6 @@ import "./Userstyles/Order.css";
 import {
   FaArrowRight,
   FaArrowDown,
-  FaArrowLeft,
   FaArrowUp,
   FaParachuteBox,
   FaMapPin,
@@ -26,6 +26,7 @@ function Orders() {
   const [loading, setLoading] = useState(true);
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const [expandedSections, setExpandedSections] = useState({});
+  const navigate = useNavigate();
 
   const fetchOrders = async (uid) => {
     try {
@@ -109,6 +110,11 @@ function Orders() {
       (total, item) => total + item.discountedPrice * (item.quantity || 1),
       0
     );
+  };
+
+  const handleTrackOrder = (order) => {
+    // Navigate to the track order page with the specific order data
+    navigate("/profile/payments", { state: { orderData: order } });
   };
 
   return (
@@ -359,7 +365,10 @@ function Orders() {
                         <FaArrowDown size={16} />
                         Back to Orders
                       </button>
-                      <button className="action-button primary">
+                      <button
+                        className="action-button primary"
+                        onClick={() => handleTrackOrder(order)}
+                      >
                         Track Order
                         <FaArrowRight size={16} />
                       </button>

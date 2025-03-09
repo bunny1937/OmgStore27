@@ -76,11 +76,12 @@ const Trackorder = () => {
   }, []);
 
   const mostRecentOrder =
-    orders.length > 0
+    orderData ||
+    (orders.length > 0
       ? orders.sort(
           (a, b) => b.orderCreatedAt.seconds - a.orderCreatedAt.seconds
         )[0]
-      : null;
+      : null);
 
   const calculateEstimatedDate = (
     orderCreatedAt,
@@ -384,7 +385,7 @@ const Trackorder = () => {
                     <strong>Quantity:</strong> {item.quantity || 1}
                   </p>
                   <p>
-                    <strong>Price:</strong> ₹{item.price || 0}
+                    <strong>Price:</strong> ₹{item.discountedPrice || 0}
                   </p>
                 </div>
               </div>

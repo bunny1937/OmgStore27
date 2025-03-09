@@ -37,7 +37,6 @@
 
 .checkout-container {
   display: flex;
-  padding: 2rem;
   height: calc(100vh - 90px);
   width: 80%;
   overflow: hidden;
@@ -48,7 +47,7 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   flex-direction: column;
-  padding: 20px;
+  padding: 5px 20px;
   border-radius: 10px;
   font-family: "Poppins", sans-serif;
   color: #333;
@@ -57,8 +56,7 @@
   position: sticky;
   top: 0;
   z-index: 2;
-  padding-top: 10px;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.4rem;
 }
 .progress-bar {
   display: flex;
@@ -153,7 +151,7 @@
 
 .button-group {
   position: sticky;
-  bottom: 2rem;
+  bottom: -1rem;
   display: flex;
   justify-content: space-between;
   padding: 15px 0;
@@ -441,7 +439,7 @@
 }
 
 .address-overview {
-  max-height: calc(92vh - 250px);
+  max-height: calc(100vh);
   overflow-y: scroll;
   width: 100%;
   padding: 20px;
@@ -561,9 +559,9 @@ form button[type="submit"]:hover {
   border: 1px solid #ddd;
 }
 .form-container {
-  max-height: calc(92vh - 250px);
+  max-height: calc(90vh - 50px);
   flex: 1;
-  padding-bottom: 70px; /* Space for button group */
+  padding-bottom: 10px; /* Space for button group */
 }
 .address-details-form-final div {
   margin-bottom: 10px;
@@ -635,7 +633,6 @@ button:focus {
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
-  border-bottom: 1px solid #f0f0f0;
 }
 
 .summary-row.total {
@@ -916,7 +913,7 @@ button:focus {
   }
 
   .address-overview {
-    height: 50vh;
+    height: auto;
     overflow-y: scroll;
   }
   .checkout-left,
@@ -953,13 +950,18 @@ button:focus {
 }
 @media (max-width: 550px) {
   .checkout-container {
-    height: calc(94vh - 80px);
+    height: calc(88vh - 80px);
     padding: 0.6rem;
+  }
+  .form-step {
+    padding-bottom: 0;
+  }
+  .pay-overview {
+    max-height: calc(90vh - 250px);
   }
   .cart-item {
     padding: 0.6rem 1rem;
   }
-
   .quantity-controls button {
     width: 20px;
     height: 20px;
@@ -971,10 +973,10 @@ button:focus {
     margin-right: 0;
   }
   .button-group {
-    padding: 10px 0;
+    padding: 0;
   }
 }
-@media (max-height: 500px) {
+@media (min-height: 500px) {
   .progress-bar-container {
     margin-bottom: 1rem;
   }
@@ -989,7 +991,19 @@ button:focus {
   }
 }
 
-@media (max-width: 399px) and (min-width: 200px) {
+@media (max-width: 399px) and (min-width: 330px) {
+  .form-container {
+    overflow-y: auto;
+    height: auto;
+    padding-bottom: 0;
+  }
+  .checkout-container {
+    height: calc(88vh - 70px);
+    padding: 0.6rem;
+  }
+  .address-overview {
+    height: auto;
+  }
   .progress-bar {
     margin: 1.5rem 1rem;
   }
@@ -1005,15 +1019,105 @@ button:focus {
     padding: 10px 20px;
   }
 }
-@media (max-width: 320px) {
-  .cart-item {
-    gap: 20px;
-    padding: 0.6rem;
+@media (max-width: 330px) and (min-width: 140px) {
+  .checkout-container {
+    height: calc(88vh - 80px);
+    padding: 0.6rem 0.4rem;
   }
-}
-@media (max-width: 290px) and (min-width: 140px) {
+  .progress-bar {
+    margin: 1.5rem 0.5rem;
+  }
+  .step-circle {
+    width: 30px;
+    height: 30px;
+  }
+  .step-label {
+    position: absolute;
+    margin-left: 0rem;
+    margin-top: 2.3rem;
+    font-size: 0.6rem;
+  }
+  .form-container {
+    overflow-y: scroll;
+  }
+  .checkout-btn {
+    padding: 8px 10px;
+  }
+  .cart-item-img,
+  .cart-item-img img {
+    width: 60px;
+  }
+  .cart-item-info h2 {
+    font-size: 0.8rem;
+  }
+  .cart-item-info h4 {
+    font-size: 10px;
+  }
+  .quantity-controls button {
+    width: 16px;
+    height: 16px;
+    font-size: 0.6rem;
+  }
+  .quantity-controls span {
+    margin: 0 10px;
+    font-size: 12px;
+  }
+  .remove-item-button {
+    padding: 5px;
+    font-size: 0.5rem;
+  }
   .quantity-controls {
     margin-right: 0;
+  }
+  .address-overview {
+    padding: 8px;
+  }
+  .add-address-button {
+    margin: 0;
+    padding: 6px 10px;
+    font-size: 0.6rem;
+  }
+  .address-selection label {
+    margin: 10px 0 0 0;
+    font-size: 0.8rem;
+  }
+  .address-option {
+    font-size: 0.7rem;
+  }
+  .address-details-form {
+    padding: 4px;
+    font-size: 0.6rem;
+  }
+  .selection-cancel {
+    background-color: rgb(255, 173, 173);
+    padding: 4px;
+    font-size: 0.6rem;
+    margin-top: 4px;
+  }
+  .pay-overview {
+    padding: 10px 4px;
+  }
+  .cart-item {
+    gap: 10px;
+    padding: 0.6rem;
+  }
+  .checkout-right {
+    padding: 10px 8px;
+  }
+  .coupon-section input {
+    height: 1.4rem;
+  }
+  .apply-coupon-btn {
+    padding: 3px 10px;
+  }
+  .view-coupons-button {
+    font-size: 0.6rem;
+  }
+  .summary-row span {
+    font-size: 0.7rem;
+  }
+  .summary-details {
+    margin-bottom: 0;
   }
 }
 @media (max-width: 164px) {

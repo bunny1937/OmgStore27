@@ -5,12 +5,6 @@
   background: #f8f9fa;
 }
 
-h1 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 15px;
-}
-
 /* Controls (Search, Filters, Sorting) */
 .controls {
   display: flex;

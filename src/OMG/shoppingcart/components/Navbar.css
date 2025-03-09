@@ -741,12 +741,17 @@ input.nosubmit {
   }
 }
 
-@media screen and (max-width: 398px) and (min-width: 200px) {
+@media screen and (max-width: 329px) and (min-width: 200px) {
   .navbar {
-    height: 5.4rem;
+    height: 4.5rem;
   }
   .navbar-logo {
-    top: -1.3rem;
+    margin-left: -2rem;
+    top: -0.8rem;
+  }
+  .navbar-logo img {
+    width: 4rem;
+    height: 4rem;
   }
   .nav-menu.active {
     width: 100%;
@@ -757,19 +762,20 @@ input.nosubmit {
     top: 1.3rem;
   }
   .menu-icon {
+    font-size: 1.4rem;
     left: 0.8rem;
     top: 82%;
   }
   .header-links > input {
-    height: 2.4rem;
+    height: 1.8rem;
   }
   .search-container {
     margin-top: 2.2rem;
   }
   .search-icon {
-    left: 4.2rem;
+    left: 3.8rem;
     z-index: 1;
-    top: -0.3em;
+    top: -0.6em;
   }
   .fav-icon {
     display: none;
@@ -799,10 +805,18 @@ input.nosubmit {
   .nav-menu .favourites-text {
     display: block;
   }
-}
-@media screen and (max-width: 300px) and (min-width: 200px) {
-  .search-icon {
-    left: 3.8rem;
+  .mobile-bottom-nav {
+    height: 50px;
+  }
+  .mobile-nav-item i {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  .mobile-nav-item span {
+    font-size: 10px;
+  }
+  .mobile-nav-item:nth-child(3) {
+    margin-top: -0.6rem;
   }
 }
 @media screen and (max-width: 200px) {

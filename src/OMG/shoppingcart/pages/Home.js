@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ReactSlider from "react-slider";
 import ProductsCard from "../components/ProductsCard";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { firebaseApp } from "../../db/Firebase";
-import Cart from "../components/Cart";
 import SkeletonCard from "./Skeleton";
 
 const Home = () => {
@@ -20,6 +25,8 @@ const Home = () => {
   const [selectedSizes, setSelectedSizes] = useState([]);
   const availableSizes = ["XS", "S", "M", "L", "XL", "XXL"];
   const availableGenders = ["Male", "female", "unisex"];
+  const [featuredProductIds, setFeaturedProductIds] = useState([]);
+  const [bestSellingProductIds, setBestSellingProductIds] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -41,6 +48,37 @@ const Home = () => {
         });
         setProducts(productsData);
         setFilteredProducts(productsData);
+        try {
+          const featuredConfigRef = doc(
+            firestore,
+            "Configuration",
+            "featuredProducts"
+          );
+          const featuredConfigSnap = await getDoc(featuredConfigRef);
+
+          if (featuredConfigSnap.exists()) {
+            setFeaturedProductIds(featuredConfigSnap.data().order || []);
+          }
+        } catch (configError) {
+          console.error("Error fetching featured configuration:", configError);
+        }
+        try {
+          const bestSellingConfigRef = doc(
+            firestore,
+            "Configuration",
+            "bestSellingProducts"
+          );
+          const bestSellingConfigSnap = await getDoc(bestSellingConfigRef);
+
+          if (bestSellingConfigSnap.exists()) {
+            setBestSellingProductIds(bestSellingConfigSnap.data().order || []);
+          }
+        } catch (configError) {
+          console.error(
+            "Error fetching best selling configuration:",
+            configError
+          );
+        }
       } catch (error) {
         console.error("Error fetching products:", error);
         setError("Failed to fetch products. Please check your connection.");
@@ -83,12 +121,38 @@ const Home = () => {
             return a.discountedPrice - b.discountedPrice;
           case "highToLow":
             return b.discountedPrice - a.discountedPrice;
-          // case "bestSelling":
-          //   // Sort by the 'salesCount' field if it exists, otherwise keep original order
-          //   return (b.salesCount || 0) - (a.salesCount || 0);
-          // case "featured":
-          //   // Sort by the 'isFeatured' field, featured products first
-          //   return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
+          case "featured":
+            // Get indices in the featured list
+            const aIndex = featuredProductIds.indexOf(a.id);
+            const bIndex = featuredProductIds.indexOf(b.id);
+
+            // If both are featured, sort by order in featuredProductIds
+            if (aIndex !== -1 && bIndex !== -1) {
+              return aIndex - bIndex;
+            }
+
+            // If only one is featured
+            if (aIndex !== -1) return -1;
+            if (bIndex !== -1) return 1;
+
+            // If neither is featured
+            return 0;
+          case "bestSelling":
+            // Get indices in the best selling list
+            const aBSIndex = bestSellingProductIds.indexOf(a.id);
+            const bBSIndex = bestSellingProductIds.indexOf(b.id);
+
+            // If both are in best selling, sort by order in bestSellingProductIds
+            if (aBSIndex !== -1 && bBSIndex !== -1) {
+              return aBSIndex - bBSIndex;
+            }
+
+            // If only one is in best selling
+            if (aBSIndex !== -1) return -1;
+            if (bBSIndex !== -1) return 1;
+
+            // If neither is in best selling
+            return 0;
           default:
             return 0;
         }
@@ -106,6 +170,8 @@ const Home = () => {
     priceRange,
     selectedCategory,
     sortBy,
+    featuredProductIds,
+    bestSellingProductIds,
   ]);
 
   // Handle Gender Filter Change
@@ -159,8 +225,8 @@ const Home = () => {
                 <option value="none">Default</option>
                 <option value="lowToHigh">Price: Low to High</option>
                 <option value="highToLow">Price: High to Low</option>
-                {/* <option value="bestSelling">Best Selling</option>
-                <option value="Featured">Featured</option> */}
+                <option value="bestSelling">Best Selling</option>
+                <option value="featured">Featured</option>
               </select>
             </div>
           </div>
