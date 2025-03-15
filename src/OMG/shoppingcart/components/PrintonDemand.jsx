@@ -3,6 +3,7 @@ import "./PrintonDemand.css";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import LazyImage from "../../admin/Components/LazyLoad";
 
 const PrintOnDemand = () => {
   // State management

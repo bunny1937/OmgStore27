@@ -193,8 +193,6 @@ const Details = () => {
   };
 
   const handleAddToFavourites = () => {
-    console.log("Selected size is:", selectedSize); // Debugging the size value
-
     if (!user) {
       setPopupOpen(true);
       toast.error("Please sign in to add items to favourites.");

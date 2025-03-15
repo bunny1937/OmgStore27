@@ -13,6 +13,7 @@ import {
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Trackorder.css";
+import LazyImage from "../../admin/Components/LazyLoad";
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 const Trackorder = () => {
@@ -370,7 +371,10 @@ const Trackorder = () => {
             <h3>Items Ordered</h3>
             {mostRecentOrder.cartItems?.map((item, idx) => (
               <div className="payment-order-item-card" key={idx}>
-                <img src={item.Img || "/placeholder.svg"} alt={item.Name} />
+                <LazyImage
+                  src={item.Img || "/placeholder.svg"}
+                  alt={item.Name}
+                />
                 <div className="payment-order-item-details">
                   <p>
                     <strong>Name:</strong> {item.Name || "N/A"}

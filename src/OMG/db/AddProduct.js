@@ -19,6 +19,7 @@ import {
   limit,
 } from "firebase/firestore";
 import "./AddProducts.css";
+import LazyImage from "../admin/Components/LazyLoad.js";
 
 const AddProducts = () => {
   const [products, setProducts] = useState([]);
@@ -264,7 +265,7 @@ const AddProducts = () => {
             <div className="addproduct-product-id">ID: {product.id}</div>
             <div className="addproduct-product-image">
               {product.ImgUrls && product.ImgUrls[0] && (
-                <img src={product.ImgUrls[0]} alt={product.Name} />
+                <LazyImage src={product.ImgUrls[0]} alt={product.Name} />
               )}
             </div>
             <div className="addproduct-product-info">
@@ -333,7 +334,10 @@ const AddProducts = () => {
                       {images.map((image, index) => (
                         <div key={index} className="image-thumbnail">
                           <span>{index + 1} - </span>
-                          <img src={image.url} alt={`Uploaded ${index + 1}`} />
+                          <LazyImage
+                            src={image.url}
+                            alt={`Uploaded ${index + 1}`}
+                          />
                         </div>
                       ))}
                     </div>

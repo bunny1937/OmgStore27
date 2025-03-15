@@ -57,7 +57,7 @@ const Footer = () => {
         </div>
         <div className="footer-section">
           <div className="Connect-contact">
-            <div className="Contact-footer">
+            <ul className="Contact-footer">
               <h3>Service</h3>
               <li>
                 <a href="/contact">Contact</a>
@@ -65,7 +65,7 @@ const Footer = () => {
               <li>
                 <a href="/faq">FAQ</a>
               </li>
-            </div>
+            </ul>
             <div className="social-icons">
               <a href="https://facebook.com" aria-label="Facebook">
                 <i className="fab fa-facebook-f"></i>

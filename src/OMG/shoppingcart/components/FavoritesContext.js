@@ -140,8 +140,6 @@ const FavouritesProvider = ({ children }) => {
         removeFavouriteItem,
         removeAllFavourites,
         addFavourite,
-        removeFavouriteItem,
-        removeAllFavourites,
       }}
     >
       {children} {showFavourites && <Favourites />}

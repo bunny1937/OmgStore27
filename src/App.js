@@ -55,6 +55,7 @@ import PrintOnDemand from "./OMG/shoppingcart/components/PrintonDemand";
 import PrintOnDemandAdmin from "./OMG/admin/Components/AdminPrintonDemand";
 import FeaturedProducts from "./OMG/admin/Components/FeaturedProduct";
 import BestSellingProducts from "./OMG/admin/Components/BestSelling";
+import { WishlistProvider } from "./OMG/shoppingcart/components/Wishlist";
 
 function App() {
   return (
@@ -66,81 +67,97 @@ function App() {
         <BackButtonProvider>
           <UserProvider>
             <ParallaxProvider>
-              <FavouritesProvider>
-                <CartProvider>
-                  <Cart />
-                  <Header />
-                  <Routes>
-                    <Route path="/" element={<Heroui />} />
-                    <Route path="/SignUp" element={<Signup />} />
-                    <Route path="/ProfileMenu" element={<ProfileMenu />} />
-                    <Route path="/profile" element={<ProfileMenu />} />
-                    <Route
-                      path="/profile/BasicDetails"
-                      element={<BasicDetails />}
-                    />
-                    <Route path="/profile/orders" element={<Orders />} />
-                    <Route path="/profile/address" element={<Address />} />
-                    <Route path="/profile/payments" element={<Payment />} />
-                    <Route
-                      path="/profile/changepassword"
-                      element={<ChangePassword />}
-                    />
-                    <Route
-                      path="/profile/Favourites"
-                      element={<Favourites />}
-                    />
-                    <Route path="/PrintonDemand" element={<PrintOnDemand />} />
-                    <Route path="UserProfile" element={<UserProfile />} />
-                    <Route path="/UserProfile1/*" element={<UserProfile1 />} />
-                    <Route path="/Profile1" element={<Profile1 />} />
-                    <Route path="/Support" element={<Support />} />
-                    <Route path="/Order" element={<Order />} />
-                    <Route path="/Sidebar" element={<Sidebar />} />
-                    <Route path="/SignIn" element={<SignInnew />} />
-                    <Route path="/Home" element={<Home />} />
-                    <Route path="/Details/:id" element={<Details />} />
-                    <Route path="/Favourites" element={<Favourites />} />
-                    <Route
-                      path="/category/:categoryName"
-                      element={<CategoryPage key={Math.random()} />}
-                    />
-                    <Route path="/products/:type" element={<CategoryType />} />
-                    <Route path="/Cart" element={<Cart />} />
-                    <Route path="/Checkout/:mode?" element={<Checkoutnew />} />
-                    <Route path="/Trackorder" element={<Trackorder />} />
-                    <Route path="/Whatsapporder" element={<WhatsappOrder />} />
-                    <Route path="/AdminDash" element={<AdminDash />} />
-                    {/* Protected Route for Admin */}
-                    <Route
-                      path="/admin/*"
-                      element={
-                        <ProtectedRoute adminOnly={true}>
-                          <AdminDashboard />
-                        </ProtectedRoute>
-                      }
-                    >
-                      <Route path="dashboard" element={<AdminDash />} />
-                      <Route path="users" element={<Users />} />
-                      <Route path="addproducts" element={<AddProducts />} />
-                      <Route path="adminorders" element={<OrdersDash />} />
-                      <Route path="categories" element={<Categories />} />
+              <WishlistProvider>
+                <FavouritesProvider>
+                  <CartProvider>
+                    <Cart />
+                    <Header />
+                    <Routes>
+                      <Route path="/" element={<Heroui />} />
+                      <Route path="/SignUp" element={<Signup />} />
+                      <Route path="/ProfileMenu" element={<ProfileMenu />} />
+                      <Route path="/profile" element={<ProfileMenu />} />
                       <Route
-                        path="adminanalytics"
-                        element={<AdminAnalytics />}
+                        path="/profile/BasicDetails"
+                        element={<BasicDetails />}
                       />
-                      <Route path="settings" element={<Settings />} />
-                      <Route path="p-o-d" element={<PrintOnDemandAdmin />} />
+                      <Route path="/profile/orders" element={<Orders />} />
+                      <Route path="/profile/address" element={<Address />} />
+                      <Route path="/profile/payments" element={<Payment />} />
                       <Route
-                        path="featuredproduct"
-                        element={<FeaturedProducts />}
+                        path="/profile/changepassword"
+                        element={<ChangePassword />}
                       />
                       <Route
-                        path="bestselling"
-                        element={<BestSellingProducts />}
+                        path="/profile/Favourites"
+                        element={<Favourites />}
                       />
-                    </Route>
-                    {/* <Route path="/users" element={<Users />} />
+                      <Route
+                        path="/PrintonDemand"
+                        element={<PrintOnDemand />}
+                      />
+                      <Route path="UserProfile" element={<UserProfile />} />
+                      <Route
+                        path="/UserProfile1/*"
+                        element={<UserProfile1 />}
+                      />
+                      <Route path="/Profile1" element={<Profile1 />} />
+                      <Route path="/Support" element={<Support />} />
+                      <Route path="/Order" element={<Order />} />
+                      <Route path="/Sidebar" element={<Sidebar />} />
+                      <Route path="/SignIn" element={<SignInnew />} />
+                      <Route path="/Home" element={<Home />} />
+                      <Route path="/Details/:id" element={<Details />} />
+                      <Route path="/Favourites" element={<Favourites />} />
+                      <Route
+                        path="/category/:categoryName"
+                        element={<CategoryPage key={Math.random()} />}
+                      />
+                      <Route
+                        path="/products/:type"
+                        element={<CategoryType />}
+                      />
+                      <Route path="/Cart" element={<Cart />} />
+                      <Route
+                        path="/Checkout/:mode?"
+                        element={<Checkoutnew />}
+                      />
+                      <Route path="/Trackorder" element={<Trackorder />} />
+                      <Route
+                        path="/Whatsapporder"
+                        element={<WhatsappOrder />}
+                      />
+                      <Route path="/AdminDash" element={<AdminDash />} />
+                      {/* Protected Route for Admin */}
+                      <Route
+                        path="/admin/*"
+                        element={
+                          <ProtectedRoute adminOnly={true}>
+                            <AdminDashboard />
+                          </ProtectedRoute>
+                        }
+                      >
+                        <Route path="dashboard" element={<AdminDash />} />
+                        <Route path="users" element={<Users />} />
+                        <Route path="addproducts" element={<AddProducts />} />
+                        <Route path="adminorders" element={<OrdersDash />} />
+                        <Route path="categories" element={<Categories />} />
+                        <Route
+                          path="adminanalytics"
+                          element={<AdminAnalytics />}
+                        />
+                        <Route path="settings" element={<Settings />} />
+                        <Route path="p-o-d" element={<PrintOnDemandAdmin />} />
+                        <Route
+                          path="featuredproduct"
+                          element={<FeaturedProducts />}
+                        />
+                        <Route
+                          path="bestselling"
+                          element={<BestSellingProducts />}
+                        />
+                      </Route>
+                      {/* <Route path="/users" element={<Users />} />
                     <Route path="/addproducts" element={<AddProducts />} />
                     <Route path="/adminorders" element={<OrdersDash />} />
                     <Route path="/categories" element={<Categories />} />
@@ -149,9 +166,10 @@ function App() {
                       element={<AdminAnalytics />}
                     />
                     <Route path="/settings" element={<Settings />} /> */}
-                  </Routes>
-                </CartProvider>
-              </FavouritesProvider>
+                    </Routes>
+                  </CartProvider>
+                </FavouritesProvider>
+              </WishlistProvider>
             </ParallaxProvider>
           </UserProvider>
         </BackButtonProvider>

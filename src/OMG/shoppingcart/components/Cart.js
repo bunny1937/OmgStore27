@@ -7,6 +7,7 @@ import { firestore, auth } from "../../db/Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import toast from "react-hot-toast";
 import "./Cart.css";
+import LazyImage from "../../admin/Components/LazyLoad";
 
 const Cart = () => {
   const {
@@ -128,7 +129,7 @@ const Cart = () => {
                   return (
                     <div className="cart_items" key={uniqueItemId}>
                       <figure className="cart_items_img">
-                        <img src={Img} alt="product-img" />
+                        <LazyImage src={Img} alt="product-img" />
                       </figure>
                       <div className="cart_items_info">
                         <h4>{Name}</h4>

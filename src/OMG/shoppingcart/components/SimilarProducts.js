@@ -3,6 +3,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import "./SimilarProducts.css";
 import { db } from "../../db/Firebase"; // Adjust the path to your Firebase configuration
+import LazyImage from "../../admin/Components/LazyLoad";
 
 const SimilarProducts = ({ category, id }) => {
   const [similarProducts, setSimilarProducts] = useState([]);
@@ -74,7 +75,7 @@ const SimilarProducts = ({ category, id }) => {
         {similarProducts.map((product) => (
           <div key={product.id} className="product-card">
             {product.ImgUrls && product.ImgUrls.length > 0 ? (
-              <img src={product.ImgUrls[0]} alt={product.Name} />
+              <LazyImage src={product.ImgUrls[0]} alt={product.Name} />
             ) : (
               <p>No image available</p>
             )}

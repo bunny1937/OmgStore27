@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firebaseApp } from "../../db/Firebase";
 import "./Category.css";
+import LazyImage from "../../admin/Components/LazyLoad";
 
 const Category = () => {
   const [hoveredProducts, setHoveredProducts] = useState({});
@@ -171,13 +172,13 @@ const Category = () => {
         <Link to={`/Details/${product.id}`}>
           <div className="category-image-container">
             {imgUrl && (
-              <img
+              <LazyImage
                 src={imgUrl}
                 alt={product.Name || "Product Image"}
                 className="category-image"
                 loading="lazy"
                 width="200"
-                height="250"
+                height="10"
               />
             )}
           </div>

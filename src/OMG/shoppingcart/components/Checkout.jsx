@@ -8,6 +8,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { firestore, db } from "../../db/Firebase";
 import cartContext from "../context/cartContext";
 import "./Checkout.css";
+import LazyImage from "../../admin/Components/LazyLoad";
 
 const PremiumCheckout = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -162,7 +163,7 @@ const PremiumCheckout = () => {
       <h2>Your Cart</h2>
       {cartItems.map((item) => (
         <div className="cart-item" key={item.id}>
-          <img src={item.Img} alt={item.Name} className="cart-item-img" />
+          <LazyImage src={item.Img} alt={item.Name} className="cart-item-img" />
           <div className="cart-item-info">
             <h3>{item.Name}</h3>
             <p>Category: {item.Category}</p>

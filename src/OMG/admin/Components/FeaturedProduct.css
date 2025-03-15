@@ -1,11 +1,7 @@
-@media (min-width: 768px) {
-  .admin-layout {
-    flex-direction: row;
-  }
-}
 .featured-products {
   padding: 20px;
 }
+
 .admin-panel {
   flex: 1;
   background-color: #fff;
@@ -65,9 +61,16 @@
 }
 .item-details {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex: 1;
   padding: 0 8px;
+  gap: 0;
+}
+.item-details h4 {
+  font-size: 1.1rem;
+}
+.item-meta {
+  font-size: 0.9rem;
 }
 .featured-img,
 .featured-img img {
@@ -82,7 +85,7 @@
 }
 
 .item-price {
-  font-size: 14px;
+  font-size: 1.1rem;
   color: #666;
 }
 
@@ -92,7 +95,7 @@
 }
 
 .action-button {
-  padding: 4px 8px;
+  padding: 10px 8px;
   background: none;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -202,4 +205,12 @@
   text-align: center;
   padding: 40px;
   color: #666;
+}
+@media (max-width: 768px) {
+  .admin-layout {
+    flex-direction: row;
+  }
+  .order-actions {
+    flex-direction: row;
+  }
 }

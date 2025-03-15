@@ -209,7 +209,7 @@ function Orders() {
                               {order.cartItems?.map((item, idx) => (
                                 <div className="order-item" key={idx}>
                                   <div className="item-image">
-                                    <img
+                                    <LazyImage
                                       src={item.Img || "/placeholder.svg"}
                                       alt={item.Name || "Product"}
                                     />
@@ -341,7 +341,9 @@ function Orders() {
                               </div>
                               <div className="summary-row">
                                 <span>Discount</span>
-                                <span>-₹{order.discountAmount || 0}</span>
+                                <span>
+                                  -₹{Math.round(order.discountAmount) || 0}
+                                </span>
                               </div>
                               <div className="summary-row total">
                                 <span>Total</span>

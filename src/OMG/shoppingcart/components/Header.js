@@ -7,6 +7,7 @@ import UserContext from "../../Auth/UserContext";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../db/Firebase";
 import logoblack from "./pages/photos/OMGstore.svg";
+import LazyImage from "../../admin/Components/LazyLoad";
 const Header = () => {
   const { user, isAdmin, setUser } = useContext(UserContext); // User context
   const { cartItems, dispatch } = useContext(cartContext); // Cart context
@@ -249,7 +250,7 @@ const Header = () => {
                   >
                     <div className="product-details-container">
                       <div className="product-info">
-                        <img
+                        <LazyImage
                           className="product-info-img"
                           src={product.ImgUrls[0]}
                         />

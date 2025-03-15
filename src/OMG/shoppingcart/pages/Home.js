@@ -138,20 +138,18 @@ const Home = () => {
             // If neither is featured
             return 0;
           case "bestSelling":
-            // Get indices in the best selling list
-            const aBSIndex = bestSellingProductIds.indexOf(a.id);
-            const bBSIndex = bestSellingProductIds.indexOf(b.id);
+            const aIndexBest = bestSellingProductIds.indexOf(a.id);
+            const bIndexBest = bestSellingProductIds.indexOf(b.id);
 
-            // If both are in best selling, sort by order in bestSellingProductIds
-            if (aBSIndex !== -1 && bBSIndex !== -1) {
-              return aBSIndex - bBSIndex;
+            if (aIndexBest !== -1 && bIndexBest !== -1) {
+              return aIndexBest - bIndexBest;
             }
 
-            // If only one is in best selling
-            if (aBSIndex !== -1) return -1;
-            if (bBSIndex !== -1) return 1;
+            // If only one is in best selling list
+            if (aIndexBest !== -1) return -1;
+            if (bIndexBest !== -1) return 1;
 
-            // If neither is in best selling
+            // If neither is in best selling list
             return 0;
           default:
             return 0;

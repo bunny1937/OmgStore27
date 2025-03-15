@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firebaseApp } from "../db/Firebase";
 import "./RollingGallery.css";
+import LazyImage from "../admin/Components/LazyLoad";
 const Carouselwheeel = () => {
   const [products, setProducts] = useState([]);
   const [progress, setProgress] = useState(50);
@@ -147,7 +148,7 @@ const Carouselwheeel = () => {
           >
             <Link to={`/Details/${product.id}`}>
               <div className="carousel-box">
-                <img
+                <LazyImage
                   src={product.ImgUrls[0]} // Using the first image from ImgUrls array
                   alt="Product"
                   draggable="false" // Prevent image dragging

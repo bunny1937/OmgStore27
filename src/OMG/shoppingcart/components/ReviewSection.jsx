@@ -15,6 +15,7 @@ import { getAuth } from "firebase/auth";
 import { firebaseApp } from "../../db/Firebase";
 import "./ReviewSection.css";
 import { ReviewSkeleton } from "../pages/Skeleton";
+import LazyImage from "../../admin/Components/LazyLoad";
 
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
@@ -185,7 +186,7 @@ const ReviewComponent = () => {
                 </p>
                 <div className="review-info">
                   {review.photoUrl && (
-                    <img
+                    <LazyImage
                       src={review.photoUrl}
                       alt="Review"
                       className="review-photo"
@@ -228,7 +229,7 @@ const ReviewComponent = () => {
         </div>
 
         {photo && (
-          <img
+          <LazyImage
             className="photo-box-img"
             src={URL.createObjectURL(photo)}
             alt="Preview"

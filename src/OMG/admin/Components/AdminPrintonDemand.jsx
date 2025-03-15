@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../db/Firebase";
+import LazyImage from "./LazyLoad";
 
 // CSS Styles
 const styles = `
@@ -553,14 +554,14 @@ const PrintOnDemandAdmin = () => {
                         <td>
                           <div className="pod-images">
                             {order.frontImageURL && (
-                              <img
+                              <LazyImage
                                 src={order.frontImageURL}
                                 alt="Front design"
                                 className="pod-image"
                               />
                             )}
                             {order.backImageURL && (
-                              <img
+                              <LazyImage
                                 src={order.backImageURL}
                                 alt="Back design"
                                 className="pod-image"
@@ -721,7 +722,7 @@ const PrintOnDemandAdmin = () => {
                     <div className="pod-design-item">
                       <div className="pod-design-label">Front Design</div>
                       {selectedOrder.frontImageURL ? (
-                        <img
+                        <LazyImage
                           src={selectedOrder.frontImageURL}
                           alt="Front design"
                           className="pod-design-image"
@@ -734,7 +735,7 @@ const PrintOnDemandAdmin = () => {
                     <div className="pod-design-item">
                       <div className="pod-design-label">Back Design</div>
                       {selectedOrder.backImageURL ? (
-                        <img
+                        <LazyImage
                           src={selectedOrder.backImageURL}
                           alt="Back design"
                           className="pod-design-image"

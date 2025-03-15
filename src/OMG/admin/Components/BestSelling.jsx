@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { firebaseApp } from "../../db/Firebase";
 import "./FeaturedProduct.css";
+import LazyImage from "./LazyLoad";
 
 const BestSellingProducts = () => {
   const [products, setProducts] = useState([]);
@@ -219,7 +220,7 @@ const BestSellingProducts = () => {
                 >
                   <span className="item-order">{index + 1}</span>
                   <div className="item-details">
-                    <img
+                    <LazyImage
                       className="featured-img"
                       src={product.ImgUrls[0]}
                       alt={product.Name}
@@ -293,7 +294,7 @@ const BestSellingProducts = () => {
               {filteredProducts.map((product) => (
                 <li key={product.id} className="product-item">
                   <div className="product-details">
-                    <img
+                    <LazyImage
                       className="featured-img"
                       src={product.ImgUrls[0]}
                       alt={product.Name}

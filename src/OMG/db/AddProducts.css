@@ -63,7 +63,7 @@
 }
 
 .addproduct-product-image {
-  height: 200px;
+  height: 340px;
   overflow: hidden;
   position: relative;
 }
@@ -71,7 +71,7 @@
 .addproduct-product-image img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   transition: transform 0.3s ease;
 }
 

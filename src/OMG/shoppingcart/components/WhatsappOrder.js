@@ -7,6 +7,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import toast from "react-hot-toast";
 import PaymentQR from "./pages/photos/PaymentQR.jpg";
+import LazyImage from "../../admin/Components/LazyLoad";
 
 const styles = `
 /* Previous styles remain the same */
@@ -61,15 +62,21 @@ const styles = `
 
 .item-details {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  justify-content:flex-start;
   gap: 15px;
 }
 
 .item-image {
-  width: 70px;
+  width: 200px !important;
   height: 70px;
   border-radius: 8px;
   object-fit: cover;
+}
+
+.item-image img {
+  width: 200px !important;
+  height: 70px;
 }
 
 .item-info {
@@ -228,6 +235,23 @@ const styles = `
   .item-details {
     align-items: flex-start;
     gap:20px
+  }
+  .item-image {
+    width: 140px !important;
+  }
+
+  .item-image img {
+    width: 160px !important;
+  }
+}
+
+@media (max-width: 768px){
+  .item-image {
+    width: 130px !important;
+  }
+
+  .item-image img {
+    width: 120px !important;
   }
 }
    @media (max-height: 600px) {
@@ -454,7 +478,11 @@ const WhatsappOrder = () => {
             {orderItems.map((item, index) => (
               <div key={index} className="item">
                 <div className="item-details">
-                  <img src={item.Img} alt={item.Name} className="item-image" />
+                  <LazyImage
+                    src={item.Img}
+                    alt={item.Name}
+                    className="item-image"
+                  />
                   <div className="item-info">
                     <span className="item-name">{item.Name}</span>
                     <span className="item-size">Size: {item.size}</span>
@@ -532,7 +560,11 @@ const WhatsappOrder = () => {
             <p className="text-center">
               Scan the QR code below to make the payment
             </p>
-            <img src={PaymentQR} alt="Payment QR Code" className="qr-code" />
+            <LazyImage
+              src={PaymentQR}
+              alt="Payment QR Code"
+              className="qr-code"
+            />
           </div>
           <div className="screenshot-upload">
             <h4>Upload Payment Screenshot</h4>
@@ -546,7 +578,7 @@ const WhatsappOrder = () => {
               />
             </label>
             {screenshotPreview && (
-              <img
+              <LazyImage
                 src={screenshotPreview}
                 alt="Payment Screenshot"
                 className="screenshot-preview"

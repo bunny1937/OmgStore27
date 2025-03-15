@@ -15,7 +15,11 @@ const cartReducer = (state, action) => {
         ...state,
         isLoading: action.payload,
       };
-
+    case "SET_CART":
+      return {
+        ...state,
+        cartItems: action.payload,
+      };
     case "SET_BUY_NOW_ITEM":
       return {
         ...state,

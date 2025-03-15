@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FavouritesContext } from "./FavoritesContext";
 import "./Favourites.css";
+import LazyImage from "../../admin/Components/LazyLoad";
 
 const Favourites = () => {
   const [isClosing, setIsClosing] = useState(false);
@@ -82,7 +83,7 @@ const Favourites = () => {
                   key={`${item.id}-${index}`}
                   onClick={handleCardClick}
                 >
-                  <img src={item.Img} alt={`${item.Name}`} />
+                  <LazyImage src={item.Img} alt={`${item.Name}`} />
                   <Link to={`/Details/${item.id}`} onClick={handleCardClick}>
                     <h4>{item.Name}</h4>
                   </Link>

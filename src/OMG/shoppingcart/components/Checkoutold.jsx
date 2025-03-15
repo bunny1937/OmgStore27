@@ -9,6 +9,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import toast, { Toaster } from "react-hot-toast";
 
 import "./Checkout.css";
+import LazyImage from "../../admin/Components/LazyLoad";
 
 const Checkoutold = () => {
   const navigate = useNavigate();
@@ -240,7 +241,7 @@ const Checkoutold = () => {
                 transition={{ delay: index * 0.1 }}
               >
                 <figure className="cart-item-img">
-                  <img src={item.Img} alt={item.Name} />
+                  <LazyImage src={item.Img} alt={item.Name} />
                 </figure>
                 <div className="cart-item-info">
                   <h2>{item.Name}</h2>

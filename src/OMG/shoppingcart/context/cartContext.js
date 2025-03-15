@@ -6,7 +6,7 @@ import React, {
   useContext,
   useCallback,
 } from "react";
-import { firestore, auth } from "../../db/Firebase";
+import { firestore, auth, db } from "../../db/Firebase";
 import {
   doc,
   getDoc,
@@ -157,7 +157,13 @@ const CartProvider = ({ children }) => {
       const cartCollectionRef = collection(firestore, "users", userId, "Cart");
       const cartSnapshot = await getDocs(cartCollectionRef);
 
-      return cartSnapshot.docs.map((doc) => doc.data());
+      const cartItems = cartSnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        uniqueItemId: doc.id, // Ensure unique mapping
+      }));
+
+      console.log("Fetched cart items from Firestore:", cartItems);
+      return cartItems;
     } catch (error) {
       console.error("Error fetching cart:", error);
       return [];
@@ -318,6 +324,7 @@ const CartProvider = ({ children }) => {
     incrementBuyNowItem,
     decrementBuyNowItem,
     removeBuyNowItem,
+    fetchCartFromFirestore,
   };
 
   return <cartContext.Provider value={values}>{children}</cartContext.Provider>;
