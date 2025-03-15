@@ -17,6 +17,7 @@ import {
   FaEnvelopeOpenText,
   FaShoppingBag,
 } from "react-icons/fa";
+import LazyImage from "../../../admin/Components/LazyLoad";
 
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
