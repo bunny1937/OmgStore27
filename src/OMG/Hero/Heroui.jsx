@@ -3,9 +3,9 @@ import "./Heroui.css";
 import Footer from "../shoppingcart/components/Footer";
 import Category from "./Category/Category";
 import SuggestionComponent from "../shoppingcart/components/Suggestion";
-import MainPage from "./Mainpage";
 import IntroOverlay from "./IntroOverlay";
 import Carouselwheeel from "./Caraouselwheeel";
+import Mainpage1 from "./Mainpage1";
 export default function Heroui() {
   const [showIntro, setShowIntro] = useState(() => {
     return sessionStorage.getItem("introShown") !== "true";
@@ -28,7 +28,7 @@ export default function Heroui() {
         <IntroOverlay onAnimationEnd={handleAnimationEnd} />
       ) : (
         <div className="hero">
-          <MainPage />
+          <Mainpage1 />
           <Carouselwheeel />
           <Category />
           <SuggestionComponent />

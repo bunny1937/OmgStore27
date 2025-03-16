@@ -154,7 +154,7 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .category-card {
-    width: 240px;
+    width: 300px;
   }
 
   .scroll-button {
@@ -169,7 +169,7 @@
   }
 
   .category-card {
-    width: 200px;
+    width: 260px;
   }
 
   .scroll-button {
@@ -181,7 +181,7 @@
 @media (max-width: 640px) {
   .category-card {
     scroll-snap-align: start;
-    width: 160px;
+    width: 230px;
   }
 
   .scroll-button {

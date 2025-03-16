@@ -183,180 +183,183 @@ function Orders() {
                 </div>
 
                 {expandedOrderId === order.id && (
-                  <div className="order-details">
-                    <div className="order-details-grid">
-                      {/* Order Items Section */}
-                      <div className="order-section order-items-section">
-                        <div
-                          className="section-header"
-                          onClick={() => toggleSection("orderItems")}
-                        >
-                          <h3>
-                            <FaShoppingBag size={16} />
-                            Order Items
-                          </h3>
-                          <button className="toggle-section">
-                            {expandedSections.orderItems ? (
-                              <FaArrowUp size={16} />
-                            ) : (
-                              <FaArrowDown size={16} />
-                            )}
-                          </button>
+                  <div className="order-details-box">
+                    <div className="order-details">
+                      <div className="order-details-left">
+                        {/* Order Items Section */}
+                        <div className="order-section order-items-section">
+                          <div
+                            className="section-header"
+                            onClick={() => toggleSection("orderItems")}
+                          >
+                            <h3>
+                              <FaShoppingBag size={16} />
+                              Order Items
+                            </h3>
+                            <button className="toggle-section">
+                              {expandedSections.orderItems ? (
+                                <FaArrowUp size={16} />
+                              ) : (
+                                <FaArrowDown size={16} />
+                              )}
+                            </button>
+                          </div>
+
+                          {expandedSections.orderItems && (
+                            <div className="section-content">
+                              <div className="order-items-list">
+                                {order.cartItems?.map((item, idx) => (
+                                  <div className="order-item" key={idx}>
+                                    <div className="item-image">
+                                      <LazyImage
+                                        src={item.Img || "/placeholder.svg"}
+                                        alt={item.Name || "Product"}
+                                      />
+                                    </div>
+                                    <div className="item-details">
+                                      <h4>{item.Name || "Product Name"}</h4>
+                                      <div className="item-meta">
+                                        {item.Category && (
+                                          <span className="item-category">
+                                            {item.Category}
+                                          </span>
+                                        )}
+                                        {item.size && (
+                                          <span className="item-size">
+                                            Size: {item.size}
+                                          </span>
+                                        )}
+                                        <span className="item-quantity">
+                                          Qty: {item.quantity || 1}
+                                        </span>
+                                      </div>
+                                      <div className="item-price">
+                                        ₹{item.discountedPrice || 0}
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
 
-                        {expandedSections.orderItems && (
-                          <div className="section-content">
-                            <div className="order-items-list">
-                              {order.cartItems?.map((item, idx) => (
-                                <div className="order-item" key={idx}>
-                                  <div className="item-image">
-                                    <LazyImage
-                                      src={item.Img || "/placeholder.svg"}
-                                      alt={item.Name || "Product"}
-                                    />
-                                  </div>
-                                  <div className="item-details">
-                                    <h4>{item.Name || "Product Name"}</h4>
-                                    <div className="item-meta">
-                                      {item.Category && (
-                                        <span className="item-category">
-                                          {item.Category}
-                                        </span>
-                                      )}
-                                      {item.size && (
-                                        <span className="item-size">
-                                          Size: {item.size}
-                                        </span>
-                                      )}
-                                      <span className="item-quantity">
-                                        Qty: {item.quantity || 1}
+                        {/* Shipping Information Section */}
+                        <div className="order-section shipping-info-section">
+                          <div
+                            className="section-header"
+                            onClick={() => toggleSection("shippingInfo")}
+                          >
+                            <h3>
+                              <FaMapPin size={16} />
+                              Shipping Information
+                            </h3>
+                            <button className="toggle-section">
+                              {expandedSections.shippingInfo ? (
+                                <FaArrowUp size={16} />
+                              ) : (
+                                <FaArrowDown size={16} />
+                              )}
+                            </button>
+                          </div>
+
+                          {expandedSections.shippingInfo && (
+                            <div className="section-content">
+                              {order.shippingInfo ? (
+                                <div className="shipping-details">
+                                  <div className="shipping-contact">
+                                    <div className="contact-item">
+                                      <FaUser size={14} />
+                                      <span>
+                                        {order.shippingInfo.name || "N/A"}
                                       </span>
                                     </div>
-                                    <div className="item-price">
-                                      ₹{item.discountedPrice || 0}
+                                    <div className="contact-item">
+                                      <FaPhone size={14} />
+                                      <span>
+                                        {order.shippingInfo.number || "N/A"}
+                                      </span>
                                     </div>
                                   </div>
+                                  <div className="shipping-address">
+                                    <FaMapPin size={14} />
+                                    <p>
+                                      {[
+                                        order.shippingInfo.flat,
+                                        order.shippingInfo.street,
+                                        order.shippingInfo.locality,
+                                        order.shippingInfo.city,
+                                        order.shippingInfo.state,
+                                        order.shippingInfo.pinCode,
+                                      ]
+                                        .filter(Boolean)
+                                        .join(", ")}
+                                    </p>
+                                  </div>
                                 </div>
-                              ))}
+                              ) : (
+                                <p className="no-info">
+                                  No shipping information available.
+                                </p>
+                              )}
                             </div>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Shipping Information Section */}
-                      <div className="order-section shipping-info-section">
-                        <div
-                          className="section-header"
-                          onClick={() => toggleSection("shippingInfo")}
-                        >
-                          <h3>
-                            <FaMapPin size={16} />
-                            Shipping Information
-                          </h3>
-                          <button className="toggle-section">
-                            {expandedSections.shippingInfo ? (
-                              <FaArrowUp size={16} />
-                            ) : (
-                              <FaArrowDown size={16} />
-                            )}
-                          </button>
+                          )}
                         </div>
-
-                        {expandedSections.shippingInfo && (
-                          <div className="section-content">
-                            {order.shippingInfo ? (
-                              <div className="shipping-details">
-                                <div className="shipping-contact">
-                                  <div className="contact-item">
-                                    <FaUser size={14} />
-                                    <span>
-                                      {order.shippingInfo.name || "N/A"}
-                                    </span>
-                                  </div>
-                                  <div className="contact-item">
-                                    <FaPhone size={14} />
-                                    <span>
-                                      {order.shippingInfo.number || "N/A"}
-                                    </span>
-                                  </div>
-                                </div>
-                                <div className="shipping-address">
-                                  <FaMapPin size={14} />
-                                  <p>
-                                    {[
-                                      order.shippingInfo.flat,
-                                      order.shippingInfo.street,
-                                      order.shippingInfo.locality,
-                                      order.shippingInfo.city,
-                                      order.shippingInfo.state,
-                                      order.shippingInfo.pinCode,
-                                    ]
-                                      .filter(Boolean)
-                                      .join(", ")}
-                                  </p>
-                                </div>
-                              </div>
-                            ) : (
-                              <p className="no-info">
-                                No shipping information available.
-                              </p>
-                            )}
-                          </div>
-                        )}
                       </div>
-
                       {/* Order Summary Section */}
-                      <div className="order-section order-summary-section">
-                        <div
-                          className="section-header"
-                          onClick={() => toggleSection("orderSummary")}
-                        >
-                          <h3>
-                            <FaEnvelopeOpenText size={16} />
-                            Order Summary
-                          </h3>
-                          <button className="toggle-section">
-                            {expandedSections.orderSummary ? (
-                              <FaArrowUp size={16} />
-                            ) : (
-                              <FaArrowDown size={16} />
-                            )}
-                          </button>
-                        </div>
+                      <div className="order-details-right">
+                        <div className="order-section order-summary-section">
+                          <div
+                            className="section-header"
+                            onClick={() => toggleSection("orderSummary")}
+                          >
+                            <h3>
+                              <FaEnvelopeOpenText size={16} />
+                              Order Summary
+                            </h3>
+                            <button className="toggle-section">
+                              {expandedSections.orderSummary ? (
+                                <FaArrowUp size={16} />
+                              ) : (
+                                <FaArrowDown size={16} />
+                              )}
+                            </button>
+                          </div>
 
-                        {expandedSections.orderSummary && (
-                          <div className="section-content">
-                            <div className="order-summary">
-                              <div className="summary-row">
-                                <span>Subtotal</span>
-                                <span>
-                                  ₹{" "}
-                                  {calculateOrderTotal(
-                                    order.cartItems
-                                  ).toLocaleString()}
-                                </span>
-                              </div>
-                              <div className="summary-row">
-                                <span>Shipping</span>
-                                <span>₹{order.shippingCost || 0}</span>
-                              </div>
-                              <div className="summary-row">
-                                <span>Discount</span>
-                                <span>
-                                  -₹{Math.round(order.discountAmount) || 0}
-                                </span>
-                              </div>
-                              <div className="summary-row total">
-                                <span>Total</span>
-                                <span>
-                                  ₹
-                                  {order.totalAmount ||
-                                    calculateOrderTotal(order.cartItems)}
-                                </span>
+                          {expandedSections.orderSummary && (
+                            <div className="section-content">
+                              <div className="order-summary">
+                                <div className="summary-row">
+                                  <span>Subtotal</span>
+                                  <span>
+                                    ₹{" "}
+                                    {calculateOrderTotal(
+                                      order.cartItems
+                                    ).toLocaleString()}
+                                  </span>
+                                </div>
+                                <div className="summary-row">
+                                  <span>Shipping</span>
+                                  <span>₹{order.shippingCost || 0}</span>
+                                </div>
+                                <div className="summary-row">
+                                  <span>Discount</span>
+                                  <span>
+                                    -₹{Math.round(order.discountAmount) || 0}
+                                  </span>
+                                </div>
+                                <div className="summary-row total">
+                                  <span>Total</span>
+                                  <span>
+                                    ₹
+                                    {order.totalAmount ||
+                                      calculateOrderTotal(order.cartItems)}
+                                  </span>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </div>
 
